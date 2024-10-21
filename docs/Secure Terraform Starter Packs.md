@@ -61,7 +61,7 @@ I scanned all the Terraform files using Wiz CLI and the initial scan results hig
 
 * Some of the issues (e.g., not using the latest versions, not encrypted at rest, etc.) were genuine and I tried addressing the majority of them. 
 
-After updating the modules to address issues that were quick fixes. I rescanned all the Terraform files using Wiz CLI and the results were: **CRITICAL: 0, HIGH: 7, MEDIUM: 58, LOW: 34**. While the number of issues at first glance may seem high, I think that with a) properly defined security requirements and b) a well-designed approach for consuming Terraform modules (see below example), the issue counts can be further reduced.
+After updating the modules to address issues that were quick fixes. I rescanned all the Terraform files using Wiz CLI and the results were: **CRITICAL: 0, HIGH: 4, MEDIUM: 58, LOW: 34**. While the number of issues at first glance may seem high, I think that with a) properly defined security requirements and b) a well-designed approach for consuming Terraform modules (see below example), the issue counts can be further reduced.
 
 ![Terraform Module Reusability - Example](images/Terraform%20Module%20Reusability%20-%20Example.png)
 
