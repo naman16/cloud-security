@@ -69,6 +69,6 @@ Resources for paved roads and security guardrails:
 3. Resourcely’s conversation with Jason Chan \- [Guardrails and Paved Roads](https://www.resourcely.io/post/guardrails-and-paved-roads)  
 4. Jason Chan’s talk at LASCON: [From Gates to Guardrails \- Alternate Approaches to Product Security](https://www.youtube.com/watch?v=geumLjxtc54)  
 5. Netflix’s blog post \- [The Show Must Go On](https://netflixtechblog.com/the-show-must-go-on-securing-netflix-studios-at-scale-19b801c86479)  
-6. Clint Gibler’s chats:  
-   1. [Jason Chan on the Origins of the Paved Road](https://www.youtube.com/watch?v=xijyr54FZn4)  
-   2. [Netflix’s Scott Behrens on the Difficulty of Building a Useful Paved Road](https://www.youtube.com/watch?v=uQaWfTwAWp0)
+6. Clint Gibler’s chats:
+   * [Jason Chan on the Origins of the Paved Road](https://www.youtube.com/watch?v=xijyr54FZn4)  
+   * [Netflix’s Scott Behrens on the Difficulty of Building a Useful Paved Road](https://www.youtube.com/watch?v=uQaWfTwAWp0)
