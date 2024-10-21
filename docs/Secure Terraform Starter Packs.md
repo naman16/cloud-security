@@ -47,20 +47,17 @@ I scanned all the Terraform files using Wiz CLI and the initial scan results hig
      * I did not clean up these issues because I see them as less risky as I have generally seen CloudWatch be used more for workload / application monitoring, less for security use-cases.
 
 * Some issues were because the LLM created supporting resources (e.g., RDS clusters) as part of the main resource (e.g., RDS instances), as opposed to reusing the dedicated module for that resource (e.g., RDS cluster). As a result, issues did not exist in the actual RDS cluster module but existed on the RDS cluster resource within the RDS instance module.
-
-   * I updated the prompt to minimize this behavior and was able to address most occurrences, but not all.
-   * Below, I have added an example using S3 bucket and ALB to further illustrate how these kinds of situations can be addressed when doing actual implementation.   
+     * I updated the prompt to minimize this behavior and was able to address most occurrences, but not all.
+     * Below, I have added an example using S3 bucket and ALB to further illustrate how these kinds of situations can be addressed when doing actual implementation.   
 
 * Some of the CCR don’t have a value specified for target native type (i.e. they are null). These rules weren’t pulled down by “wiz-ccr-extractor” and as a result, weren’t fed into the LLM as part of the security requirements for the respective services.
-
-  * I did a quick review and manually fixed up some of these, however, I did not do this for all occurrences.
-  * This can be addressed by feeding well-defined requirements to the LLM.
+      * I did a quick review and manually fixed up some of these, however, I did not do this for all occurrences.
+      * This can be addressed by feeding well-defined requirements to the LLM.
    
 * Some CCRs’ names and descriptions did not align with Wiz’s actual detection policy (rego rule). In this scenario, I did not make any updates to the Terraform. For example:
-
-  * Name: RDS Aurora cluster multi-availability zone should be enabled.
-  * Description: This rule checks if the RDS Aurora Cluster has Multi-Availability Zone (Multi-AZ) disabled. This rule fails if \`MultiAZ\` is \`false\` or does not exist. RDS Aurora clusters should be configured for multiple AZs to ensure the availability of stored data. Deployment to multiple AZs allows for automated failover in the event of an AZ availability issue and during regular RDS maintenance events. It is recommended, especially for production environments, to create a standby instance by enabling the Multi-AZ deployment feature on the RDS clusters. **Note** See Cloud Configuration Rule \`RDS-024\` to review the RDS Instances not configured with Multi-AZ.
-  * Wiz Detection: 'aws\_rds\_cluster\' should have 'engine', 'storage\_type', 'allocated\_storage', 'iops' and 'db\_cluster\_instance\_class' attributes defined.
+      * Name: RDS Aurora cluster multi-availability zone should be enabled.
+      * Description: This rule checks if the RDS Aurora Cluster has Multi-Availability Zone (Multi-AZ) disabled. This rule fails if \`MultiAZ\` is \`false\` or does not exist. RDS Aurora clusters should be configured for multiple AZs to ensure the availability of stored data. Deployment to multiple AZs allows for automated failover in the event of an AZ availability issue and during regular RDS maintenance events. It is recommended, especially for production environments, to create a standby instance by enabling the Multi-AZ deployment feature on the RDS clusters. **Note** See Cloud Configuration Rule \`RDS-024\` to review the RDS Instances not configured with Multi-AZ.
+      * Wiz Detection: 'aws\_rds\_cluster\' should have 'engine', 'storage\_type', 'allocated\_storage', 'iops' and 'db\_cluster\_instance\_class' attributes defined.
 
 * Some of the issues (e.g., not using latest versions, not encrypted at rest, etc.) were genuine and I tried addressing the majority of them. 
 
