@@ -31,6 +31,9 @@ For this automation, I have used Wiz’s Cloud Configuration Rules (CCR)  (I thi
 
 
 
+The source code for the solution is here: (https://github.com/naman16/Secure-Terraform-Starter-Packs/tree/main)
+
+
 ## Testing Results
 
 Once the Terraform modules were generated, I was naturally very excited to test them for configuration accuracy (i.e. understanding Terraform) as well as security. Below are the high-level results from some lightweight testing. 
