@@ -29,10 +29,16 @@ For the purposes of this automation, I have used Wiz’s Cloud Configuration Rul
 
 ## Testing Results
 
-Once the Terraform modules were generated, I was naturally very excited to test them for configuration accuracy (i.e. understanding Terraform) as well as security. Below are the high-level results from some lightweight testing:
+Once the Terraform modules were generated, I was naturally very excited to test them for configuration accuracy (i.e. understanding Terraform) as well as security. Below are the high-level results from some lightweight testing. 
 
-* *Accuracy*: I was able to deploy the modules for S3 bucket and DynamoDB table in the first try without making any updates to the Terraform files (except specifying values for the variables).  
-* *Security Configurations*: I scanned all the Terraform files using Wiz CLI and the initial scan results highlighted CRITICAL: 0, HIGH: 8, MEDIUM: 70, LOW: 45\. On further analysis, I observed that:  
+### Accuracy
+
+I was able to deploy the modules for S3 bucket and DynamoDB table in the first try without making any updates to the Terraform files (except specifying values for the variables).
+
+### Security Configurations
+
+I scanned all the Terraform files using Wiz CLI and the initial scan results highlighted CRITICAL: 0, HIGH: 8, MEDIUM: 70, LOW: 45\. On further analysis, I observed that:
+
 * A good number of the issues (22, including 4 HIGH) were associated with CloudWatch.   
   * I did not clean up these issues because I see them as less risky as I have generally seen CloudWatch be used more for workload / application monitoring, less for security use-cases.  
 * Some issues were because the LLM created supporting resources (e.g., RDS clusters) as part of the main resource (e.g., RDS instances), as opposed to reusing the dedicated module for that resource (e.g., RDS cluster). As a result, issues did not exist in the actual RDS cluster module but existed on the RDS cluster resource within the RDS instance module.  
@@ -46,6 +52,7 @@ Once the Terraform modules were generated, I was naturally very excited to test 
   * Description: This rule checks if the RDS Aurora Cluster has Multi-Availability Zone (Multi-AZ) disabled.  \\nThis rule fails if \`MultiAZ\` is \`false\` or does not exist.  \\nRDS Aurora clusters should be configured for multiple AZs to ensure the availability of stored data. Deployment to multiple AZs allows for automated failover in the event of an AZ availability issue and during regular RDS maintenance events.  \\nIt is recommended, especially for production environments, to create a standby instance by enabling the Multi-AZ deployment feature on the RDS clusters.\\n\>\*\*Note\*\*  \\nSee Cloud Configuration Rule \`RDS-024\` to review the RDS Instances not configured with Multi-AZ.  
   * Wiz Detection: 'aws\_rds\_cluster\]' should have 'engine', 'storage\_type', 'allocated\_storage', 'iops' and 'db\_cluster\_instance\_class' attributes defined  
 * Some of the issues (e.g., not using latest versions, not encrypted at rest, etc.) were genuine and I tried addressing the majority of them. 
+
 
 After updating the modules to address issues that were quick fixes. I rescanned all the Terraform files using Wiz CLI and the results were: CRITICAL: 0, HIGH: 7, MEDIUM: 58, LOW: 34\. While the number of issues at first glance may seem high, I think that with a) properly defined security requirements and b) well-designed approach for consuming Terraform modules (see below example), the issue counts can be further reduced.   
 ![][image2]
