@@ -24,7 +24,7 @@ Given that a) it is best practice to manage cloud environments using IaC and b) 
 
 I have been thinking about this problem statement for the last year and have been curious about using large language models (LLMs) to develop secure and reusable IaC. I tried implementing this a few times before but never got satisfactory results for various reasons \- poor approach, broader definition of the problem statement, LLM performance, etc. But in my most recent attempt, the results were impressive. Below, I have shared the results and the source code for anyone to use as well as provided some thoughts on how it can be expanded to generate IaC for different languages, cloud providers, and requirement sets.
 
-For this automation ([source code here](https://github.com/naman16/Secure-Terraform-Starter-Packs/tree/main)), I have used Wiz’s Cloud Configuration Rules (CCR)  (I think they have the best out-of-box policy set) for AWS as the set of requirements that needs to be codified in reusable Terraform modules. I have used **Anthropic’s Claude 3.5 Sonnet (via AWS Bedrock)** as the LLM to develop the secure Terraform modules. Below is a high-level overview of how the automation works:
+For this automation (code linked [here](https://github.com/naman16/Secure-Terraform-Starter-Packs/tree/main)), I have used Wiz’s Cloud Configuration Rules (CCR)  (I think they have the best out-of-box policy set) for AWS as the set of requirements that needs to be codified in reusable Terraform modules. I have used **Anthropic’s Claude 3.5 Sonnet (via AWS Bedrock)** as the LLM to develop the secure Terraform modules. Below is a high-level overview of how the automation works:
 
 ![Automation Overview](images/Automation%20Overview.png)
 
