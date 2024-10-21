@@ -44,8 +44,7 @@ I was able to deploy the modules for S3 bucket and DynamoDB table in the first t
 I scanned all the Terraform files using Wiz CLI and the initial scan results highlighted **CRITICAL: 0, HIGH: 8, MEDIUM: 70, LOW: 45**. On further analysis, I observed that:
 
 * A good number of the issues (22, including 4 HIGH) were associated with CloudWatch.
-
-   * I did not clean up these issues because I see them as less risky as I have generally seen CloudWatch be used more for workload / application monitoring, less for security use-cases.
+     * I did not clean up these issues because I see them as less risky as I have generally seen CloudWatch be used more for workload / application monitoring, less for security use-cases.
 
 * Some issues were because the LLM created supporting resources (e.g., RDS clusters) as part of the main resource (e.g., RDS instances), as opposed to reusing the dedicated module for that resource (e.g., RDS cluster). As a result, issues did not exist in the actual RDS cluster module but existed on the RDS cluster resource within the RDS instance module.
 
