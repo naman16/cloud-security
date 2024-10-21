@@ -4,14 +4,14 @@
   align-items: center;
   padding: 1rem;
   flex-wrap: wrap;
-  background-color: #23272a; /* Consistent footer color */
+  background-color: #23272a; /* Uniform background color */
 }
 
 .md-footer-disclaimer {
   flex: 1;
   text-align: left;
   margin-right: auto;
-  font-size: 0.75rem; /* Slightly smaller text size */
+  font-size: 0.7rem; /* Slightly smaller text size */
   color: #fff; /* White text for contrast */
 }
 
@@ -21,7 +21,7 @@
 }
 
 .md-footer-social img {
-  width: 36px; /* Slightly larger LinkedIn icon size */
+  width: 40px; /* Larger LinkedIn icon size */
   height: auto;
-  margin-left: 1rem;
+  margin-left: 1rem; /* Space between text and icon */
 }
