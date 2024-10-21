@@ -28,6 +28,8 @@ For the purposes of this automation, I have used Wiz’s Cloud Configuration Rul
 ![Automation Overview](images/Automation%20Overview.png)
 
 
+
+
 ## Testing Results
 
 Once the Terraform modules were generated, I was naturally very excited to test them for configuration accuracy (i.e. understanding Terraform) as well as security. Below are the high-level results from some lightweight testing. 
@@ -56,6 +58,8 @@ I scanned all the Terraform files using Wiz CLI and the initial scan results hig
 
 After updating the modules to address issues that were quick fixes. I rescanned all the Terraform files using Wiz CLI and the results were: CRITICAL: 0, HIGH: 7, MEDIUM: 58, LOW: 34\. While the number of issues at first glance may seem high, I think that with a) properly defined security requirements and b) well-designed approach for consuming Terraform modules (see below example), the issue counts can be further reduced.   
 ![Terraform Module Reusability - Example](images/Terraform%20Module%20Reusability%20-%20Example.png)
+
+
 
 
 ## Closing Thoughts
