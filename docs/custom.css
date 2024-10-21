@@ -2,24 +2,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding: 1rem;
   flex-wrap: wrap;
+  background-color: #222; /* Ensure good contrast */
 }
 
 .md-footer-disclaimer {
-  flex: 1 1 auto;
-  text-align: left; /* Aligns the disclaimer to the left */
-  margin: 0.5rem;
-  font-size: 0.6rem;
-  max-width: 75%; /* Limit width for better spacing */
+  flex: 1;
+  text-align: left;
+  margin-right: auto; /* Aligns disclaimer to the left */
+  font-size: 0.8rem; /* Increased for readability */
+  color: #fff; /* White text for contrast */
 }
 
 .md-footer-social {
-  flex: 0 0 auto;
-  margin-left: auto; /* Right-align social icons */
+  display: flex;
+  align-items: center;
 }
 
 .md-footer-social img {
-  width: 24px; /* Set specific width for LinkedIn icon */
+  width: 32px; /* Larger icon size */
   height: auto;
+  margin-left: 1rem; /* Space between text and icon */
 }
