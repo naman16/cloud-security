@@ -24,7 +24,8 @@ Given that a) it is best practice to manage cloud environments using IaC and b) 
 
 I have been thinking about this problem statement for a while now and have always been curious about using large language models (LLMs) to develop secure and reusable IaC. I tried implementing this a few times before but never got satisfactory results for various reasons \- poor approach, broader definition of the problem statement, LLM performance, etc. But in my most recent attempt, the results were impressive. Below, I have shared the results and the source code for anyone to use as well as provided some thoughts on how it can be expanded to generate IaC for different languages, cloud providers, and requirement sets.
 
-For the purposes of this automation, I have used Wiz’s Cloud Configuration Rules (CCR)  (I think they have the best out-of--box policy set) for AWS as the set of requirements that needs to be codified in reusable Terraform modules. I have used Anthropic’s Claude 3.5 Sonnet (via AWS Bedrock) as the LLM to develop the secure Terraform modules. Below is a high-level overview of how the automation works:  
+For the purposes of this automation, I have used Wiz’s Cloud Configuration Rules (CCR)  (I think they have the best out-of--box policy set) for AWS as the set of requirements that needs to be codified in reusable Terraform modules. I have used Anthropic’s Claude 3.5 Sonnet (via AWS Bedrock) as the LLM to develop the secure Terraform modules. Below is a high-level overview of how the automation works:
+
 ![Automation Overview](images/Automation%20Overview.png)
 
 
@@ -56,7 +57,8 @@ I scanned all the Terraform files using Wiz CLI and the initial scan results hig
   * Wiz Detection: 'aws\_rds\_cluster\]' should have 'engine', 'storage\_type', 'allocated\_storage', 'iops' and 'db\_cluster\_instance\_class' attributes defined.
 * Some of the issues (e.g., not using latest versions, not encrypted at rest, etc.) were genuine and I tried addressing the majority of them. 
 
-After updating the modules to address issues that were quick fixes. I rescanned all the Terraform files using Wiz CLI and the results were: CRITICAL: 0, HIGH: 7, MEDIUM: 58, LOW: 34\. While the number of issues at first glance may seem high, I think that with a) properly defined security requirements and b) well-designed approach for consuming Terraform modules (see below example), the issue counts can be further reduced.   
+After updating the modules to address issues that were quick fixes. I rescanned all the Terraform files using Wiz CLI and the results were: CRITICAL: 0, HIGH: 7, MEDIUM: 58, LOW: 34\. While the number of issues at first glance may seem high, I think that with a) properly defined security requirements and b) well-designed approach for consuming Terraform modules (see below example), the issue counts can be further reduced.
+
 ![Terraform Module Reusability - Example](images/Terraform%20Module%20Reusability%20-%20Example.png)
 
 
