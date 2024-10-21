@@ -1,0 +1,25 @@
+.md-footer-meta__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+.md-footer-disclaimer {
+  flex: 1;
+  text-align: left;
+  margin-right: auto;
+  font-size: 0.6rem;
+}
+
+.md-footer-social {
+  display: flex;
+  align-items: center;
+}
+
+.md-footer-social img {
+  width: 70px;
+  height: 70px;
+  margin-left: 1rem;
+}
