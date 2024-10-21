@@ -2,24 +2,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0; /* Increased padding for better spacing */
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
-}
-
-.md-footer-copyright,
-.md-footer-social {
-  flex: 0 0 auto;
-  font-size: 0.8rem; /* Slightly larger for better readability */
+  padding: 1rem 0;
+  flex-wrap: wrap;
 }
 
 .md-footer-disclaimer {
   flex: 1 1 auto;
-  text-align: center;
-  margin: 0.5rem; /* Adjusted margin for better spacing */
-  font-size: 0.6rem; /* Increased font size */
-  max-width: 100%; /* Allow full width usage */
+  text-align: left; /* Aligns the disclaimer to the left */
+  margin: 0.5rem;
+  font-size: 0.6rem;
+  max-width: 75%; /* Limit width for better spacing */
 }
 
 .md-footer-social {
-  margin-left: auto; /* Aligns social icons to the right */
+  flex: 0 0 auto;
+  margin-left: auto; /* Right-align social icons */
+}
+
+.md-footer-social img {
+  width: 24px; /* Set specific width for LinkedIn icon */
+  height: auto;
 }
