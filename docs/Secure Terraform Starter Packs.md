@@ -27,6 +27,7 @@ I have been thinking about this problem statement for a while now and have alway
 For the purposes of this automation, I have used Wiz’s Cloud Configuration Rules (CCR)  (I think they have the best out-of--box policy set) for AWS as the set of requirements that needs to be codified in reusable Terraform modules. I have used Anthropic’s Claude 3.5 Sonnet (via AWS Bedrock) as the LLM to develop the secure Terraform modules. Below is a high-level overview of how the automation works:  
 ![Automation Overview](images/Automation%20Overview.png)
 
+
 ## Testing Results
 
 Once the Terraform modules were generated, I was naturally very excited to test them for configuration accuracy (i.e. understanding Terraform) as well as security. Below are the high-level results from some lightweight testing. 
@@ -56,6 +57,7 @@ I scanned all the Terraform files using Wiz CLI and the initial scan results hig
 After updating the modules to address issues that were quick fixes. I rescanned all the Terraform files using Wiz CLI and the results were: CRITICAL: 0, HIGH: 7, MEDIUM: 58, LOW: 34\. While the number of issues at first glance may seem high, I think that with a) properly defined security requirements and b) well-designed approach for consuming Terraform modules (see below example), the issue counts can be further reduced.   
 ![Terraform Module Reusability - Example](images/Terraform%20Module%20Reusability%20-%20Example.png)
 
+
 ## Closing Thoughts
 
 Even though the focus of this implementation was around developing secure Terraform modules for AWS using Wiz’s CCR as the requirements, this is fairly easy to customize for other IaC languages, cloud providers, and requirements / policy sets to meet your specific use-cases. By updating the LLM prompt and adjusting the plumbing (e.g., changing requirements to that of different CSPs or tools, updating file paths to “azure/” or “gcp/, switching file types from json to csv, etc.), you can extend the functionality of this automation to implement additional use-cases.
@@ -70,5 +72,5 @@ Resources for paved roads and security guardrails:
 4. Jason Chan’s talk at LASCON: [From Gates to Guardrails \- Alternate Approaches to Product Security](https://www.youtube.com/watch?v=geumLjxtc54)  
 5. Netflix’s blog post \- [The Show Must Go On](https://netflixtechblog.com/the-show-must-go-on-securing-netflix-studios-at-scale-19b801c86479)  
 6. Clint Gibler’s chats:
-   * [Jason Chan on the Origins of the Paved Road](https://www.youtube.com/watch?v=xijyr54FZn4)  
-   * [Netflix’s Scott Behrens on the Difficulty of Building a Useful Paved Road](https://www.youtube.com/watch?v=uQaWfTwAWp0)
+    * [Jason Chan on the Origins of the Paved Road](https://www.youtube.com/watch?v=xijyr54FZn4)
+    * [Netflix’s Scott Behrens on the Difficulty of Building a Useful Paved Road](https://www.youtube.com/watch?v=uQaWfTwAWp0)
