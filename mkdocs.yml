@@ -27,12 +27,6 @@ theme:
       primary: teal
       accent: lime
 
-nav:
-  - Home: index.md
-  - Blog:
-      - "Implementing CNAPP: Day 2 Focus Areas": blog/post1.md
-      - "Secure Terraform Starter Packs For AWS": blog/post2.md
-
 extra_css:
   - custom.css
 
