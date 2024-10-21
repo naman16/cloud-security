@@ -29,7 +29,7 @@ For this automation, I have used Wiz’s Cloud Configuration Rules (CCR)  (I thi
 ![Automation Overview](images/Automation%20Overview.png)
 
 
-
+Link to the source code for this repository: (https://github.com/naman16/Secure-Terraform-Starter-Packs/tree/main)
 
 ## Testing Results
 
