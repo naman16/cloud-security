@@ -159,7 +159,7 @@ While the specific workflows and integrations will differ for each organization 
 
 Below is a visual that provides a high-level overview of classifying different types of issues, identifying responsible stakeholders, and setting up integrations for effective communication, tracking, and management of issues:  
 
-![CNAPP Workflows & Integrations](/images/CNAPP%20Workflows%20&%20Integrations.png)
+![CNAPP Workflows & Integrations](images/CNAPP%20Workflows%20&%20Integrations.png)
 
 In summary, addressing day 2 focus areas for CNAPP is essential for maximizing ROI and enhancing the overall maturity of the cloud security program. Prioritizing pre-deployment security capabilities \- such as IaC, secret, and container image scanning \- ensures vulnerabilities and misconfigurations are identified and remediated early in the development lifecycle, conserving valuable time and resources. By operationalizing capabilities beyond traditional CSPM, organizations gain increased visibility into critical security domains, including identity and access management, data security, network protection, attack surface management, container and workload security, and threat detection and response. Establishing clear operational workflows and integrating with existing tools \- such as ticketing and messaging platforms \- transforms security insights into actionable information that can be seamlessly incorporated into daily processes. 
 
