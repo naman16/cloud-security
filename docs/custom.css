@@ -2,26 +2,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 1rem 0; /* Increased padding for better spacing */
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
 .md-footer-copyright,
 .md-footer-social {
   flex: 0 0 auto;
+  font-size: 0.8rem; /* Slightly larger for better readability */
 }
 
 .md-footer-disclaimer {
   flex: 1 1 auto;
   text-align: center;
-  margin: 0 1rem;
-  font-size: 0.4rem;
-  max-width: 75%;
-}
-
-.md-footer-copyright {
-  font-size: 0.6rem;
+  margin: 0.5rem; /* Adjusted margin for better spacing */
+  font-size: 0.6rem; /* Increased font size */
+  max-width: 100%; /* Allow full width usage */
 }
 
 .md-footer-social {
-  margin: 0;
+  margin-left: auto; /* Aligns social icons to the right */
 }
