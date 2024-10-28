@@ -34,6 +34,11 @@ plugins:
   - social
   - search
 
+nav:
+  - Home: index.md
+  - "Implementing CNAPP: Day 2 Focus Areas": "Implementing CNAPP: Day 2 Focus Areas.md"
+  - "AWS Security Guardrails": "AWS Security Guardrails & Terraform.md"
+
 extra:
   social:
     - icon: fontawesome/brands/linkedin
