@@ -35,9 +35,9 @@ plugins:
   - search
 
 nav:
-  - Home: index.md
+  - "Implementing CNAPP: Tool Selection and Day 1 Focus Areas": index.md
   - "Implementing CNAPP: Day 2 Focus Areas": "Implementing CNAPP: Day 2 Focus Areas.md"
-  - "AWS Security Guardrails": "AWS Security Guardrails & Terraform.md"
+  - "AWS Security Guardrails & Terraform": "AWS Security Guardrails & Terraform.md"
 
 extra:
   social:
