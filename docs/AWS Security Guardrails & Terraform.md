@@ -119,22 +119,22 @@ The Terraform Creator (terraform-creator.py) is a Python script that automatical
 
 * **Standardized Module Structure**: Generates three files for each AWS service:
   
-  * main.tf: Contains resource configurations with requirement traceability  
-  * variables.tf: Defines all configurable parameters with secure default  
-  * notes.md: Provides detailed implementation documentation and coverage analysis
+      * main.tf: Contains resource configurations with requirement traceability  
+      * variables.tf: Defines all configurable parameters with secure default  
+      * notes.md: Provides detailed implementation documentation and coverage analysis
 
 * **Intelligent Implementation Decisions**: Makes informed choices about requirement implementation:
     
-  * Assumes reusability where users will bring pre-created resource components (KMS keys, log buckets, etc.) as opposed to creating supporting resources (see below example) 
-  * Avoids creating duplicate resources for implementing different requirements  
-  * Creates optional read/write IAM policies for flexibility
+      * Assumes reusability where users will bring pre-created resource components (KMS keys, log buckets, etc.) as opposed to creating supporting resources (see below example) 
+      * Avoids creating duplicate resources for implementing different requirements  
+      * Creates optional read/write IAM policies for flexibility
 
 * **Comprehensive Documentation**: Maintains detailed documentation of implementation status:
 
-  * Maps security requirements to specific Terraform configurations  
-  * Documents partially implemented requirements  
-  * Explains requirements that cannot be implemented via Terraform  
-  * Includes additional security measures beyond base requirements
+      * Maps security requirements to specific Terraform configurations  
+      * Documents partially implemented requirements  
+      * Explains requirements that cannot be implemented via Terraform  
+      * Includes additional security measures beyond base requirements
 
 Below is the LLM prompt that I am currently using for Terraform creation:
 
@@ -194,8 +194,9 @@ variables.tf content
 notes.md content
 </notes.md>
 ```
-
-<br>
+<be>
+<be>
+<be>
 
 Below is an illustrative example to highlight how Terraform modules can be reused:
 
