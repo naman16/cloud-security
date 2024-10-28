@@ -190,7 +190,7 @@ notes.md content
 </notes.md>
 ```
 
-\n
+<br>
 
 Below is an illustrative example to highlight how Terraform modules can be reused:
 
