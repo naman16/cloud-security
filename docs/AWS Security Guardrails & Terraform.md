@@ -209,8 +209,6 @@ While this implementation is designed to generate secure IaC starter packs, it i
 
 Resources for paved roads and security guardrails:
 
-Resources for paved roads and security guardrails:
-
 1. Netflix’s talk at RSA \- [Construction Time Again: A Lesson in Paving Paths for Security](https://www.rsaconference.com/library/presentation/usa/2023/Construction%20Time%20Again%20A%20Lesson%20in%20Paving%20Paths%20for%20Security?utm_source=appsec.beehiiv.com&utm_medium=referral&utm_campaign=reasonable-appsec-6-five-security-articles-guard-rails-paved-roads-photo-and-podcast-corner)  
 2. Google Cloud \- [Building security guardrails for developers](https://cloud.google.com/blog/topics/inside-google-cloud/building-security-guardrails-for-developers-with-google-cloud)  
 3. Resourcely’s conversation with Jason Chan \- [Guardrails and Paved Roads](https://www.resourcely.io/post/guardrails-and-paved-roads)  
