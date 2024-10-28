@@ -190,7 +190,10 @@ notes.md content
 </notes.md>
 ```
 
+\n
+
 Below is an illustrative example to highlight how Terraform modules can be reused:
+
 ![Terraform Module Reusability - Example](images/Terraform%20Module%20Reusability%20-%20Example.png)
 
 ## Closing Thoughts
