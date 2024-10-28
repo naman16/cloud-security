@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Traditional security approaches designed for on-premises environments are inadequate in addressing the unique risks posed by cloud. The distributed and dynamic nature of cloud resources, speed of development and innovation, multi-tenant architectures, and decentralized operating models have resulted in a complex threat landscape that requires a fundamental shift in building and operating scalable security programs. This paradigm shift has popularized the concepts of paved roads and security guardrails to reduce the security burdens on the engineers and enable them to focus on innovation and driving business value, without compromising on security. Below, I have included some helpful resources better to explain the concepts of paved roads and security guardrails but at a high-level:
+Traditional security approaches designed for on-premises environments are inadequate in addressing the unique risks posed by the cloud. The distributed and dynamic nature of cloud resources, speed of development and innovation, multi-tenant architectures, and decentralized operating models have resulted in a complex threat landscape that requires a fundamental shift in building and operating scalable security programs. This paradigm shift has popularized the concepts of paved roads and security guardrails to reduce the security burdens on the engineers and enable them to focus on innovation and driving business value, without compromising on security. Below, I have included some helpful resources better to explain the concepts of paved roads and security guardrails but at a high-level:
 
 * *Paved Roads*: Originally conceptualized by Netflix, refers to a set of standardized frameworks (e.g., authentication patterns, certificate management, service mesh, etc.), self-service tools, and automated processes that are easily readily consumable by engineers, allowing them to focus on their core responsibilities and not worry about implementing security requirements.  
 * *Security Guardrails*: These are preventive controls, integrated into the development workflows, that define the security boundaries and force the engineers to operate with them, thereby stopping misconfigured and vulnerable resources (code) from being released into cloud environments.
@@ -11,7 +11,7 @@ Most organizations today have adopted some form of *paved roads* or *security gu
 
 Additionally, for many organizations operating in the cloud, implementing *Cloud-Native Application Protection Platform (CNAPP)* has become essential for achieving greater visibility into cloud environments and identifying diverse classes of security issues (Shameless plug \- I recently wrote blog posts on [Day 1](https://naman16.github.io/cloud-security/) and [Day 2](https://naman16.github.io/cloud-security/Implementing%20CNAPP:%20Day%202%20Focus%20Areas/) focus areas for CNAPP).
 
-While conducting scans and generating insights is a foundational first step toward understanding and securing the environment, a critical gap remains. Organizations often lack prescriptive guidance and accessible, reusable security artifacts that engineers can leverage directly. By not providing these resources, security teams inadvertently place the burden of configuring services securely on engineers, who may lack the security expertise or resources needed to efficiently address intricate security requirements. Without “built-in” security, engineers end up spending time on tasks that could otherwise be streamlined through *reusable secure Infrastructure as Code (IaC) templates (It is best practices to leverage IaC for cloud infrastructure provisioning and management)*. This kind of “secure-by-design” IaC allows engineers to meet security requirements faster, enabling them to stay focused on their primary responsibilities while maintaining a secure development pipeline.
+While conducting scans and generating insights is a foundational first step toward understanding and securing the environment, a critical gap remains. Organizations often lack prescriptive guidance and accessible, reusable security artifacts that engineers can leverage directly. By not providing these resources, security teams inadvertently place the burden of configuring services securely on engineers, who may lack the security expertise or resources needed to efficiently address intricate security requirements. Without “built-in” security, engineers end up spending time on tasks that could otherwise be streamlined through *reusable secure Infrastructure as Code (IaC) templates (It is best practice to leverage IaC for cloud infrastructure provisioning and management)*. This kind of “secure-by-design” IaC allows engineers to meet security requirements faster, enabling them to stay focused on their primary responsibilities while maintaining a secure development pipeline.
 
 Establishing such reusable, secure IaC offers additional benefits beyond efficiency. By actively supporting engineers with secure IaC, security teams move from a passive, reactive role into a proactive partnership, where they provide engineers with actionable solutions rather than just requirements. This approach fosters stronger relationships with development teams, as security becomes an enabler rather than a gatekeeper, actively facilitating good security practices instead of merely imposing them.
 
@@ -21,12 +21,10 @@ In summary, organizations invest significant resources in scanning and monitorin
 
 ## Solution Overview
 
-Given the benefits of secure IaC templates with built-in security requirements, below is a high-level overview of an automation that leverages Artificial Intelligence (AI) to develop:
+Given the benefits of secure IaC templates with built-in security requirements, below is a high-level overview of automation that leverages Artificial Intelligence (AI) to develop:
 
 * List of security requirements for several commonly used AWS services  
 * Secure Terraform modules that codify these security requirements
-
-![][image1]
 
 ### Requirements Generator
 
@@ -38,7 +36,7 @@ The Requirements Generator (requirements-generator.py) is a Python script that c
 * **Standardized Output**: Generates consistently formatted JSON output with required fields like ID, name, description, cloud provider, and security domain  
 * **Comprehensive Coverage**: Identifies gaps in security requirements and adds missing controls based on AWS best practices
 
-Below is the LLM prompt that I am currently using for requirements generation:
+Below is the large language model (LLM) prompt that I am currently using for requirements generation:
 
 ```
 You are a cloud security expert that is tasked with defining detailed technical security requirements AWS services. 
@@ -121,10 +119,10 @@ The Terraform Creator (terraform-creator.py) is a Python script that automatical
 
 * **Standardized Module Structure**: Generates three files for each AWS service:  
   * main.tf: Contains resource configurations with requirement traceability  
-  * variables.tf: Defines all configurable parameters with secure defaults  
+  * variables.tf: Defines all configurable parameters with secure default  
   * notes.md: Provides detailed implementation documentation and coverage analysis  
 * **Intelligent Implementation Decisions**: Makes informed choices about requirement implementation:  
-  * Assumes reusability where users will bring pre-created resources components (KMS keys, log buckets, etc.) as opposed to creating supporting resources (see below example)  
+  * Assumes reusability where users will bring pre-created resource components (KMS keys, log buckets, etc.) as opposed to creating supporting resources (see below example)  
   * Avoids creating duplicate resources for implementing different requirements  
   * Creates optional read/write IAM policies for flexibility  
 * **Comprehensive Documentation**: Maintains detailed documentation of implementation status:  
@@ -196,14 +194,14 @@ notes.md content
 
 ## Closing Thoughts
 
-Even though the focus of this implementation was around developing security requirements and Terraform modules for AWS, this is fairly easy to customize for other IaC languages, cloud providers, and requirements / policy sets to meet your specific use-cases. By updating the LLM prompts and adjusting some of the supporting files, you can extend the functionality of this automation to develop security requirements and implement supporting secure IaC in your desired language, for your preferred CSP(s) and their specific requirements.
+While this implementation primarily focused on developing security requirements and Terraform modules for AWS, it provides a flexible framework that can be customized for other IaC languages, cloud providers, and security requirements. By updating the prompts for the LLM and adjusting configurations—such as integrating Prowler and Checkov’s policies for Azure or GCP, incorporating security requirements from alternative tools, or using your own requirements—this automation can be adapted to suit various use-cases.
 
-With the help of LLM, I was able to create these  modules in a matter of a couple of hours with reasonable accuracy, which otherwise would have taken me at least a few weeks to a few months. I am not trying to overhype this or make it sound like a silver bullet. At the end of the day, it is AI-generated content and should be taken with a grain of salt when it comes to relevancy and accuracy. In my mind, I see this as an enabler that helps us be more efficient in developing secure IaC and not a solution that can be used blindly without any review or customization. Overall, I am optimistic about what I have seen thus far and it can potentially help
+With the help of AI, I was able to create these requirements and modules in a few hours with reasonable accuracy, which would otherwise have taken me weeks or even months. However, since the requirements and modules are AI-generated, it’s important to use them with caution; I recommend reviewing, validating, and tailoring the content to meet your specific needs. Rather than viewing this as a silver bullet, I see it as an enabler for enhancing efficiency in developing secure IaC. Overall, I am optimistic about its potential benefits:
 
-* Engineers save valuable time since they don’t have to start from scratch when implementing security configurations.  
-* Security teams can leverage AI to partially offload the development of remediation guidance / artifacts and focus their efforts on more complex issues and tasks.
+* **Time Savings for Engineers**: They can avoid starting from scratch when implementing security configurations.  
+* **Support for Security Teams**: AI can help alleviate the burden of developing remediation guidance, allowing teams to focus on more complex issues.
 
-Even though this is a very focused implementation that is designed to help with generating secure IaC starter packs, the broader point to note here is that we can now use AI solutions like this to provide security teams (who are constantly overworked) some support and extra working hands. As the models evolve and get smarter, the quality of responses will only get better and we will be able to further rely on AI to help us be more efficient and solve harder and more complex problems.
+While this implementation is designed to generate secure IaC starter packs, it illustrates a broader point: AI solutions can offer much-needed support to overworked security teams. As models evolve and improve, the quality of AI-generated outputs will only get better, enabling us to tackle more complex security challenges efficiently.
 
 Resources for paved roads and security guardrails:
 
