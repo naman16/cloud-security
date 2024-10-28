@@ -192,7 +192,7 @@ notes.md content
 </notes.md>
 ```
 
-![][image2]
+![][Terraform Module Reusability - Example.png]
 
 ## Closing Thoughts
 
