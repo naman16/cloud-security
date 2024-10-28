@@ -117,15 +117,20 @@ Respond with ONLY a valid JSON array of requirements. Do not include any explana
 
 The Terraform Creator (terraform-creator.py) is a Python script that automatically generates secure Terraform modules based on the security requirements that were developed by the “Requirements Generator” script. The script utilizes Anthropic's Claude 3.5 Sonnet model through AWS Bedrock and employs prompt engineering to transform security requirements into reusable and secure Terraform modules. Below are the key features that I have attempted to implement:
 
-* **Standardized Module Structure**: Generates three files for each AWS service:  
+* **Standardized Module Structure**: Generates three files for each AWS service:
+  
   * main.tf: Contains resource configurations with requirement traceability  
   * variables.tf: Defines all configurable parameters with secure default  
-  * notes.md: Provides detailed implementation documentation and coverage analysis  
-* **Intelligent Implementation Decisions**: Makes informed choices about requirement implementation:  
-  * Assumes reusability where users will bring pre-created resource components (KMS keys, log buckets, etc.) as opposed to creating supporting resources (see below example)  
+  * notes.md: Provides detailed implementation documentation and coverage analysis
+
+* **Intelligent Implementation Decisions**: Makes informed choices about requirement implementation:
+    
+  * Assumes reusability where users will bring pre-created resource components (KMS keys, log buckets, etc.) as opposed to creating supporting resources (see below example) 
   * Avoids creating duplicate resources for implementing different requirements  
-  * Creates optional read/write IAM policies for flexibility  
-* **Comprehensive Documentation**: Maintains detailed documentation of implementation status:  
+  * Creates optional read/write IAM policies for flexibility
+
+* **Comprehensive Documentation**: Maintains detailed documentation of implementation status:
+
   * Maps security requirements to specific Terraform configurations  
   * Documents partially implemented requirements  
   * Explains requirements that cannot be implemented via Terraform  
@@ -216,7 +221,7 @@ Resources for paved roads and security guardrails:
 5. Netflix’s blog post \- [The Show Must Go On](https://netflixtechblog.com/the-show-must-go-on-securing-netflix-studios-at-scale-19b801c86479)  
 6. Clint Gibler’s chats:
 
-    * [Jason Chan on the Origins of the Paved Road](https://www.youtube.com/watch?v=xijyr54FZn4)
-    * [Netflix’s Scott Behrens on the Difficulty of Building a Useful Paved Road](https://www.youtube.com/watch?v=uQaWfTwAWp0)
+      1. [Jason Chan on the Origins of the Paved Road](https://www.youtube.com/watch?v=xijyr54FZn4)
+      2. [Netflix’s Scott Behrens on the Difficulty of Building a Useful Paved Road](https://www.youtube.com/watch?v=uQaWfTwAWp0)
 
-7. Resourcely’s open-source project \- [Cloud Guardrails](https://www.cloudguardrails.com/) 
+7. Resourcely’s open-source project \- [Cloud Guardrails](https://www.cloudguardrails.com/)
