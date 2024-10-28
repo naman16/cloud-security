@@ -27,9 +27,6 @@ Given the benefits of secure IaC templates with built-in security requirements, 
 * Secure Terraform modules that codify these security requirements
 
 ![Automation Overview](images/Automation%20Overview.png)
-![Automation Overview](images/Automation%20Overview.png)
-
-<br>
 
 ### Requirements Generator
 
