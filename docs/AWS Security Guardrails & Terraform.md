@@ -26,6 +26,12 @@ Given the benefits of secure IaC templates with built-in security requirements, 
 * List of security requirements for several commonly used AWS services  
 * Secure Terraform modules that codify these security requirements
 
+![Automation Overview](images/Automation%20Overview.png)
+
+<br>
+<br>
+<br>
+
 ### Requirements Generator
 
 The Requirements Generator (requirements-generator.py) is a Python script that consolidates and enhances AWS service security requirements from multiple scanning tools ([Checkov](https://www.checkov.io/5.Policy%20Index/terraform.html) and [Prowler](https://github.com/prowler-cloud/prowler)). The script leverages Anthropic’s Claude 3.5 Sonnet model through AWS Bedrock and through prompt engineering, aims to transform the security requirements from these distinct sources into comprehensive, well-structured guidelines that engineers can easily understand and implement. Below are the key features that I have tried to implement:
