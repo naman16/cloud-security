@@ -21,7 +21,7 @@ In summary, organizations invest significant resources in scanning and monitorin
 
 ## Solution Overview
 
-Given the benefits of secure IaC templates with built-in security requirements, below is a high-level overview of automation that leverages Artificial Intelligence (AI) to develop:
+Given the benefits of secure IaC templates with built-in security requirements, below is a high-level overview of automation ([**source code here**](https://github.com/naman16/AWS-Security-Guardrails-TF) that leverages Artificial Intelligence (AI) to develop:
 
 * List of security requirements for several commonly used AWS services  
 * Secure Terraform modules that codify these security requirements
