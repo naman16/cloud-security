@@ -29,8 +29,6 @@ Given the benefits of secure IaC templates with built-in security requirements, 
 ![Automation Overview](images/Automation%20Overview.png)
 
 <br>
-<br>
-<br>
 
 ### Requirements Generator
 
