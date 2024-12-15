@@ -13,8 +13,8 @@ AWS Organization Policies are a critical feature for managing and governing mult
 There are 2 types of AWS Organization Policies:
 
 * [Authorization Policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_authorization_policies.html): Authorization policies provide the ability to centrally define and enforce the maximum available permissions for principals and resources within your AWS Organizations. The 2 types of Authorization Policies are:  
-  * [Service Control Policies (SCPs)](#service-control-policies-\(scps\)): SCPs allow you to centrally define and enforce maximum available permissions for principals (IAM users, root users, and roles) within your AWS Organizations.   
-  * [Resource Control Policies (RCPs)](#resource-control-policies-\(rcps\)): RCPs allow you to centrally define and enforce the maximum available permissions for resources within your AWS Organizations.   
+  * [Service Control Policies (SCPs)](#service-control-policies-scps): SCPs allow you to centrally define and enforce maximum available permissions for principals (IAM users, root users, and roles) within your AWS Organizations.   
+  * [Resource Control Policies (RCPs)](#resource-control-policies-rcps): RCPs allow you to centrally define and enforce the maximum available permissions for resources within your AWS Organizations.   
 * [Management Policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_management_policies.html): Management policies provide the ability to centrally define and enforce configurations on services and resources within your AWS Organizations. The different types of Management Policies are:  
   * Declarative Policies: Declarative policies allow you to centrally define and enforce baseline configuration of resources within your AWS Organizations.  
   * Backup Policies: Backup policies allow you to centrally manage backups for resources within your AWS Organizations.   
