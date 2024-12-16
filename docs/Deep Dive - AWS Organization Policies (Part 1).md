@@ -101,8 +101,7 @@ The flowchart below provides a high-level overview of how access decisions are m
     ]
 }
 ```
--
-      * **Example**: Prevent high-risk roles from changes except when made by whitelisted admin roles.
+- **Example**: Prevent high-risk roles from changes except when made by whitelisted admin roles.
 
 ```
 {
