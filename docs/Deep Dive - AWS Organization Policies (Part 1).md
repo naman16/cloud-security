@@ -162,7 +162,7 @@ The flowchart below provides a high-level overview of how access decisions are m
       - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
       - Never apply SCPs directly to the root OUs before testing in lower/non-production accounts/OUs.          
 
-## SCP Reference Materials
+### SCP Reference Materials
 
 Documentation, Blog Posts, and Videos:
 
@@ -198,28 +198,36 @@ The introduction of Resource Control Policies (RCPs) by AWS addresses critical s
 ### RCP Applicability Scope
 
 - RCPs apply only to resources managed by member accounts within your organization. They do not apply to resources that reside outside your organization.  
-        - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
+  - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
+
 - Unlike SCPs, which only apply to IAM principals within your organization, RCPs apply to principals external to your organization when they try to access resources within your organization.  
-        - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.  
-- RCPs apply to the following AWS services:
-        - Amazon S3
-        - AWS Key Management Service (KMS)
-              - However, RCPs do not apply to AWS-managed KMS keys as those are managed and used by AWS services on your behalf.
-        - AWS Secrets Manager
-        - Amazon SQS   
-        - AWS Security Token Service (STS) 
+  - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.  
+
+- RCPs apply to the following AWS services:  
+  - Amazon S3  
+  - AWS Key Management Service (KMS)  
+    - However, RCPs do not apply to AWS-managed KMS keys as those are managed and used by AWS services on your behalf.  
+  - AWS Secrets Manager  
+  - Amazon SQS  
+  - AWS Security Token Service (STS)  
+
 - RCPs do not apply to resources within the management account. However, they do apply to resources within delegated admin accounts.  
+
 - RCPs cannot be used to restrict access to service-linked roles.
 
 ### RCP Permission Evaluation Logic
 
 - The permissions for a resource are restricted by the RCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at any parent level (root, OUs, or resource’s account), the action cannot be performed on the resource, even if the resource owner attaches a resource-based policy that allows full access to the principal.  
+
 - When a principal makes a request to access a resource within an account governed by an RCP, the RCP becomes part of the policy evaluation logic to determine whether the action is permitted. This applies regardless of whether the requesting principal belongs to the same organization or an external account.  
+
 - Since RCPs do not grant permissions, IAM principals must still be explicitly granted access via IAM policies. If an IAM principal lacks appropriate IAM permissions, they cannot perform the actions, even if an RCP allows those actions on the resource.  
+
 - If permissions boundaries are present, access must be allowed by all three mechanisms—RCPs, permission boundaries, and IAM policies—to perform the action.
 
-The below flowchart provides a high-level overview of how access decisions are made when RCPs are enabled:  
+The flowchart below provides a high-level overview of how access decisions are made when RCPs are enabled:  
 ![Permissions Evaluation Logic - RCPs](images/Permissions%20Evaluation%20Logic%20-%20RCPs.png)
+
 
 ### RCP Development and Testing
 
