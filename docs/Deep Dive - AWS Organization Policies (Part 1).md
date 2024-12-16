@@ -66,7 +66,7 @@ The flowchart below provides a high-level overview of how access decisions are m
 ## SCP Development and Testing
 
 - Use "Deny" statements to enforce baseline security controls that you want to apply across your entire organization.
-      - **Example**: Prevent member accounts from leaving your organization.
+  - **Example**: Prevent member accounts from leaving your organization.
 
 ```json
 {
@@ -82,87 +82,86 @@ The flowchart below provides a high-level overview of how access decisions are m
     ]
 }
 
-- Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.
-      - **Example**: Block all S3 actions if the requests are not made using secure transport protocol (HTTPS). 
-```
-  {
-      "Version": "2012-10-17",
-      "Statement": [
-          {
-              "Effect": "Deny",
-              "Action": "s3:*",
-              "Resource": "*",
-              "Condition": {
-                  "Bool": {
-                      "aws:SecureTransport": "false"
-                  }
-              }
-          }
-      ]
-  }
-```
 
-      - **Example**: Prevent high-risk roles from changes except when made by whitelisted admin roles. 
-```
-  {
-      "Version": "2012-10-17",
-      "Statement": [
-          {
-              "Sid": "DenyAccessWithException",
-              "Effect": "Deny",
-              "Action": [
-                  "iam:AttachRolePolicy",
-                  "iam:DeleteRole",
-                  "iam:DeleteRolePermissionsBoundary",
-                  "iam:DeleteRolePolicy",
-                  "iam:DetachRolePolicy",
-                  "iam:PutRolePermissionsBoundary",
-                  "iam:PutRolePolicy",
-                  "iam:UpdateAssumeRolePolicy",
-                  "iam:UpdateRole",
-                  "iam:UpdateRoleDescription"
-              ],
-              "Resource": [
-                  "arn:aws:iam::*:role/<role to protect from unauthorized changes>"
-              ],
-              "Condition": {
-                  "ArnNotLike": {
-                      "aws:PrincipalARN":"arn:aws:iam::*:role/<approved admin that can make changes>"
-                  }
-              }
-          }
-      ]
-  }
-```
+- Use "Deny" statements with conditions to manage exceptions or enforce certain specific controls.
+  - **Example**: Block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Deny",
+            "Action": "s3:*",
+            "Resource": "*",
+            "Condition": {
+                "Bool": {
+                    "aws:SecureTransport": "false"
+                }
+            }
+        }
+    ]
+}
 
 
-- By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful in removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), at any level within the organization, as you can inadvertently end up locking yourself out.
-      - **Example**: Access should only be granted to approved services (S3, EC2, DynamoDB) and all other service access should be blocked. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
-```
-     {
-     "Version": "2012-10-17",
-         "Statement": [
-             {
-                 "Effect": "Allow",
-                 "Action": [
-                     "s3:*",
-                     "ec2:*",
-                     "dynamodb:*",
-                     "organizations:*"
-                 ],
-                 "Resource": "*"
-             }
-         ]
-     }
-```
+  - **Example**: Prevent high-risk roles from changes except when made by whitelisted admin roles.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DenyAccessWithException",
+            "Effect": "Deny",
+            "Action": [
+                "iam:AttachRolePolicy",
+                "iam:DeleteRole",
+                "iam:DeleteRolePermissionsBoundary",
+                "iam:DeleteRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:PutRolePermissionsBoundary",
+                "iam:PutRolePolicy",
+                "iam:UpdateAssumeRolePolicy",
+                "iam:UpdateRole",
+                "iam:UpdateRoleDescription"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:role/<role to protect from unauthorized changes>"
+            ],
+            "Condition": {
+                "ArnNotLike": {
+                    "aws:PrincipalARN": "arn:aws:iam::*:role/<approved admin that can make changes>"
+                }
+            }
+        }
+    ]
+}
+
+- By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful when removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), as you can inadvertently end up locking yourself out.
+  - **Example**: Access should only be granted to approved services (S3, EC2, DynamoDB), and all other service access should be blocked. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*",
+                "ec2:*",
+                "dynamodb:*",
+                "organizations:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
 
 - AWS currently does not have any features or mechanisms to run SCPs in audit-mode to monitor the behavior and ascertain that SCPs won’t inadvertently cause disruptions.  
   - Leverage [service last accessed data in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html) to determine which services are in use versus not and then use this insight to develop SCPs.  
   - SCPs should be deployed to non-production accounts/OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts/OUs.  
   - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.  
-  - Never apply SCPs directly to the root OUs before testing in lower/non-production accounts/OUs.  
-
----
+  - Never apply SCPs directly to the root OUs before testing in lower/non-production accounts/OUs.
 
 ### SCP Reference Materials
 
@@ -177,9 +176,7 @@ The flowchart below provides a high-level overview of how access decisions are m
 - [Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
 - [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
 - [Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)  
-- [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)  
-
----
+- [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)
 
 #### Example Policies
 
