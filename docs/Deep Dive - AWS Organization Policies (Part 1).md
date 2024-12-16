@@ -137,9 +137,9 @@ The below flowchart provides a high-level overview on how access decisions are m
 
 * By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions.  
   * Be careful in removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), at any level within the organization, as you can inadvertently end up locking yourself out.  
-  * For example, Only services \- S3, EC2, and DynamoDB are approved for use.  
+  * For example, Only services \- S3, EC2, and DynamoDB are approved for use.
 
-*  When using “Allow” statements:
+* When using “Allow” statements:
   * the “Resource” element can only have “\*”
   * “Condition” elements are not applicable  
 
