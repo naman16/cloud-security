@@ -110,38 +110,36 @@ The below flowchart provides a high-level overview on how access decisions are m
 
   * For example, you want to prevent high-risk roles from changes except when made by whitelisted admin roles. 
     ```json
-    {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "DenyAccessWithException",
-                "Effect": "Deny",
-                "Action": [
-                    "iam:AttachRolePolicy",
-                    "iam:DeleteRole",
-                    "iam:DeleteRolePermissionsBoundary",
-                    "iam:DeleteRolePolicy",
-                    "iam:DetachRolePolicy",
-                    "iam:PutRolePermissionsBoundary",
-                    "iam:PutRolePolicy",
-                    "iam:UpdateAssumeRolePolicy",
-                    "iam:UpdateRole",
-                    "iam:UpdateRoleDescription"
-                ],
-                "Resource": [
-                    "arn:aws:iam::*:role/<role to protect from unauthorized changes>"
-                ],
-                "Condition": {
-                    "ArnNotLike": {
-                        "aws:PrincipalARN":"arn:aws:iam::*:role/<approved admin that can make changes>"
-                    }
-                }
-            }
-        ]
-    }
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Sid": "DenyAccessWithException",
+                  "Effect": "Deny",
+                  "Action": [
+                      "iam:AttachRolePolicy",
+                      "iam:DeleteRole",
+                      "iam:DeleteRolePermissionsBoundary",
+                      "iam:DeleteRolePolicy",
+                      "iam:DetachRolePolicy",
+                      "iam:PutRolePermissionsBoundary",
+                      "iam:PutRolePolicy",
+                      "iam:UpdateAssumeRolePolicy",
+                      "iam:UpdateRole",
+                      "iam:UpdateRoleDescription"
+                  ],
+                  "Resource": [
+                      "arn:aws:iam::*:role/<role to protect from unauthorized changes>"
+                  ],
+                  "Condition": {
+                      "ArnNotLike": {
+                          "aws:PrincipalARN":"arn:aws:iam::*:role/<approved admin that can make changes>"
+                      }
+                  }
+              }
+          ]
+      }
     
-
-
 
 * By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful in removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), at any level within the organization, as you can inadvertently end up locking yourself out.
        * For example, you want to only provide accessed to approved services (S3, EC2, DynamoDB) and block all other services. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
