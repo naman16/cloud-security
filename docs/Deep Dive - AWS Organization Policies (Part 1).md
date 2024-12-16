@@ -156,37 +156,41 @@ The flowchart below provides a high-level overview of how access decisions are m
      }
 ```
 
-* AWS currently does not have any features or mechanisms to run SCPs in audit-mode to monitor the behavior and ascertain that SCPs won’t inadvertently cause disruptions.  
-       * Leverage [service last accessed data in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html) to determine which services are in use v/s not and then use this insight to develop SCPs.   
-       * SCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts / OUs.   
-       * Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy”. Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.  
-       * Never apply SCPs directly to the root OUs before testing in lower / non-production accounts / OUs. 
+- AWS currently does not have any features or mechanisms to run SCPs in audit-mode to monitor the behavior and ascertain that SCPs won’t inadvertently cause disruptions.  
+  - Leverage [service last accessed data in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html) to determine which services are in use versus not and then use this insight to develop SCPs.  
+  - SCPs should be deployed to non-production accounts/OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts/OUs.  
+  - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.  
+  - Never apply SCPs directly to the root OUs before testing in lower/non-production accounts/OUs.  
+
+---
 
 ### SCP Reference Materials
 
-#### Documentation, Blog Posts, and Videos:
+#### Documentation, Blog Posts, and Videos
 
-* [Codify your best practices using service control policies: Part 1](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/)  
-* [Codify your best practices using service control policies: Part 2](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/)   
-* [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)
-* [SummitRoute - AWS SCP Best Practices](https://summitroute.com/blog/2020/03/25/aws_scp_best_practices/#two-person-rule-concept/)  
-* [ScaleSec \-  Understanding AWS Service Control Policies](https://scalesec.com/blog/understanding-aws-service-control-policies/)   
-* [How to use AWS Organizations to simplify security at enormous scale](https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/)  
-* [Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
-* [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
-* [Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)  
-* [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)
-       
+- [Codify your best practices using service control policies: Part 1](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/)  
+- [Codify your best practices using service control policies: Part 2](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/)  
+- [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
+- [SummitRoute - AWS SCP Best Practices](https://summitroute.com/blog/2020/03/25/aws_scp_best_practices/#two-person-rule-concept/)  
+- [ScaleSec - Understanding AWS Service Control Policies](https://scalesec.com/blog/understanding-aws-service-control-policies/)  
+- [How to use AWS Organizations to simplify security at enormous scale](https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/)  
+- [Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
+- [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
+- [Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)  
+- [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)  
+
+---
+
 #### Example Policies
 
-* [AWS documentation containing SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html)  
-* [AWS Samples \- Service Control Policy Examples](https://github.com/aws-samples/service-control-policy-examples)  
-* Vendor / Open Source Projects for SCPs:  
-    * [ScaleSec \- Example SCPs](https://github.com/ScaleSec/terraform_aws_scp)  
-    * [PrimeHarbor \- Example SCPs](https://github.com/primeharbor/aws-service-control-policies/tree/main)  
-    * [ASecureCloud \- Example SCPs](https://asecure.cloud/l/scp/)  
-    * [CloudPosse \- Example SCPs](https://github.com/cloudposse/terraform-aws-service-control-policies/tree/main/catalog)  
-    * [Salesforce’s Allowlister](https://github.com/salesforce/aws-allowlister) \- Creates SCP that only allow AWS services that are compliant with preferred compliance frameworks (e.g., PCI, HIPAA, HITRUST, FedRamp High, FedRamp Moderate)
+- [AWS documentation containing SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html)  
+- [AWS Samples - Service Control Policy Examples](https://github.com/aws-samples/service-control-policy-examples)  
+- Vendor / Open Source Projects for SCPs:  
+  - [ScaleSec - Example SCPs](https://github.com/ScaleSec/terraform_aws_scp)  
+  - [PrimeHarbor - Example SCPs](https://github.com/primeharbor/aws-service-control-policies/tree/main)  
+  - [ASecureCloud - Example SCPs](https://asecure.cloud/l/scp/)  
+  - [CloudPosse - Example SCPs](https://github.com/cloudposse/terraform-aws-service-control-policies/tree/main/catalog)  
+  - [Salesforce’s Allowlister](https://github.com/salesforce/aws-allowlister) - Creates SCPs that only allow AWS services compliant with preferred compliance frameworks (e.g., PCI, HIPAA, HITRUST, FedRamp High, FedRamp Moderate).
 
 ## Resource Control Policies (RCPs)
 
