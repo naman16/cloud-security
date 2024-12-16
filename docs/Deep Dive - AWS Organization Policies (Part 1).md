@@ -85,9 +85,7 @@ The below flowchart provides a high-level overview on how access decisions are m
         ]
     }
   ```
-<be>
-<be>
-<be>
+
 * Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls. 
   * For example, you want to block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
   ```
@@ -107,9 +105,7 @@ The below flowchart provides a high-level overview on how access decisions are m
         ]
     }
   ```
-<be>
-<be>
-<be>
+
   * For example, you want to prevent high-risk roles from changes except when made by whitelisted admin roles. 
     ```
       {
