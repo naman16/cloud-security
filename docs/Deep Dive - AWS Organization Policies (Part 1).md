@@ -72,7 +72,6 @@ The below flowchart provides a high-level overview on how access decisions are m
 * Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.  
   * For example, you want to prevent the member accounts from leaving your organization.
   ```
-  json
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -86,13 +85,12 @@ The below flowchart provides a high-level overview on how access decisions are m
         ]
     }
   ```
-
-
-
+<be>
+<be>
+<be>
 * Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls. 
   * For example, you want to block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
   ```
-  json
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -108,12 +106,12 @@ The below flowchart provides a high-level overview on how access decisions are m
             }
         ]
     }
-  ```    
-
- 
+  ```
+<be>
+<be>
+<be>
   * For example, you want to prevent high-risk roles from changes except when made by whitelisted admin roles. 
     ```
-    json
       {
           "Version": "2012-10-17",
           "Statement": [
@@ -144,11 +142,12 @@ The below flowchart provides a high-level overview on how access decisions are m
           ]
       }
     ```
-
+<be>
+<be>
+<be>
 * By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful in removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), at any level within the organization, as you can inadvertently end up locking yourself out.
     * For example, you want to only provide accessed to approved services (S3, EC2, DynamoDB) and block all other services. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
       ```
-      json
            {
            "Version": "2012-10-17",
                "Statement": [
@@ -165,7 +164,9 @@ The below flowchart provides a high-level overview on how access decisions are m
                ]
            }
       ```
-
+<be>
+<be>
+<be>
 * AWS currently does not have any features or mechanisms to run SCPs in audit-mode to monitor the behavior and ascertain that SCPs won’t inadvertently cause disruptions.  
    * Leverage [service last accessed data in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html) to determine which services are in use v/s not and then use this insight to develop SCPs.   
    * SCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts / OUs.   
