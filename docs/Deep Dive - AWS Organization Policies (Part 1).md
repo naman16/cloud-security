@@ -66,8 +66,8 @@ The flowchart below provides a high-level overview of how access decisions are m
 
 ## SCP Development and Testing
 
-- Use "Deny" statements to enforce baseline security controls that you want to apply across your entire organization.
-        - **Example**: Prevent member accounts from leaving your organization.
+- Use "Deny" statements to enforce baseline security controls that you want to apply across your entire organization.  
+      - **Example**: Prevent member accounts from leaving your organization.
 
 ```
 {
@@ -84,8 +84,8 @@ The flowchart below provides a high-level overview of how access decisions are m
 }
 ```
 
-- Use "Deny" statements with conditions to manage exceptions or enforce certain specific controls.
-        - **Example**: Block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
+- Use "Deny" statements with conditions to manage exceptions or enforce certain specific controls.  
+      - **Example**: Block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
 
 ```
 {
@@ -105,7 +105,7 @@ The flowchart below provides a high-level overview of how access decisions are m
 }
 ```
 
-        - **Example**: Prevent high-risk roles from changes except when made by whitelisted admin roles.
+      - **Example**: Prevent high-risk roles from changes except when made by whitelisted admin roles.
 
 ```
 {
@@ -139,9 +139,9 @@ The flowchart below provides a high-level overview of how access decisions are m
 }
 ```
 
+- By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful when removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), as you can inadvertently end up locking yourself out.  
+      - **Example**: Access should only be granted to approved services (S3, EC2, DynamoDB), and all other service access should be blocked. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
 
-- By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful when removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), as you can inadvertently end up locking yourself out.
-            - **Example**: Access should only be granted to approved services (S3, EC2, DynamoDB), and all other service access should be blocked. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
 ```
 {
     "Version": "2012-10-17",
@@ -159,11 +159,12 @@ The flowchart below provides a high-level overview of how access decisions are m
     ]
 }
 ```
+
 - AWS currently does not have any features or mechanisms to run SCPs in audit-mode to monitor the behavior and ascertain that SCPs won’t inadvertently cause disruptions.  
-        - Leverage [service last accessed data in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html) to determine which services are in use versus not and then use this insight to develop SCPs.  
-        - SCPs should be deployed to non-production accounts/OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts/OUs.  
-        - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.  
-        - Never apply SCPs directly to the root OUs before testing in lower/non-production accounts/OUs.  
+      - Leverage [service last accessed data in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html) to determine which services are in use versus not and then use this insight to develop SCPs.  
+      - SCPs should be deployed to non-production accounts/OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts/OUs.
+      - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
+      - Never apply SCPs directly to the root OUs before testing in lower/non-production accounts/OUs.          
 
 ### SCP Reference Materials
 
@@ -183,13 +184,14 @@ The flowchart below provides a high-level overview of how access decisions are m
 #### Example Policies
 
 - [AWS documentation containing SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html)  
-- [AWS Samples - Service Control Policy Examples](https://github.com/aws-samples/service-control-policy-examples)  
+- [AWS Samples - Service Control Policy Examples](https://github.com/aws-samples/service-control-policy-examples)
 - Vendor / Open Source Projects for SCPs:  
-        - [ScaleSec - Example SCPs](https://github.com/ScaleSec/terraform_aws_scp)  
-        - [PrimeHarbor - Example SCPs](https://github.com/primeharbor/aws-service-control-policies/tree/main)  
-        - [ASecureCloud - Example SCPs](https://asecure.cloud/l/scp/)  
-        - [CloudPosse - Example SCPs](https://github.com/cloudposse/terraform-aws-service-control-policies/tree/main/catalog)  
-        - [Salesforce’s Allowlister](https://github.com/salesforce/aws-allowlister) - Creates SCPs that only allow AWS services compliant with preferred compliance frameworks (e.g., PCI, HIPAA, HITRUST, FedRamp High, FedRamp Moderate).  
+      - [ScaleSec - Example SCPs](https://github.com/ScaleSec/terraform_aws_scp)     
+      - [ScaleSec - Example SCPs](https://github.com/ScaleSec/terraform_aws_scp)  
+      - [PrimeHarbor - Example SCPs](https://github.com/primeharbor/aws-service-control-policies/tree/main)  
+      - [ASecureCloud - Example SCPs](https://asecure.cloud/l/scp/)  
+      - [CloudPosse - Example SCPs](https://github.com/cloudposse/terraform-aws-service-control-policies/tree/main/catalog)  
+      - [Salesforce’s Allowlister](https://github.com/salesforce/aws-allowlister) - Creates SCPs that only allow AWS services compliant with preferred compliance frameworks (e.g., PCI, HIPAA, HITRUST, FedRamp High, FedRamp Moderate).  
 
 ## Resource Control Policies (RCPs)
 
