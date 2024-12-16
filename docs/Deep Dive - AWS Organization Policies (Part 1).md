@@ -27,9 +27,6 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 
 ## Service Control Policies (SCPs)
 
-| Does not affect Management account | Maximum size of policy document - 5120 characters | Maximum number that can be attached to a root, OU, or account - 5 |
-|------------------------------------|---------------------------------------------------|------------------------------------------------------------------|
-
 [SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within AWS Organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:
 
 ## SCP Applicability Scope
@@ -195,37 +192,34 @@ The flowchart below provides a high-level overview of how access decisions are m
 
 ## Resource Control Policies (RCPs)
 
-| **Does not affect Management account** | **Maximum size of policy document - 5120 characters** | **Maximum number that can be attached to a root, OU, or account - 5** |
-|----------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
-
-The introduction of Resource Control Policies (RCPs) by AWS addresses critical security challenges inherent in cloud environments. While Service Control Policies (SCPs) effectively set permission boundaries for IAM principals within an organization, they do not govern resource-based policies. This limitation can lead to unintended access if resource policies are misconfigured, as SCPs cannot restrict permissions granted through resource-based policies. Managing these resource policies individually across a sprawling infrastructure is complex and burdensome for security teams. RCPs mitigate this issue by enabling centralized enforcement of access controls directly on resources across all member accounts within an AWS Organization. 
+The introduction of Resource Control Policies (RCPs) by AWS addresses critical security challenges inherent in cloud environments. While Service Control Policies (SCPs) effectively set permission boundaries for IAM principals within an organization, they do not govern resource-based policies. This limitation can lead to unintended access if resource policies are misconfigured, as SCPs cannot restrict permissions granted through resource-based policies. Managing these resource policies individually across a sprawling infrastructure is complex and burdensome for security teams. RCPs mitigate this issue by enabling centralized enforcement of access controls directly on resources across all member accounts within an AWS Organization.
 
 [RCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available for the resources within your AWS Organization. By design, RCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that resources within AWS Organizations can only be accessed within these predefined access boundaries. Unlike SCPs, which are principal-centric, RCPs are resource-centric, focusing on controlling access to AWS resources. Below are key considerations when implementing RCPs:
 
 ### RCP Applicability Scope
 
-* RCPs apply only to resources managed by member accounts within your organization. They do not apply to resources that reside outside your organization.  
-  * For example, if an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
-* Unlike SCPs which only apply to IAM principals within your organization, RCPs apply to principals, external to your organization, when they try to access resources within your organization.  
-  * For example, if an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.    
-* RCPs apply to the following AWS services:  
-  * Amazon S3  
-  * AWS Key Management Service (KMS)  
-    * However, RCPs do not apply to AWS managed KMS keys as those are managed and used by AWS services on your behalf.   
-  * AWS Secrets Manager  
-  * Amazon SQS  
-  * AWS Security Token Service (STS)  
-* RCPs do not apply to resources within the management account. However, they do apply to resources within delegated admin accounts.  
-* RCPs cannot be used to restrict access to service-linked roles.
+- RCPs apply only to resources managed by member accounts within your organization. They do not apply to resources that reside outside your organization.  
+  - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
+- Unlike SCPs, which only apply to IAM principals within your organization, RCPs apply to principals external to your organization when they try to access resources within your organization.  
+  - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.  
+- RCPs apply to the following AWS services:  
+        - Amazon S3  
+        - AWS Key Management Service (KMS) 
+          - However, RCPs do not apply to AWS-managed KMS keys as those are managed and used by AWS services on your behalf.  
+        - AWS Secrets Manager 
+        - Amazon SQS  
+        - AWS Security Token Service (STS)  
+- RCPs do not apply to resources within the management account. However, they do apply to resources within delegated admin accounts.  
+- RCPs cannot be used to restrict access to service-linked roles.
 
 ### RCP Permission Evaluation Logic
 
-* The permissions for a resource are restricted by the RCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at any parent level (root or OUs or resource’s account), the action cannot be performed on the resource, even if the resource owner attaches a resource-based policy that allows full access to the principal.  
-* When a principal makes a request to access a resource within an account governed by an RCP, the RCP becomes part of the policy evaluation logic to determine whether the action is permitted. This applies regardless of whether the requesting principal belongs to the same organization or an external account.  
-* Since RCPs do not grant permissions, IAM principals must still be explicitly granted access via IAM policies. If an IAM principal lacks appropriate IAM permissions, they cannot perform the actions, even if an RCP allows those actions on the resource.  
-* If permissions boundaries are present, access must be allowed by all 3 \- RCPs, permission boundaries, and IAM policies \- to perform the action.
+- The permissions for a resource are restricted by the RCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at any parent level (root, OUs, or resource’s account), the action cannot be performed on the resource, even if the resource owner attaches a resource-based policy that allows full access to the principal.  
+- When a principal makes a request to access a resource within an account governed by an RCP, the RCP becomes part of the policy evaluation logic to determine whether the action is permitted. This applies regardless of whether the requesting principal belongs to the same organization or an external account.  
+- Since RCPs do not grant permissions, IAM principals must still be explicitly granted access via IAM policies. If an IAM principal lacks appropriate IAM permissions, they cannot perform the actions, even if an RCP allows those actions on the resource.  
+- If permissions boundaries are present, access must be allowed by all three mechanisms—RCPs, permission boundaries, and IAM policies—to perform the action.
 
-The below flowchart provides a high-level overview on how access decisions are made when RCPs are enabled:  
+The below flowchart provides a high-level overview of how access decisions are made when RCPs are enabled:  
 ![Permissions Evaluation Logic - RCPs](images/Permissions%20Evaluation%20Logic%20-%20RCPs.png)
 
 ### RCP Development and Testing
@@ -244,52 +238,51 @@ The below flowchart provides a high-level overview on how access decisions are m
 
 #### Documentation, Blog Posts, and Videos
 
-  * [Introducing resource control policies (RCPs), a new type of authorization policy in AWS Organizations](https://aws.amazon.com/blogs/aws/introducing-resource-control-policies-rcps-a-new-authorization-policy/)  
-  * [Wiz \- How to use AWS Resource Control Policies](https://www.wiz.io/blog/how-to-use-aws-resource-control-policies)
+- [Introducing resource control policies (RCPs), a new type of authorization policy in AWS Organizations](https://aws.amazon.com/blogs/aws/introducing-resource-control-policies-rcps-a-new-authorization-policy/)  
+- [Wiz - How to use AWS Resource Control Policies](https://www.wiz.io/blog/how-to-use-aws-resource-control-policies)
 
 #### Example Policies
 
-  * [AWS documentation containing RCP policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps_examples.html)  
-  * [AWS Samples \- RCP Policy Examples](https://github.com/aws-samples/data-perimeter-policy-examples/tree/main/resource_control_policies)  
-    
+- [AWS documentation containing RCP policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps_examples.html)  
+- [AWS Samples - RCP Policy Examples](https://github.com/aws-samples/data-perimeter-policy-examples/tree/main/resource_control_policies)
+
 
 ## Access Evaluation Logic
 
-The overall access evaluation logic that AWS applies to determine whether action is allowed or not is much more complex than what is described above for RCPs and SCPs. The above visuals were only to conceptually walkthrough how these Authorization Policies function conceptually to help enforce access controls and security requirements. There are other types of policies as well in the flow (e.g., resource policies, session policies, IAM policies, etc.), that increase the complexity in how access is evaluated. The below [flowchart from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic_policy-eval-denyallow.html) is a comprehensive walkthrough of how access decisions are made: 
-
+The overall access evaluation logic that AWS applies to determine whether an action is allowed or not is much more complex than what is described above for RCPs and SCPs. The above visuals were only to conceptually walk through how these Authorization Policies function conceptually to help enforce access controls and security requirements. There are other types of policies as well in the flow (e.g., resource policies, session policies, IAM policies, etc.), that increase the complexity in how access is evaluated. The below [flowchart from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic_policy-eval-denyallow.html) is a comprehensive walkthrough of how access decisions are made:  
 ![Complete Access Evaluation Logic](images/Complete%20Access%20Evaluation%20Logic.png)
 
 ## Data Perimeter
 
-When SCPs and RCPs are used together, they establish the foundational components for a [data perimeter](https://aws.amazon.com/identity/data-perimeters-on-aws/) within your organization. At a high-level, data perimeter involves 3 key components \- trusted identities, trusted resources, expected networks \- that work together to ensure that only whitelisted identities, from known networks can access your organization’s resources.
+When SCPs and RCPs are used together, they establish the foundational components for a [data perimeter](https://aws.amazon.com/identity/data-perimeters-on-aws/) within your organization. At a high level, a data perimeter involves three key components—**trusted identities**, **trusted resources**, and **expected networks**—that work together to ensure that only whitelisted identities from known networks can access your organization’s resources.
 
-* **Trusted Identities**: IAM principals within the organization, explicitly trusted external accounts, or AWS on your behalf.  
-* **Trusted Resources**: Resources within your organization, resources belonging to explicitly trusted external accounts, or resources that AWS uses on your behalf.  
-* **Expected Networks**: Your VPCs, on-premise networks, or networks that AWS uses on your behalf.
+- **Trusted Identities**: IAM principals within the organization, explicitly trusted external accounts, or AWS on your behalf.  
+- **Trusted Resources**: Resources within your organization, resources belonging to explicitly trusted external accounts, or resources that AWS uses on your behalf.  
+- **Expected Networks**: Your VPCs, on-premise networks, or networks that AWS uses on your behalf.
 
-The below diagram from AWS provides a high-level overview of the concept of data perimeters:
+The diagram below from AWS provides a high-level overview of the concept of data perimeters:
 
 ![Data Perimeter Overview](images/Data%20Perimeter%20Overview.png)
 
-By ONLY implementing SCPs and RCPs, you will have an accelerated start on the journey of setting up a data perimeter, however, it's not going to give you the full setup that covers all the services. For a robust implementation of data perimeter, there are other key elements (and arguably the harder ones to implement), listed below, that will need to be in place as well:
+By implementing **only** SCPs and RCPs, you will have an accelerated start on the journey of setting up a data perimeter. However, this alone will not give you a full setup that covers all services. For a robust implementation of a data perimeter, there are other key elements (and arguably the harder ones to implement), listed below, that also need to be in place:
 
-* [**Resource Policies**](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html)**:** Not all AWS services that support resource policies are also supported by RCPs (e.g., SNS, ECR, API Gateways). As such, for these services, resource policies will still need to be applied in a decentralized manner on a per resource / per account basis, thereby significantly increasing the complexity of extending the perimeter to these additional services.   
-* [**VPC Endpoint Policies**](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html#vpc-endpoint-policies-interface)**:** To enforce that identities and resources are accessed from **expected networks**, AWS recommends using VPC endpoint policies to achieve the same. However, similar to resource policies, configuring and managing VPC endpoints at scale in a decentralized manner, across all the VPCs in your organization, for every supported AWS service, is complex and requires significant effort.   
-  * AWS’ whitepaper on secure and scalable networking architecture has a section that talks about a pattern for implementing centralized VPC endpoints in a hub and spoke model. The whitepaper can be found [here](https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-access-to-vpc-private-endpoints.html).
+- [**Resource Policies**](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html): Not all AWS services that support resource policies are also supported by RCPs (e.g., SNS, ECR, API Gateways). For these services, resource policies will still need to be applied in a decentralized manner on a per-resource or per-account basis, significantly increasing the complexity of extending the perimeter to these additional services.  
+- [**VPC Endpoint Policies**](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html#vpc-endpoint-policies-interface): To enforce that identities and resources are accessed from **expected networks**, AWS recommends using VPC endpoint policies. However, like resource policies, configuring and managing VPC endpoints at scale across all the VPCs in your organization for every supported AWS service is complex and requires significant effort.  
+  - AWS’s whitepaper on secure and scalable networking architecture includes a section on implementing centralized VPC endpoints in a hub-and-spoke model. The whitepaper can be found [here](https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-access-to-vpc-private-endpoints.html).
 
-The below flowchart outlines how the different policies, along with the requisite IAM condition keys, work together to achieve a secure data perimeter:
+The flowchart below outlines how the different policies, along with the requisite IAM condition keys, work together to achieve a secure data perimeter:
 
 ![Data Perimeter - How To](images/Data%20Perimeter%20-%20How%20To.png)
 
 ### Data Perimeter Reference Materials
 
-### Documentation, Blog Posts, and Videos
+#### Documentation, Blog Posts, and Videos
 
-  * [Blog Post Series: Establishing a Data Perimeter on AWS](https://aws.amazon.com/identity/data-perimeters-blog-post-series/)  
-  * [AWS re:Inforce 2024 \- Establishing a data perimeter on AWS, featuring Capital One (IAM305)](https://www.youtube.com/watch?v=te8GsFjB6Fw)
+- [Blog Post Series: Establishing a Data Perimeter on AWS](https://aws.amazon.com/identity/data-perimeters-blog-post-series/)  
+- [AWS re:Inforce 2024 - Establishing a data perimeter on AWS, featuring Capital One (IAM305)](https://www.youtube.com/watch?v=te8GsFjB6Fw)
 
-### Example Policies
-  * [AWS Samples \- Data Perimeter Policy Examples](https://github.com/aws-samples/data-perimeter-policy-examples)
+#### Example Policies
 
+- [AWS Samples - Data Perimeter Policy Examples](https://github.com/aws-samples/data-perimeter-policy-examples)
 
 Both SCPs and RCPs are integral for managing permissions and enforcing governance across multi-account AWS environments. While SCPs set permission guardrails for IAM principals, RCPs set permission guardrails for resources. In addition to defining maximum available permissions for principals and resources within your organization, SCPs and RCPs can also be used to enforce security controls (e.g., preventing users from uploading unencrypted S3 objects, enforcing IMDSv2 for EC2 instances, or requiring HTTPS connections to resources). Together, these policies provide a centralized capability to enforce access controls and security requirements consistently across your entire organization at scale.
