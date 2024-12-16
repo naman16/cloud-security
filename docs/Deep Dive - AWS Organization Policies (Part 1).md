@@ -198,16 +198,16 @@ The introduction of Resource Control Policies (RCPs) by AWS addresses critical s
 ### RCP Applicability Scope
 
 - RCPs apply only to resources managed by member accounts within your organization. They do not apply to resources that reside outside your organization.  
-  - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
+        - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
 - Unlike SCPs, which only apply to IAM principals within your organization, RCPs apply to principals external to your organization when they try to access resources within your organization.  
-  - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.  
-- RCPs apply to the following AWS services:  
-        - Amazon S3  
-        - AWS Key Management Service (KMS) 
-          - However, RCPs do not apply to AWS-managed KMS keys as those are managed and used by AWS services on your behalf.  
-        - AWS Secrets Manager 
-        - Amazon SQS  
-        - AWS Security Token Service (STS)  
+        - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.  
+- RCPs apply to the following AWS services:
+        - Amazon S3
+        - AWS Key Management Service (KMS)
+              - However, RCPs do not apply to AWS-managed KMS keys as those are managed and used by AWS services on your behalf.
+        - AWS Secrets Manager
+        - Amazon SQS   
+        - AWS Security Token Service (STS) 
 - RCPs do not apply to resources within the management account. However, they do apply to resources within delegated admin accounts.  
 - RCPs cannot be used to restrict access to service-linked roles.
 
