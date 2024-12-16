@@ -191,7 +191,7 @@ By ONLY implementing SCPs and RCPs, you will have an accelerated start on the jo
 
 The below flowchart outlines how the different policies, along with the requisite IAM condition keys, work together to achieve a secure data perimeter:
 
-![Data Perimeter - How To](images/Data%20Perimeter%20How%20To.png)
+![Data Perimeter - How To](images/Data%20Perimeter%20-%20How%20To.png)
 
 Additional Reference Materials for Data Perimeters:
 
