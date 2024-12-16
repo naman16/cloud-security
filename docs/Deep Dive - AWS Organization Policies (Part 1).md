@@ -65,9 +65,75 @@ The below flowchart provides a high-level overview on how access decisions are m
 **Developing and Testing of SCPs:**
 
 * Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.  
-  * For example, you want to prevent the member accounts from leaving your organization.  
+  * For example, you want to prevent the member accounts from leaving your organization.
+  ```json
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Deny",
+                "Action": [
+                    "organizations:LeaveOrganization"
+                ],
+                "Resource": "*"
+            }
+        ]
+    }
+    ```
+
 * Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.  
-  * For example, you want to block all S3 actions if the requests are not made using secure transport protocol (HTTPS).   
+  * For example, you want to block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
+  ```json
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Deny",
+                "Action": "s3:*",
+                "Resource": "*",
+                "Condition": {
+                    "Bool": {
+                        "aws:SecureTransport": "false"
+                    }
+                }
+            }
+        ]
+    }
+    ```
+
+  * For example, you want to prevent high-risk roles from changes except when made by whitelisted admin roles. 
+    ```json
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "DenyAccessWithException",
+                "Effect": "Deny",
+                "Action": [
+                    "iam:AttachRolePolicy",
+                    "iam:DeleteRole",
+                    "iam:DeleteRolePermissionsBoundary",
+                    "iam:DeleteRolePolicy",
+                    "iam:DetachRolePolicy",
+                    "iam:PutRolePermissionsBoundary",
+                    "iam:PutRolePolicy",
+                    "iam:UpdateAssumeRolePolicy",
+                    "iam:UpdateRole",
+                    "iam:UpdateRoleDescription"
+                ],
+                "Resource": [
+                    "arn:aws:iam::*:role/<role to protect from unauthorized changes>"
+                ],
+                "Condition": {
+                    "ArnNotLike": {
+                        "aws:PrincipalARN":"arn:aws:iam::*:role/<approved admin that can make changes>"
+                    }
+                }
+            }
+        ]
+    }
+    ```
+
 * By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions.  
   * Be careful in removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), at any level within the organization, as you can inadvertently end up locking yourself out.  
   * For example, Only services \- S3, EC2, and DynamoDB are approved for use.  
@@ -86,7 +152,8 @@ Documentation, Blog Posts, and Videos:
 
 * [Codify your best practices using service control policies: Part 1](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/)  
 * [Codify your best practices using service control policies: Part 2](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/)   
-* [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
+* [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)
+* [SummitRoute - AWS SCP Best Practices](https://summitroute.com/blog/2020/03/25/aws_scp_best_practices/#two-person-rule-concept/)  
 * [ScaleSec \-  Understanding AWS Service Control Policies](https://scalesec.com/blog/understanding-aws-service-control-policies/)   
 * [How to use AWS Organizations to simplify security at enormous scale](https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/)  
 * [Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
@@ -191,7 +258,7 @@ By ONLY implementing SCPs and RCPs, you will have an accelerated start on the jo
 
 The below flowchart outlines how the different policies, along with the requisite IAM condition keys, work together to achieve a secure data perimeter:
 
-![Data Perimeter - How To](images/Data%20Perimeter%20-%20How%20To.png)
+![Data Perimeter - How To](images/Data%20Perimeter%20How%20To.png)
 
 Additional Reference Materials for Data Perimeters:
 
