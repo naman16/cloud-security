@@ -198,18 +198,18 @@ The introduction of Resource Control Policies (RCPs) by AWS addresses critical s
 ### RCP Applicability Scope
 
 - RCPs apply only to resources managed by member accounts within your organization. They do not apply to resources that reside outside your organization.  
-  - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
+        - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
 
 - Unlike SCPs, which only apply to IAM principals within your organization, RCPs apply to principals external to your organization when they try to access resources within your organization.  
-  - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.  
+        - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.  
 
 - RCPs apply to the following AWS services:  
-  - Amazon S3  
-  - AWS Key Management Service (KMS)  
-    - However, RCPs do not apply to AWS-managed KMS keys as those are managed and used by AWS services on your behalf.  
-  - AWS Secrets Manager  
-  - Amazon SQS  
-  - AWS Security Token Service (STS)  
+        - Amazon S3  
+        - AWS Key Management Service (KMS)  
+          - However, RCPs do not apply to AWS-managed KMS keys as those are managed and used by AWS services on your behalf.  
+        - AWS Secrets Manager  
+        - Amazon SQS  
+        - AWS Security Token Service (STS)  
 
 - RCPs do not apply to resources within the management account. However, they do apply to resources within delegated admin accounts.  
 
@@ -218,11 +218,8 @@ The introduction of Resource Control Policies (RCPs) by AWS addresses critical s
 ### RCP Permission Evaluation Logic
 
 - The permissions for a resource are restricted by the RCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at any parent level (root, OUs, or resource’s account), the action cannot be performed on the resource, even if the resource owner attaches a resource-based policy that allows full access to the principal.  
-
 - When a principal makes a request to access a resource within an account governed by an RCP, the RCP becomes part of the policy evaluation logic to determine whether the action is permitted. This applies regardless of whether the requesting principal belongs to the same organization or an external account.  
-
 - Since RCPs do not grant permissions, IAM principals must still be explicitly granted access via IAM policies. If an IAM principal lacks appropriate IAM permissions, they cannot perform the actions, even if an RCP allows those actions on the resource.  
-
 - If permissions boundaries are present, access must be allowed by all three mechanisms—RCPs, permission boundaries, and IAM policies—to perform the action.
 
 The flowchart below provides a high-level overview of how access decisions are made when RCPs are enabled:  
@@ -275,7 +272,7 @@ By implementing **only** SCPs and RCPs, you will have an accelerated start on th
 
 - [**Resource Policies**](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html): Not all AWS services that support resource policies are also supported by RCPs (e.g., SNS, ECR, API Gateways). For these services, resource policies will still need to be applied in a decentralized manner on a per-resource or per-account basis, significantly increasing the complexity of extending the perimeter to these additional services.  
 - [**VPC Endpoint Policies**](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html#vpc-endpoint-policies-interface): To enforce that identities and resources are accessed from **expected networks**, AWS recommends using VPC endpoint policies. However, like resource policies, configuring and managing VPC endpoints at scale across all the VPCs in your organization for every supported AWS service is complex and requires significant effort.  
-  - AWS’s whitepaper on secure and scalable networking architecture includes a section on implementing centralized VPC endpoints in a hub-and-spoke model. The whitepaper can be found [here](https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-access-to-vpc-private-endpoints.html).
+        - AWS’s whitepaper on secure and scalable networking architecture includes a section on implementing centralized VPC endpoints in a hub-and-spoke model. The whitepaper can be found [here](https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-access-to-vpc-private-endpoints.html).
 
 The flowchart below outlines how the different policies, along with the requisite IAM condition keys, work together to achieve a secure data perimeter:
 
