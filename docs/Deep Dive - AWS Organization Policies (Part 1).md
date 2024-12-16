@@ -33,47 +33,44 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 
 [SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within AWS Organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:
 
-### SCP Applicability Scope
+## SCP Applicability Scope
 
-* SCPs apply only to IAM principals managed by member accounts within your organization. They do not apply to IAM principals that reside outside your organization.  
-* SCPs do not apply to policies attached directly to resources (i.e. resource policies).
-       * For example, if an Amazon S3 bucket owned by account A has a bucket policy granting access to users in account B (outside the organization), the SCP attached to account A does not apply to those external users or the resource policies.
-  
-* SCPs do not apply to [service-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create-service-linked-role.html).  
-* SCPs do not apply to IAM principals within the management account. However, they do apply to IAM principals within delegated admin accounts.
-  
-* SCPs do not apply to the below tasks/entities:
-        * Register for the Enterprise support plan as the root user.  
-        * Provide trusted signer functionality for CloudFront private content.  
-        * Configure reverse DNS for an Amazon Lightsail email server and Amazon EC2 instance as the root user.
-        * Tasks on some AWS-related services:  
-              * Alexa Top Sites.  
-              * Alexa Web Information Service.  
-              * Amazon Mechanical Turk.  
-              * Amazon Product Marketing API.
+- SCPs apply only to IAM principals managed by member accounts within your organization. They do not apply to IAM principals that reside outside your organization.
+- SCPs do not apply to policies attached directly to resources (i.e., resource policies).  
+  - For example, if an Amazon S3 bucket owned by account A has a bucket policy granting access to users in account B (outside the organization), the SCP attached to account A does not apply to those external users or the resource policies.
+- SCPs do not apply to [service-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create-service-linked-role.html).
+- SCPs do not apply to IAM principals within the management account. However, they do apply to IAM principals within delegated admin accounts.
+- SCPs do not apply to the following tasks/entities:
+  - Register for the Enterprise support plan as the root user.
+  - Provide trusted signer functionality for CloudFront private content.
+  - Configure reverse DNS for an Amazon Lightsail email server and Amazon EC2 instance as the root user.
+  - Tasks on some AWS-related services:
+    - Alexa Top Sites.
+    - Alexa Web Information Service.
+    - Amazon Mechanical Turk.
+    - Amazon Product Marketing API.
 
-### SCP Permission Evaluation Logic
+## SCP Permission Evaluation Logic
 
-* SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed in the SCP, it is implicitly denied, regardless of IAM permissions.  
-* The permissions of accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root or OU or the principal’s account), the action cannot be performed by the principal even if has admin access.  
+- SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed in the SCP, it is implicitly denied, regardless of IAM permissions.
+- The permissions of accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.
+- SCPs do not grant permissions; hence, IAM principals need to be assigned permissions explicitly via IAM policies.
+  - For example, if access to a service (e.g., S3) is “Allowed” via SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.
+- If an IAM principal has an IAM policy that grants access to an action:
+  - And the SCP also explicitly allows the action, then the principal can perform that action.
+  - But if the SCP does not explicitly allow or denies the action, the principal cannot perform that action.
+- If permissions boundaries are present, access must be allowed by all three mechanisms—SCPs, permission boundaries, and IAM policies—to perform the action.
 
-* SCPs do not grant permissions; hence, IAM principals need to be assigned permissions explicitly via IAM policies.  
-        * For example, If access to a service (S3) is “Allowed” via the SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.   
+The flowchart below provides a high-level overview of how access decisions are made when SCPs are enabled:
 
-* If an IAM principal has an IAM policy that grants access to an action:  
-        * and the SCP also explicitly allows the action, then the principal can perform that action  
-        * but the SCP does not explicitly allow or is denied, then the principal cannot perform that action  
-
-* If permissions boundaries are present, access must be allowed by all 3 \- SCPs, permission boundaries, and IAM policies \- to perform the action.
-
-The below flowchart provides a high-level overview on how access decisions are made when SCPs are enabled:  
 ![Permissions Evaluation Logic - SCPs](images/Permissions%20Evaluation%20Logic%20-%20SCPs.png)
 
-### SCP Development and Testing
+## SCP Development and Testing
 
-* Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.  
-      * For example, you want to prevent the member accounts from leaving your organization.
-```
+- Use "Deny" statements to enforce baseline security controls that you want to apply across your entire organization.
+  - **Example**: Prevent member accounts from leaving your organization.
+
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -86,7 +83,6 @@ The below flowchart provides a high-level overview on how access decisions are m
         }
     ]
 }
-```
 
 * Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls. 
       * For example, you want to block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
