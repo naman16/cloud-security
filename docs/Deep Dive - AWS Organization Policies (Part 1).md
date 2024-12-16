@@ -65,7 +65,7 @@ The below flowchart provides a high-level overview on how access decisions are m
 **Developing and Testing of SCPs:**
 
 * Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.  
-  * For example, you want to prevent the member accounts from leaving the AWS Organization.   
+  * For example, you want to prevent the member accounts from leaving your organization.  
 * Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.  
   * For example, you want to block all S3 actions if the requests are not made using secure transport protocol (HTTPS).   
 * By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions.  
@@ -183,16 +183,15 @@ The below diagram from AWS provides a high-level overview of the concept of data
 
 ![Data Perimeter Overview](images/Data%20Perimeter%20Overview.png)
 
-In an effective data perimeter implementation, actions will only be permitted when all the 3 components evaluate to true. The below table from AWS outlines the 2 objectives that must be true for each of the 3 components:
+By ONLY implementing SCPs and RCPs, you will have an accelerated start on the journey of setting up a data perimeter, however, it's not going to give you the full setup that covers all the services. For a robust implementation of data perimeter, there are other key elements (and arguably the harder ones to implement), listed below, that will need to be in place as well:
 
-| Authorization component  | Objective  |
-| :---- | :---- |
-| Only trusted identities | Ensure that my resources can be accessed by only trusted identities.  |
-|  | Ensure that only trusted identities are allowed from my networks.  |
-| Only trusted resources  | Ensure that my identities can access only trusted resources.  |
-|  | Ensure that only trusted resources can be accessed from my networks.  |
-| Only expected networks  | Ensure that my identities can access resources only from expected networks.  |
-|  | Ensure my resources can only be accessed from expected networks. |
+* [**Resource Policies**](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html)**:** Not all AWS services that support resource policies are also supported by RCPs (e.g., SNS, ECR, API Gateways). As such, for these services, resource policies will still need to be applied in a decentralized manner on a per resource / per account basis, thereby significantly increasing the complexity of extending the perimeter to these additional services.   
+* [**VPC Endpoint Policies**](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html#vpc-endpoint-policies-interface)**:** To enforce that identities and resources are accessed from **expected networks**, AWS recommends using VPC endpoint policies to achieve the same. However, similar to resource policies, configuring and managing VPC endpoints at scale in a decentralized manner, across all the VPCs in your organization, for every supported AWS service, is complex and requires significant effort.   
+  * AWS’ whitepaper on secure and scalable networking architecture has a section that talks about a pattern for implementing centralized VPC endpoints in a hub and spoke model. The whitepaper can be found [here](https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-access-to-vpc-private-endpoints.html).
+
+The below flowchart outlines how the different policies, along with the requisite IAM condition keys, work together to achieve a secure data perimeter:
+
+![Data Perimeter - How To](images/Data%20Perimeter%20How%20To.png)
 
 Additional Reference Materials for Data Perimeters:
 
