@@ -29,7 +29,7 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 
 [SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within AWS Organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:
 
-## SCP Applicability Scope
+### SCP Applicability Scope
 
 - SCPs apply only to IAM principals managed by member accounts within your organization. They do not apply to IAM principals that reside outside your organization.
 - SCPs do not apply to policies attached directly to resources (i.e., resource policies).  
@@ -46,7 +46,7 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
         - Amazon Mechanical Turk.
         - Amazon Product Marketing API.
 
-## SCP Permission Evaluation Logic
+### SCP Permission Evaluation Logic
 
 - SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed in the SCP, it is implicitly denied, regardless of IAM permissions.
 - The permissions of accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.
@@ -61,7 +61,7 @@ The flowchart below provides a high-level overview of how access decisions are m
 
 ![Permissions Evaluation Logic - SCPs](images/Permissions%20Evaluation%20Logic%20-%20SCPs.png)
 
-## SCP Development and Testing
+### SCP Development and Testing
 
 - Use "Deny" statements to enforce baseline security controls that you want to apply across your entire organization.  
       - **Example**: Prevent member accounts from leaving your organization.
@@ -162,9 +162,9 @@ The flowchart below provides a high-level overview of how access decisions are m
       - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
       - Never apply SCPs directly to the root OUs before testing in lower/non-production accounts/OUs.          
 
-### SCP Reference Materials
+## SCP Reference Materials
 
-#### Documentation, Blog Posts, and Videos
+Documentation, Blog Posts, and Videos:
 
 - [Codify your best practices using service control policies: Part 1](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/)  
 - [Codify your best practices using service control policies: Part 2](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/)  
@@ -177,7 +177,7 @@ The flowchart below provides a high-level overview of how access decisions are m
 - [Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)  
 - [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)
 
-#### Example Policies
+Example Policies:
 
 - [AWS documentation containing SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html)  
 - [AWS Samples - Service Control Policy Examples](https://github.com/aws-samples/service-control-policy-examples)
@@ -235,12 +235,12 @@ The below flowchart provides a high-level overview of how access decisions are m
 
 ### RCP Reference Materials
 
-#### Documentation, Blog Posts, and Videos
+Documentation, Blog Posts, and Videos:
 
 - [Introducing resource control policies (RCPs), a new type of authorization policy in AWS Organizations](https://aws.amazon.com/blogs/aws/introducing-resource-control-policies-rcps-a-new-authorization-policy/)  
 - [Wiz - How to use AWS Resource Control Policies](https://www.wiz.io/blog/how-to-use-aws-resource-control-policies)
 
-#### Example Policies
+Example Policies:
 
 - [AWS documentation containing RCP policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps_examples.html)  
 - [AWS Samples - RCP Policy Examples](https://github.com/aws-samples/data-perimeter-policy-examples/tree/main/resource_control_policies)
@@ -275,12 +275,12 @@ The flowchart below outlines how the different policies, along with the requisit
 
 ### Data Perimeter Reference Materials
 
-#### Documentation, Blog Posts, and Videos
+Documentation, Blog Posts, and Videos:
 
 - [Blog Post Series: Establishing a Data Perimeter on AWS](https://aws.amazon.com/identity/data-perimeters-blog-post-series/)  
 - [AWS re:Inforce 2024 - Establishing a data perimeter on AWS, featuring Capital One (IAM305)](https://www.youtube.com/watch?v=te8GsFjB6Fw)
 
-#### Example Policies
+Example Policies:
 
 - [AWS Samples - Data Perimeter Policy Examples](https://github.com/aws-samples/data-perimeter-policy-examples)
 
