@@ -27,7 +27,8 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 
 ## Service Control Policies (SCPs)
 
-| Does not affect Management account | Maximum size of policy document \- 5120 characters | Maximum number that can be attached to a root, OU, or account \- 5 |
+| Does not affect Management account | Maximum size of policy document - 5120 characters | Maximum number that can be attached to a root, OU, or account - 5 |
+|------------------------------------|---------------------------------------------------|------------------------------------------------------------------|
 
 [SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within AWS Organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:
 
@@ -192,7 +193,8 @@ The flowchart below provides a high-level overview of how access decisions are m
 
 ## Resource Control Policies (RCPs)
 
-| Does not affect Management account | Maximum size of policy document \- 5120 characters | Maximum number that can be attached to a root, OU, or account \- 5 |
+| **Does not affect Management account** | **Maximum size of policy document - 5120 characters** | **Maximum number that can be attached to a root, OU, or account - 5** |
+|----------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
 
 The introduction of Resource Control Policies (RCPs) by AWS addresses critical security challenges inherent in cloud environments. While Service Control Policies (SCPs) effectively set permission boundaries for IAM principals within an organization, they do not govern resource-based policies. This limitation can lead to unintended access if resource policies are misconfigured, as SCPs cannot restrict permissions granted through resource-based policies. Managing these resource policies individually across a sprawling infrastructure is complex and burdensome for security teams. RCPs mitigate this issue by enabling centralized enforcement of access controls directly on resources across all member accounts within an AWS Organization. 
 
