@@ -82,8 +82,8 @@ The flowchart below provides a high-level overview of how access decisions are m
     ]
 }
 
-* Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls. 
-      * For example, you want to block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
+- Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.
+      - **Example**: Block all S3 actions if the requests are not made using secure transport protocol (HTTPS). 
 ```
   {
       "Version": "2012-10-17",
@@ -102,7 +102,7 @@ The flowchart below provides a high-level overview of how access decisions are m
   }
 ```
 
-      * For example, you want to prevent high-risk roles from changes except when made by whitelisted admin roles. 
+      - **Example**: Prevent high-risk roles from changes except when made by whitelisted admin roles. 
 ```
   {
       "Version": "2012-10-17",
@@ -135,8 +135,9 @@ The flowchart below provides a high-level overview of how access decisions are m
   }
 ```
 
-* By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful in removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), at any level within the organization, as you can inadvertently end up locking yourself out.
-          * For example, you want to only provide accessed to approved services (S3, EC2, DynamoDB) and block all other services. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
+
+- By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful in removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), at any level within the organization, as you can inadvertently end up locking yourself out.
+      - **Example**: Access should only be granted to approved services (S3, EC2, DynamoDB) and all other service access should be blocked. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
 ```
      {
      "Version": "2012-10-17",
