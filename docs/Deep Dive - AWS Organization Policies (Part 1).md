@@ -84,9 +84,10 @@ The below flowchart provides a high-level overview on how access decisions are m
             }
         ]
     }
- 
 
-* Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.  
+
+* Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.
+* Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls. 
   * For example, you want to block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
   ```json
     {
