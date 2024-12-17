@@ -221,23 +221,17 @@ Example Policies:
 
 ## Resource Control Policies (RCPs)
 
-The introduction of Resource Control Policies (RCPs) by AWS addresses critical security challenges inherent in cloud environments. While Service Control Policies (SCPs) effectively set permission boundaries for IAM principals within an organization, they do not govern resource-based policies. This limitation can lead to unintended access if resource policies are misconfigured, as SCPs cannot restrict permissions granted through resource-based policies. Managing these resource policies individually across a sprawling infrastructure is complex and burdensome for security teams. RCPs mitigate this issue by enabling centralized enforcement of access controls directly on resources across all member accounts within an AWS Organization.
+The introduction of Resource Control Policies (RCPs) by AWS addresses critical security challenges inherent in cloud environments. While Service Control Policies (SCPs) effectively set permission boundaries for IAM principals within an organization, they do not govern resource-based policies. This limitation can lead to unintended / backdoor access if resource policies are misconfigured, as SCPs cannot restrict permissions granted through resource-based policies. Additionally, managing these resource policies individually across a sprawling infrastructure is complex and burdensome for security teams. RCPs mitigate this issue by enabling centralized enforcement of access controls directly on resources across all member accounts within an AWS Organization.
 
 [RCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available for the resources within your AWS Organization. By design, RCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that resources within AWS Organizations can only be accessed within these predefined access boundaries. Unlike SCPs, which are principal-centric, RCPs are resource-centric, focusing on controlling access to AWS resources. Below are key considerations when implementing RCPs:
 
 ### RCP Applicability Scope
-
-
-- SCPs apply only to IAM principals managed by member accounts within your organization. They do not apply to IAM principals that reside outside your organization.
-- SCPs do not apply to policies attached directly to resources (i.e., resource policies).  
-      - For example, if an Amazon S3 bucket owned by account A has a bucket policy granting access to users in account B (outside the organization), the SCP attached to account A does not apply to those external users or the
-
  
 - RCPs apply only to resources managed by member accounts within your organization. They do not apply to resources that reside outside your organization.  
       - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
 
 - Unlike SCPs, which only apply to IAM principals within your organization, RCPs apply to principals external to your organization when they try to access resources within your organization.  
-      - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the S3 bucket.  
+      - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the principal when trying to access the S3 bucket.  
 
 - RCPs apply to the following AWS services:  
       - Amazon S3  
