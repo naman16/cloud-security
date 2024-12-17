@@ -71,6 +71,7 @@ The flowchart below provides a high-level overview of how access decisions are m
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Sid": "DenyLeavingOrganization",
             "Effect": "Deny",
             "Action": [
                 "organizations:LeaveOrganization"
@@ -82,23 +83,57 @@ The flowchart below provides a high-level overview of how access decisions are m
 ```
 
 - Use "Deny" statements with conditions to manage exceptions or enforce certain specific controls.  
-      - **Example**: Block all S3 actions if the requests are not made using secure transport protocol (HTTPS).
+      - **Example**: Enforce the use of IMDSv2 for EC2 instances. 
 
 ```
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Deny",
-            "Action": "s3:*",
-            "Resource": "*",
-            "Condition": {
-                "Bool": {
-                    "aws:SecureTransport": "false"
-                }
-            }
-        }
-    ]
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "DenyRunInstancesWithoutIMDSv2",
+			"Effect": "Deny",
+			"Action": "ec2:RunInstances",
+			"Resource": "*",
+			"Condition": {
+				"StringNotEquals": {
+					"ec2:MetadataHttpTokens": "required"
+				}
+			}
+		},
+		{
+			"Sid": "DenyRunInstancesWithHighHopLimit",
+			"Effect": "Deny",
+			"Action": "ec2:RunInstances",
+			"Resource": "*",
+			"Condition": {
+				"NumericGreaterThan": {
+					"ec2:MetadataHttpPutResponseHopLimit": "3"
+				}
+			}
+		},
+		{
+			"Sid": "DenyAllActionsForInsecureRoleDelivery",
+			"Effect": "Deny",
+			"Action": "*",
+			"Resource": "*",
+			"Condition": {
+				"NumericLessThan": {
+					"ec2:RoleDelivery": "2.0"
+				}
+			}
+		},
+		{
+			"Sid": "DenyMetadataOptionsModificationForNonAdmins",
+			"Effect": "Deny",
+			"Action": "ec2:ModifyInstanceMetadataOptions",
+			"Resource": "*",
+			"Condition": {
+				"StringNotLike": {
+					"aws:PrincipalARN": "arn:aws:iam::*:role/ec2-imds-admins"
+				}
+			}
+		}
+	]
 }
 ```
 - **Example**: Prevent high-risk roles from changes except when made by whitelisted admin roles.
@@ -143,6 +178,7 @@ The flowchart below provides a high-level overview of how access decisions are m
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Sid": "AllowApprovedServiceAccess",
             "Effect": "Allow",
             "Action": [
                 "s3:*",
@@ -233,13 +269,69 @@ The flowchart below provides a high-level overview of how access decisions are m
 
 
 ### RCP Development and Testing
-
  
 - Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.  
-      - **Example**: you want to block resource access for principals external to your organization.
+      - **Example**: Block resource access for principals external to the organization.
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "EnforceOrgIdentities",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": [
+                "s3:*",
+                "sqs:*",
+                "kms:*",
+                "secretsmanager:*",
+                "sts:AssumeRole",
+                "sts:DecodeAuthorizationMessage",
+                "sts:GetAccessKeyInfo",
+                "sts:GetFederationToken",
+                "sts:GetServiceBearerToken",
+                "sts:GetSessionToken",
+                "sts:SetContext"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringNotEqualsIfExists": {
+                    "aws:PrincipalOrgID": "<org-id>"
+                }
+            }
+        }
+    ]
+}
+```
  
 - Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.  
-      - **Example**: you want to allow S3 access to only principals in your organization and your known third party accounts.
+      - **Example**: Block all actions if the requests to the services are not made using secure transport protocol (HTTPS). 
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "EnforceSecureTransport",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": [
+                "sts:*",
+                "s3:*",
+                "sqs:*",
+                "secretsmanager:*",
+                "kms:*"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "BoolIfExists": {
+                    "aws:SecureTransport": "false"
+                }
+            }
+        }
+    ]
+}
+```
+
 
 - By default, AWS applies a managed RCP, RCPFullAWSAccess to all entities in the organization, which allow access to pass through RCPs and assure that all your existing IAM permissions continue to operate as they did. This policy cannot be detached.  
  
