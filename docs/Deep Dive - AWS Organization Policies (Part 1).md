@@ -2,19 +2,13 @@
 
 ## Introduction
 
-Today, companies heavily use AWS Organizations or AWS Control Tower for managing their multi-account AWS environments, in alignment with AWS best practices, to meet their business, governance, security, and operational goals. This approach enables efficient grouping of workloads by business units and functions, workload isolation, application of security controls by environment (development, testing, and production), improved management of quotas and service limits, minimized blast radius for IT failures or security breaches, and restricted access to sensitive data. However, while multi-account strategies enhance flexibility, scalability, and security, they also introduce new challenges. Managing accounts at scale \- consistently enforcing security and governance, streamlining operations \- can quickly become complex. This is where [AWS Organization Policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies.html) play a pivotal role, providing a centralized framework to maintain control, enforce guardrails, and ensure governance at scale.
+As organizations scale their cloud infrastructure, managing AWS accounts securely and efficiently becomes both a necessity and a challenge. Today, companies heavily rely on [AWS Organizations](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html) or [AWS Control Tower](https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html) to align their multi-account AWS environments with business, governance, and security best practices. This strategy enables workload isolation, improved quota and resource management, and the enforcement of security controls across environments (development, testing, and production). However, managing AWS accounts at scale introduces complexities — maintaining governance, enforcing guardrails, and streamlining operations across the organization.
 
-AWS Organization Policies are a critical feature for managing and governing multiple AWS accounts in a centralized, scalable, and efficient manner. They are rules applied at the organizational level to manage permissions, enforce compliance, control resource access, and standardize configurations across AWS accounts. Acting as guardrails, these policies ensure that all accounts within an organization operate within defined boundaries, balancing flexibility with governance. Key benefits of implementing AWS Organization Policies include:
-
-* **Centralized Management**: Simplifies governance by allowing administrators to manage multiple accounts from a single location, reducing operational overhead and complexity by applying policies consistently across all accounts.  
-* **Enhanced Security**: Enforces security best practices, protects sensitive resources, and ensures a consistent security posture using least-privilege access controls across your company’s AWS environment.  
-* **Operational Efficiency**: Reduces manual effort by automating governance and policy management while standardizing configurations across accounts to streamline operations.
-
-There are 2 types of AWS Organization Policies:
+This is where [AWS Organization Policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies.html) play a pivotal role. These are rules that are applied at the organizational level for controlling resource access, enforcing security controls, and ensuring standardized configurations across multiple AWS accounts. They ensure that all accounts within an organization operate within these defined boundaries, thereby balancing flexibility with proper governance. There are 2 types of AWS Organization Policies:
 
 - [**Authorization Policies**](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_authorization_policies.html): Authorization policies provide the ability to centrally define and enforce the maximum available permissions for principals and resources within your AWS Organizations. The two types of Authorization Policies are:  
-      - [**Service Control Policies (SCPs)**](#service-control-policies-scps): SCPs allow you to centrally define and enforce maximum available permissions for principals (IAM users, root users, and roles) within your AWS Organizations.  
-      - [**Resource Control Policies (RCPs)**](#resource-control-policies-rcps): RCPs allow you to centrally define and enforce the maximum available permissions for resources within your AWS Organizations.  
+      - [**Service Control Policies (SCPs)**]: SCPs allow you to centrally define and enforce maximum available permissions for principals (IAM users, root users, and roles) within your AWS Organizations.  
+      - [**Resource Control Policies (RCPs)**]: RCPs allow you to centrally define and enforce the maximum available permissions for resources within your AWS Organizations.  
 
 - [**Management Policies**](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_management_policies.html): Management policies provide the ability to centrally define and enforce configurations on services and resources within your AWS Organizations. The different types of Management Policies are:  
       - **Declarative Policies**: Declarative policies allow you to centrally define and enforce baseline configuration of resources within your AWS Organizations.  
@@ -23,11 +17,11 @@ There are 2 types of AWS Organization Policies:
       - **Chatbot Policies**: Chatbot policies allow you to centrally restrict access to resources within your AWS Organizations, from Teams, Slack, etc.  
       - **AI Services Opt-Out Policies**: AI policies allow you to centrally control access to your data and prevent them from being used in development of AWS’ AI services.
 
-In the remainder of this blog (Part 1), I will take a deep-dive into the two types of Authorization Policies: SCPs and RCPs. I will follow this with a subsequent blog (Part 2\) that delves into the various types of Management Policies.
+In the remainder of this blog (Part 1), I will take a deep-dive into the two types of Authorization Policies: SCPs and RCPs. I will follow this with a subsequent blog (Part 2) that delves into the various types of Management Policies.
 
 ## Service Control Policies (SCPs)
 
-[SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within AWS Organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:
+[SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within your organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:
 
 ### SCP Applicability Scope
 
