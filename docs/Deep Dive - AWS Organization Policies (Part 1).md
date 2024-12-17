@@ -374,7 +374,11 @@ The flowchart below outlines how the different policies, along with the requisit
 
 ![Data Perimeter - How To](images/Data%20Perimeter%20-%20How%20To.png)
 
+In conclusion, SCPs and RCPs are an important stride toward building a data perimeter that aligns trusted identities, trusted resources, and expected networks. However, progressing from here to a fully realized data perimeter is a strategic, multi-layered effort that must evolve in lockstep with the complexity of your AWS environments. Achieving this level of control involves deep insights into the inner workings of your AWS environment, including the identity models of each service, the metadata tags that guide resource governance, and the network paths — both on-premises and in the cloud — that support data flows. You must also know exactly which third parties interact with your systems and from which locations, and maintain visibility into how these relationships change over time.
 
+This effort involves incrementally expanding beyond the basics, starting with core AWS services and methodically layering on additional controls for other resources. Over time, it will also require incorporation of resource policies, VPC endpoint policies, and other service-specific measures to tighten the perimeter. Additionally, a well-defined tagging strategy is essential as it enables consistent governance, supports automated guardrails, helps with exceptions management, and simplifies the application of policies across large, dynamic environments. 
+
+Ultimately, implementing a robust data perimeter is a multi-year undertaking that requires time, operational discipline, and organizational buy-in. It relies on strong foundational elements such as granular identity controls, consistent tagging practices, well-managed exceptions, resource governance, and secure network setup. By taking a phased, service-by-service approach and continually refining your controls, you can evolve from a simple perimeter concept into a fully realized data perimeter that safeguards your organization’s critical assets in a complex and ever-evolving AWS landscape.
 
 ### Data Perimeter Reference Materials
 
