@@ -199,14 +199,14 @@ Documentation, Blog Posts, and Videos:
 - [AWS - Codify your best practices using service control policies: Part 1](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/)  
 - [AWS - Codify your best practices using service control policies: Part 2](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/)  
 - [AWS - Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
-- [SummitRoute - AWS SCP Best Practices](https://summitroute.com/blog/2020/03/25/aws_scp_best_practices/#two-person-rule-concept/)  
-- [ScaleSec - Understanding AWS Service Control Policies](https://scalesec.com/blog/understanding-aws-service-control-policies/)  
 - [AWS - How to use AWS Organizations to simplify security at enormous scale](https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/)  
 - [AWS - Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
 - [AWS - Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
 - [AWS - Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)  
 - [AWS - Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)
 - [AWS re:Invent 2024 - Security invariants: From enterprise chaos to cloud order](https://www.youtube.com/watch?v=aljwG4N5a-0)
+- [SummitRoute - AWS SCP Best Practices](https://summitroute.com/blog/2020/03/25/aws_scp_best_practices/#two-person-rule-concept/)  
+- [ScaleSec - Understanding AWS Service Control Policies](https://scalesec.com/blog/understanding-aws-service-control-policies/)  
 
 Example Policies:
 
