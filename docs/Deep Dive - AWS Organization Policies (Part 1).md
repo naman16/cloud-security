@@ -7,8 +7,8 @@ As organizations scale their cloud infrastructure, managing AWS accounts securel
 This is where [AWS Organization Policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies.html) play a pivotal role. These are rules that are applied at the organizational level for controlling resource access, enforcing security controls, and ensuring standardized configurations across multiple AWS accounts. They ensure that all accounts within an organization operate within these defined boundaries, thereby balancing flexibility with proper governance. There are 2 types of AWS Organization Policies:
 
 - [**Authorization Policies**](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_authorization_policies.html): Authorization policies provide the ability to centrally define and enforce the maximum available permissions for principals and resources within your AWS Organizations. The two types of Authorization Policies are:  
-      - [**Service Control Policies (SCPs)**]: SCPs allow you to centrally define and enforce maximum available permissions for principals (IAM users, root users, and roles) within your AWS Organizations.  
-      - [**Resource Control Policies (RCPs)**]: RCPs allow you to centrally define and enforce the maximum available permissions for resources within your AWS Organizations.  
+      - **Service Control Policies (SCPs)**: SCPs allow you to centrally define and enforce maximum available permissions for principals (IAM users, root users, and roles) within your AWS Organizations.  
+      - **Resource Control Policies (RCPs)**: RCPs allow you to centrally define and enforce the maximum available permissions for resources within your AWS Organizations.  
 
 - [**Management Policies**](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_management_policies.html): Management policies provide the ability to centrally define and enforce configurations on services and resources within your AWS Organizations. The different types of Management Policies are:  
       - **Declarative Policies**: Declarative policies allow you to centrally define and enforce baseline configuration of resources within your AWS Organizations.  
@@ -21,7 +21,7 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 
 ## Service Control Policies (SCPs)
 
-[SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within your organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:
+[Service Control Policies (SCPs)](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within your organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:
 
 ### SCP Applicability Scope
 
@@ -43,13 +43,13 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 ### SCP Permission Evaluation Logic
 
 - SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed in the SCP, it is implicitly denied, regardless of IAM permissions.
-- The permissions of accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.
+- The permissions available to principals within accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.
 - SCPs do not grant permissions; hence, IAM principals need to be assigned permissions explicitly via IAM policies.
-      - For example, if access to a service (e.g., S3) is “Allowed” via SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.
+      - **Example:** if access to a service (e.g., S3) is “Allowed” via SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.
 - If an IAM principal has an IAM policy that grants access to an action:
       - And the SCP also explicitly allows the action, then the principal can perform that action.
       - But if the SCP does not explicitly allow or denies the action, the principal cannot perform that action.
-- If permissions boundaries are present, access must be allowed by all three mechanisms—SCPs, permission boundaries, and IAM policies—to perform the action.
+- If permissions boundaries are present, access must be allowed by all three mechanisms — SCPs, permission boundaries, and IAM policies—to perform the action.
 
 The flowchart below provides a high-level overview of how access decisions are made when SCPs are enabled:
 
@@ -190,33 +190,33 @@ The flowchart below provides a high-level overview of how access decisions are m
       - Leverage [service last accessed data in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html) to determine which services are in use versus not and then use this insight to develop SCPs.  
       - SCPs should be deployed to non-production accounts/OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts/OUs.
       - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
-      - Never apply SCPs directly to the root OUs before testing in lower/non-production accounts/OUs.          
+      - Never apply SCPs directly to the root OUs before thoroughly testing in lower/non-production accounts/OUs.          
 
 ### SCP Reference Materials
 
 Documentation, Blog Posts, and Videos:
 
-- [Codify your best practices using service control policies: Part 1](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/)  
-- [Codify your best practices using service control policies: Part 2](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/)  
-- [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
+- [AWS - Codify your best practices using service control policies: Part 1](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/)  
+- [AWS - Codify your best practices using service control policies: Part 2](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/)  
+- [AWS - Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
 - [SummitRoute - AWS SCP Best Practices](https://summitroute.com/blog/2020/03/25/aws_scp_best_practices/#two-person-rule-concept/)  
 - [ScaleSec - Understanding AWS Service Control Policies](https://scalesec.com/blog/understanding-aws-service-control-policies/)  
-- [How to use AWS Organizations to simplify security at enormous scale](https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/)  
-- [Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
-- [Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
-- [Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)  
-- [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)
+- [AWS - How to use AWS Organizations to simplify security at enormous scale](https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/)  
+- [AWS - Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
+- [AWS - Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
+- [AWS - Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)  
+- [AWS - Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)
+- [AWS re:Invent 2024 - Security invariants: From enterprise chaos to cloud order](https://www.youtube.com/watch?v=aljwG4N5a-0)
 
 Example Policies:
 
-- [AWS documentation containing SCPs](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html)  
-- [AWS Samples - Service Control Policy Examples](https://github.com/aws-samples/service-control-policy-examples)
+- [AWS - SCPs included within AWS documentation](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html)  
+- [AWS - GitHub repository containing examples of SCPs](https://github.com/aws-samples/service-control-policy-examples)
 - Vendor / Open Source Projects for SCPs:  
-      - [ScaleSec - Example SCPs](https://github.com/ScaleSec/terraform_aws_scp)     
-      - [ScaleSec - Example SCPs](https://github.com/ScaleSec/terraform_aws_scp)  
-      - [PrimeHarbor - Example SCPs](https://github.com/primeharbor/aws-service-control-policies/tree/main)  
-      - [ASecureCloud - Example SCPs](https://asecure.cloud/l/scp/)  
-      - [CloudPosse - Example SCPs](https://github.com/cloudposse/terraform-aws-service-control-policies/tree/main/catalog)  
+      - [ScaleSec](https://github.com/ScaleSec/terraform_aws_scp)
+      - [PrimeHarbor](https://github.com/primeharbor/aws-service-control-policies/tree/main)  
+      - [ASecureCloud](https://asecure.cloud/l/scp/)  
+      - [CloudPosse](https://github.com/cloudposse/terraform-aws-service-control-policies/tree/main/catalog)  
       - [Salesforce’s Allowlister](https://github.com/salesforce/aws-allowlister) - Creates SCPs that only allow AWS services compliant with preferred compliance frameworks (e.g., PCI, HIPAA, HITRUST, FedRamp High, FedRamp Moderate).  
 
 ## Resource Control Policies (RCPs)
