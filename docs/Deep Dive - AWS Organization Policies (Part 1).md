@@ -234,15 +234,19 @@ The flowchart below provides a high-level overview of how access decisions are m
 
 ### RCP Development and Testing
 
-* Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.  
-  * For example, you want to block resource access for principals external to your organization.   
-* Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.  
-  * For example, you want to allow S3 access to only principals in your organization and your known third party accounts.   
-* By default, AWS applies a managed RCP, RCPFullAWSAccess to all entities in the organization, which allow access to pass through RCPs and assure that all your existing IAM permissions continue to operate as they did. This policy cannot be detached.  
-* AWS currently does not have any features or mechanisms to run RCPs in audit-mode to monitor the behavior and ascertain that RCPs won’t inadvertently cause disruptions.  
-  * RCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts / OUs.   
-  * Enable CloudTrail logging and query for access denied events. Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.  
-  * Never apply RCPs directly to the root OUs before testing in lower / non-production accounts / OUs.
+ 
+- Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.  
+      - **Example**: you want to block resource access for principals external to your organization.
+ 
+- Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.  
+      - **Example**: you want to allow S3 access to only principals in your organization and your known third party accounts.
+
+- By default, AWS applies a managed RCP, RCPFullAWSAccess to all entities in the organization, which allow access to pass through RCPs and assure that all your existing IAM permissions continue to operate as they did. This policy cannot be detached.  
+ 
+- AWS currently does not have any features or mechanisms to run RCPs in audit-mode to monitor the behavior and ascertain that RCPs won’t inadvertently cause disruptions.  
+      - RCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts / OUs.
+      - Enable CloudTrail logging and query for access denied events. Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
+      - Never apply RCPs directly to the root OUs before testing in lower / non-production accounts / OUs.
 
 ### RCP Reference Materials
 
