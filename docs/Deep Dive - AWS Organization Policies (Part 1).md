@@ -42,7 +42,7 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 
 ### SCP Permission Evaluation Logic
 
-- SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed in the SCP, it is implicitly denied, regardless of IAM permissions.
+- SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed by the SCP, it is implicitly denied, regardless of IAM permissions.
       - Hence, when SCPs are initially enabled, AWS attaches the [`FullAWSAccess`](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess) policy at the root level of your organization. This ensures that all services and actions remain initially allowed until more restrictive policies are applied.
 - The permissions available to principals within accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.
 - SCPs do not grant permissions; hence, IAM principals need to be assigned permissions explicitly via IAM policies.
