@@ -43,6 +43,7 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 ### SCP Permission Evaluation Logic
 
 - SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed in the SCP, it is implicitly denied, regardless of IAM permissions.
+      - Hence, when SCPs are initially enabled, AWS attaches the [`FullAWSAccess`](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess) SCP at the root level of your organization. This ensures that all services and actions remain initially allowed until more restrictive policies are applied.
 - The permissions available to principals within accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.
 - SCPs do not grant permissions; hence, IAM principals need to be assigned permissions explicitly via IAM policies.
       - **Example:** if access to a service (e.g., S3) is “Allowed” via SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.
@@ -164,7 +165,7 @@ The flowchart below provides a high-level overview of how access decisions are m
 }
 ```
 
-- By default, AWS applies the managed SCP, [FullAWSAccess](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful when removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), as you can inadvertently end up locking yourself out.  
+- By default, AWS applies the managed SCP, `FullAWSAccess`(https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful when removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), as you can inadvertently end up locking yourself out.  
       - **Example**: Access should only be granted to approved services (S3, EC2, DynamoDB), and all other service access should be blocked. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
 
 ```
@@ -247,6 +248,7 @@ The introduction of Resource Control Policies (RCPs) by AWS addresses critical s
 
 ### RCP Permission Evaluation Logic
 
+- By default, when RCPs are enabled, AWS applies a managed RCP, `RCPFullAWSAccess` to all entities (root, OUs, accounts) in the organization, which allow access to pass through RCPs and assure that all your existing IAM permissions continue to operate as they did until more restrictive policies are applied. This policy cannot be detached.
 - The permissions for a resource are restricted by the RCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at any parent level (root, OUs, or resource’s account), the action cannot be performed on the resource, even if the resource owner attaches a resource policy that allows full access to the principal.  
 - When a principal makes a request to access a resource within an account governed by an RCP, the RCP becomes part of the policy evaluation logic to determine whether the action is permitted. This applies regardless of whether the requesting principal belongs to the same organization or an external account.  
 - Since RCPs do not grant permissions, IAM principals must still be explicitly granted access via IAM policies. If an IAM principal lacks appropriate IAM permissions, they cannot perform the actions, even if an RCP allows those actions on the resource.  
@@ -318,10 +320,7 @@ The flowchart below provides a high-level overview of how access decisions are m
         }
     ]
 }
-```
-
-
-- By default, AWS applies a managed RCP, RCPFullAWSAccess to all entities in the organization, which allow access to pass through RCPs and assure that all your existing IAM permissions continue to operate as they did. This policy cannot be detached.  
+```  
  
 - AWS currently does not have any features or mechanisms to run RCPs in audit-mode to monitor the behavior and ascertain that RCPs won’t inadvertently cause disruptions.  
       - RCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts / OUs.
