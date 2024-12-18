@@ -373,9 +373,9 @@ Below is an example to demonstrate access evaluation when `Alice` (principal ins
 | **s3:ListObjects**  | **Allowed**                       | **Allowed**                      |
 
 Below is a visual walkthrough of the above scenario to showcase how access is evaluated to make "Allow" / "Deny" decisions:
-<be>
-<be>
-<be>
+<br>
+<br>
+<br>
 ![Access Evaluation Logic - Example](images/Access%20Evaluation%20Logic%20-%20Example.png)
 
 ## Data Perimeter
