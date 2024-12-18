@@ -199,7 +199,6 @@ Documentation, Blog Posts, and Videos:
 
 - [AWS - Codify your best practices using service control policies: Part 1](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/)  
 - [AWS - Codify your best practices using service control policies: Part 2](https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/)  
-- [AWS - Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
 - [AWS - How to use AWS Organizations to simplify security at enormous scale](https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/)  
 - [AWS - Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
 - [AWS - Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
