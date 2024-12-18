@@ -346,9 +346,8 @@ Example Policies:
 ## Access Evaluation Logic
 
 The overall access evaluation logic that AWS applies to determine whether an action is allowed or not is much more complex than what is described above for RCPs and SCPs. The above visuals only walk through how these Authorization Policies function conceptually to help enforce access controls and security requirements. There are other types of policies as well in the flow (e.g., resource policies, session policies, IAM policies, etc.), that increase the complexity of how access is evaluated. The below [flowchart from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic_policy-eval-denyallow.html) is a comprehensive walkthrough of how access decisions are made:
-<be>
-<be>
-<be>
+<br>
+<br>
 ![Complete Access Evaluation Logic](images/Complete%20Access%20Evaluation%20Logic.png)
 
 Below is an example to demonstrate access evaluation when `Alice` (principal inside the organization) and `Bob` (principal outside the organization) attempt S3 actions (`s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`, and `s3:ListObjects`) on the `example-bucket` under `Account B` (account in the same organization as Alice).
@@ -373,7 +372,6 @@ Below is an example to demonstrate access evaluation when `Alice` (principal ins
 | **s3:ListObjects**  | **Allowed**                       | **Allowed**                      |
 
 Below is a visual walkthrough of the above scenario to showcase how access is evaluated to make "Allow" / "Deny" decisions:
-<br>
 <br>
 <br>
 ![Access Evaluation Logic - Example](images/Access%20Evaluation%20Logic%20-%20Example.png)
