@@ -351,6 +351,33 @@ The overall access evaluation logic that AWS applies to determine whether an act
 <be>
 ![Complete Access Evaluation Logic](images/Complete%20Access%20Evaluation%20Logic.png)
 
+Below is an example to demonstrate access evaluation when `Alice` (principal inside the organization) and `Bob` (principal outside the organization) attempt S3 actions (`s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`, and `s3:ListObjects`) on the `example-bucket` under `Account B` (account in the same organization as Alice).
+
+### **Policies Applied**
+
+| **Hierarchy Level** | **SCP Policies**                          | **RCP Policies**                          | **Description**                                              |
+|----------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------------------------|
+| **Root**            | Allows `s3`, `ec2`, `dynamoDB`, `organizations` | Allows all services                       | Broad access at the root level.                             |
+| **OU: Production**  | Denies `s3:GetObject`                     | Denies `s3:DeleteObject`                  | Restricts `s3:GetObject` and `s3:DeleteObject`.             |
+| **Account B**       | Denies `s3:DeleteObject`                  | Allows access **only** if the principal is from the same organization or Bob's account ID | Restricts `s3:PutObject` and enforces conditional access.   |
+| **Resource Policy** | Allows `s3:*` for all principals          |                                           | Resource-based policy explicitly allows all S3 actions.     |
+
+
+### **Evaluation Results**
+
+| **Action**         | **Alice (Inside Org)**             | **Bob (Outside Org)**            |
+|---------------------|------------------------------------|---------------------------------|
+| **s3:GetObject**    | **Denied** at OU SCP              | **Allowed** at Account RCP       |
+| **s3:PutObject**    | **Denied** at Account RCP         | **Allowed** at Account RCP       |
+| **s3:DeleteObject** | **Denied** at OU RCP              | **Denied** at OU RCP             |
+| **s3:ListObjects**  | **Allowed**                       | **Allowed**                      |
+
+Below is a visual walkthrough of the above scenario to showcase how access is evaluated to make "Allow" / "Deny" decisions:
+<be>
+<be>
+<be>
+![Access Evaluation Logic - Example](images/Access%20Evaluation%20Logic%20-%20Example.png)
+
 ## Data Perimeter
 
 When SCPs and RCPs are used together, they establish the foundational components for a [data perimeter](https://aws.amazon.com/identity/data-perimeters-on-aws/) within your organization. At a high level, a data perimeter involves three key components— trusted identities, trusted resources, and expected networks — that work together to ensure that only whitelisted identities from known networks can access your organization’s resources.
