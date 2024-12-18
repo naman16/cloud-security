@@ -15,7 +15,7 @@ This is where [AWS Organization Policies](https://docs.aws.amazon.com/organizati
       - **Backup Policies**: Backup policies allow you to centrally manage backups for resources within your AWS Organizations.  
       - **Tag Policies**: Tag policies allow you to centrally enforce tagging standards on resources within your AWS Organizations.  
       - **Chatbot Policies**: Chatbot policies allow you to centrally restrict access to resources within your AWS Organizations, from Teams, Slack, etc.  
-      - **AI Services Opt-Out Policies**: AI policies allow you to centrally control access to your data and prevent them from being used in development of AWS’ AI services.
+      - **AI Services Opt-Out Policies**: AI policies allow you to centrally control access to your data and prevent them from being used in the development of AWS’ AI services.
 
 In the remainder of this blog (Part 1), I will take a deep-dive into the two types of Authorization Policies: SCPs and RCPs. I will follow this with a subsequent blog (Part 2) that delves into the various types of Management Policies.
 
@@ -46,10 +46,10 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
       - Hence, when SCPs are initially enabled, AWS attaches the [`FullAWSAccess`](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess) policy at the root level of your organization. This ensures that all services and actions remain initially allowed until more restrictive policies are applied.
 - The permissions available to principals within accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.
 - SCPs do not grant permissions; hence, IAM principals need to be assigned permissions explicitly via IAM policies.
-      - **Example:** if access to a service (e.g., S3) is “Allowed” via SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.
+      - **Example:** If access to a service (e.g., S3) is “Allowed” via SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.
 - If an IAM principal has an IAM policy that grants access to an action:
       - And the SCP also explicitly allows the action, then the principal can perform that action.
-      - But if the SCP does not explicitly allow or denies the action, the principal cannot perform that action.
+      - But if the SCP does not explicitly allow or deny the action, the principal cannot perform that action.
 - If permissions boundaries are present, access must be allowed by all three mechanisms — SCPs, permission boundaries, and IAM policies - to perform the action.
 
 The flowchart below provides a high-level overview of how access decisions are made when SCPs are enabled:
@@ -228,7 +228,7 @@ RCPs are a type of authorization policy that provides you with centralized contr
 ### RCP Applicability Scope
  
 - RCPs apply only to resources managed by member accounts within your organization. They do not apply to resources that reside outside your organization.  
-      - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in account B, then the RCP attached to account A does not apply to the S3 bucket in Account B.  
+      - **Example**: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in Account B, then the RCP attached to Account A does not apply to the S3 bucket in Account B.  
 
 - Unlike SCPs, which only apply to IAM principals within your organization, RCPs apply to principals external to your organization when they try to access resources within your organization.  
       - **Example**: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the principal when trying to access the S3 bucket.  
@@ -322,8 +322,8 @@ The flowchart below provides a high-level overview of how access decisions are m
 ```  
  
 - AWS currently does not have any features or mechanisms to run RCPs in audit-mode to monitor the behavior and ascertain that RCPs won’t inadvertently cause disruptions.  
-      - RCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts / OUs.
-      - Enable CloudTrail logging and query for access denied events. Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
+      - RCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Only once there’s reasonable assurance around the behavior of RCPs can the scope be extended to production accounts / OUs be extended.
+      - Enable CloudTrail logging and query for access denied events. Analyze the log entries to determine that all the denied events are intended and by design, and RCPs are not blocking legitimate actions.
       - Never apply RCPs directly to the root OUs before testing in lower / non-production accounts / OUs.
 - Like SCPs, RCPs have the same quotas and limits - policy size of 5120 characters, and 5 RCPs per entity (root, OUs, accounts). 
 
@@ -345,7 +345,7 @@ Example Policies:
 
 ## Access Evaluation Logic
 
-The overall access evaluation logic that AWS applies to determine whether an action is allowed or not is much more complex than what is described above for RCPs and SCPs. The above visuals were only to walk through how these Authorization Policies function conceptually to help enforce access controls and security requirements. There are other types of policies as well in the flow (e.g., resource policies, session policies, IAM policies, etc.), that increase the complexity in how access is evaluated. The below [flowchart from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic_policy-eval-denyallow.html) is a comprehensive walkthrough of how access decisions are made:
+The overall access evaluation logic that AWS applies to determine whether an action is allowed or not is much more complex than what is described above for RCPs and SCPs. The above visuals only walk through how these Authorization Policies function conceptually to help enforce access controls and security requirements. There are other types of policies as well in the flow (e.g., resource policies, session policies, IAM policies, etc.), that increase the complexity of how access is evaluated. The below [flowchart from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic_policy-eval-denyallow.html) is a comprehensive walkthrough of how access decisions are made:
 <be>
 <be>
 <be>
@@ -375,7 +375,7 @@ The flowchart below outlines how the different policies, along with the requisit
 
 In conclusion, SCPs and RCPs are an important stride toward building a data perimeter that aligns trusted identities, trusted resources, and expected networks. However, progressing from here to a fully realized data perimeter is a strategic, multi-layered effort that must evolve in lockstep with the complexity of your AWS environments. Achieving this level of control involves deep insights into the inner workings of your AWS environment, including the identity models of each service, the metadata tags that guide resource governance, and the network paths — both on-premises and in the cloud — that support data flows. You must also know exactly which third parties interact with your systems and from which locations, and maintain visibility into how these relationships change over time.
 
-This effort involves incrementally expanding beyond the basics, starting with core AWS services and methodically layering on additional controls for other resources. Over time, it will also require incorporation of resource policies, VPC endpoint policies, and other service-specific measures to tighten the perimeter. Additionally, a well-defined tagging strategy is essential as it enables consistent governance, supports automated guardrails, helps with exceptions management, and simplifies the application of policies across large, dynamic environments. 
+This effort involves incrementally expanding beyond the basics, starting with core AWS services and methodically layering on additional controls for other resources. Over time, it will also require the incorporation of resource policies, VPC endpoint policies, and other service-specific measures to tighten the perimeter. Additionally, a well-defined tagging strategy is essential as it enables consistent governance, supports automated guardrails, helps with exception management, and simplifies the application of policies across large, dynamic environments. 
 
 Ultimately, implementing a robust data perimeter is a multi-year undertaking that requires time, operational discipline, and organizational buy-in. It relies on strong foundational elements such as granular identity controls, consistent tagging practices, well-managed exceptions, resource governance, and secure network setup. By taking a phased, service-by-service approach and continually refining your controls, you can evolve from a simple perimeter concept into a fully realized data perimeter that safeguards your organization’s critical assets in a complex and ever-evolving AWS landscape.
 
@@ -394,4 +394,4 @@ Example Policies:
 
 Both SCPs and RCPs are integral for managing permissions and enforcing governance across multi-account AWS environments. While SCPs set permission guardrails for IAM principals, RCPs set permission guardrails for resources. In addition to defining maximum available permissions for principals and resources within your organization, SCPs and RCPs can also be used to enforce security controls (e.g., preventing users from uploading unencrypted S3 objects, enforcing IMDSv2 for EC2 instances, or requiring HTTPS connections to resources). Together, these policies provide a centralized capability to control access, enforce security requirements, and also lay the foundations for a well-defined data perimeter.
 
-This is part 1 of mult-part blog series where in the next blog(s), I will try to do a similar deep-dive into the different types of Management Policies. 
+This is part 1 of mult-part blog series where in the next blog(s), I will try to do a similar deep-dive into the different types of Management Policies.
