@@ -192,7 +192,7 @@ The flowchart below provides a high-level overview of how access decisions are m
       - SCPs should be deployed to non-production accounts/OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts/OUs.
       - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
       - Never apply SCPs directly to the root OUs before thoroughly testing in lower/non-production accounts/OUs.          
-- The blog post from AWS - [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/) - does a great job of walking through different approaches / recommendations for rolling out SCPs across multi-account environments, while staying within the limits and quotas of policy size (5120 characters), and number of SCPs (5) per entity (root, OUs, accounts). 
+- The blog post from AWS - [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/) - does a great job of walking through different approaches / recommendations for rolling out SCPs across multi-account environments, while staying within the limits and quotas - policy size of 5120 characters (including whitespaces), and 5 SCPs per entity (root, OUs, accounts). 
 
 ### SCP Reference Materials
 
@@ -325,7 +325,7 @@ The flowchart below provides a high-level overview of how access decisions are m
       - RCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Only once there’s reasonable assurance around the behavior of RCPs can the scope be extended to production accounts / OUs be extended.
       - Enable CloudTrail logging and query for access denied events. Analyze the log entries to determine that all the denied events are intended and by design, and RCPs are not blocking legitimate actions.
       - Never apply RCPs directly to the root OUs before testing in lower / non-production accounts / OUs.
-- Like SCPs, RCPs have the same quotas and limits - policy size of 5120 characters, and 5 RCPs per entity (root, OUs, accounts). 
+- Like SCPs, RCPs have the same quotas and limits - policy size of 5120 characters (including whitespaces), and 5 RCPs per entity (root, OUs, accounts). 
 
 ### RCP Reference Materials
 
