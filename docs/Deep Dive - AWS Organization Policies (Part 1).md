@@ -421,4 +421,4 @@ Example Policies:
 
 Both SCPs and RCPs are integral for managing permissions and enforcing governance across multi-account AWS environments. While SCPs set permission guardrails for IAM principals, RCPs set permission guardrails for resources. In addition to defining maximum available permissions for principals and resources within your organization, SCPs and RCPs can also be used to enforce security controls (e.g., preventing users from uploading unencrypted S3 objects, enforcing IMDSv2 for EC2 instances, or requiring HTTPS connections to resources). Together, these policies provide a centralized capability to control access, enforce security requirements, and also lay the foundations for a well-defined data perimeter.
 
-This is part 1 of mult-part blog series where in the next blog(s), I will try to do a similar deep-dive into the different types of Management Policies.
+This is part 1 of mult-part blog series where in the next blog(s), I will try to do a similar deep-dive into the different types of Management Policies.   
