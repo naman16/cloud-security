@@ -192,6 +192,7 @@ The flowchart below provides a high-level overview of how access decisions are m
       - SCPs should be deployed to non-production accounts/OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts/OUs.
       - Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
       - Never apply SCPs directly to the root OUs before thoroughly testing in lower/non-production accounts/OUs.          
+- The blog post from AWS - [Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/) - does a great job of walking through different approaches / recommendations for rolling out SCPs across multi-account environments, while staying within the limits and quotas of policy size (5120 characters), and number of SCPs (5) per entity (root, OUs, accounts). 
 
 ### SCP Reference Materials
 
@@ -202,8 +203,7 @@ Documentation, Blog Posts, and Videos:
 - [AWS - How to use AWS Organizations to simplify security at enormous scale](https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/)  
 - [AWS - Identity Guide – Preventive controls with AWS Identity – SCPs](https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/)  
 - [AWS - Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment](https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/)  
-- [AWS - Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)  
-- [AWS - Get more out of service control policies in a multi-account environment](https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/)
+- [AWS - Control VPC sharing in an AWS multi-account setup with service control policies](https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/)
 - [AWS re:Invent 2024 - Security invariants: From enterprise chaos to cloud order](https://www.youtube.com/watch?v=aljwG4N5a-0)
 - [SummitRoute - AWS SCP Best Practices](https://summitroute.com/blog/2020/03/25/aws_scp_best_practices/#two-person-rule-concept/)  
 - [ScaleSec - Understanding AWS Service Control Policies](https://scalesec.com/blog/understanding-aws-service-control-policies/)  
@@ -325,6 +325,7 @@ The flowchart below provides a high-level overview of how access decisions are m
       - RCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts / OUs.
       - Enable CloudTrail logging and query for access denied events. Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.
       - Never apply RCPs directly to the root OUs before testing in lower / non-production accounts / OUs.
+- Like SCPs, RCPs have the same quotas and limits - policy size of 5120 characters, and 5 RCPs per entity (root, OUs, accounts). 
 
 ### RCP Reference Materials
 
