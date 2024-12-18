@@ -43,7 +43,7 @@ In the remainder of this blog (Part 1), I will take a deep-dive into the two typ
 ### SCP Permission Evaluation Logic
 
 - SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed in the SCP, it is implicitly denied, regardless of IAM permissions.
-      - Hence, when SCPs are initially enabled, AWS attaches the [`FullAWSAccess`](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess) SCP at the root level of your organization. This ensures that all services and actions remain initially allowed until more restrictive policies are applied.
+      - Hence, when SCPs are initially enabled, AWS attaches the [`FullAWSAccess`](https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess) policy at the root level of your organization. This ensures that all services and actions remain initially allowed until more restrictive policies are applied.
 - The permissions available to principals within accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.
 - SCPs do not grant permissions; hence, IAM principals need to be assigned permissions explicitly via IAM policies.
       - **Example:** if access to a service (e.g., S3) is “Allowed” via SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.
@@ -165,8 +165,8 @@ The flowchart below provides a high-level overview of how access decisions are m
 }
 ```
 
-- By default, AWS applies the managed SCP, `FullAWSAccess`(https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess), to all entities in the organization, which grants access to all services and actions. Be careful when removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), as you can inadvertently end up locking yourself out.  
-      - **Example**: Access should only be granted to approved services (S3, EC2, DynamoDB), and all other service access should be blocked. You can do this by applying the below SCP and removing the default AWS managed SCP - FullAWSAccess.
+- By default, AWS applies the managed SCP `FullAWSAccess`, to all entities in the organization, which grants access to all services and actions. Be careful when removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), as you can inadvertently end up locking yourself out.  
+      - **Example**: Access should only be granted to approved services (S3, EC2, DynamoDB), and all other service access should be blocked. You can do this by applying the below SCP and removing the default `FullAWSAccess` policy.
 
 ```
 {
