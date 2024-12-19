@@ -356,20 +356,20 @@ Below is an example to demonstrate access evaluation when `Alice` (principal ins
 
 | **Hierarchy Level** | **SCP Policies**                          | **RCP Policies**                          | **Description**                                              |
 |----------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------------------------|
-| **Root**            | Allows `s3`, `ec2`, `dynamoDB`, `organizations` | Allows all services                       | Broad access at the root level.                             |
+| **Root**            | Allows `s3`, `ec2`, `dynamoDB`, `organizations` | Allows all services                       | Broad access to services.                                   |
 | **OU: Production**  | Denies `s3:GetObject`                     | Denies `s3:DeleteObject`                  | Restricts `s3:GetObject` and `s3:DeleteObject`.             |
-| **Account B**       | Denies `s3:DeleteObject`                  | Allows access **only** if the principal is from the same organization or Bob's account ID | Restricts `s3:PutObject` and enforces conditional access.   |
-| **Resource Policy** | Allows `s3:*` for all principals          |                                           | Resource-based policy explicitly allows all S3 actions.     |
+| **Account B**       | Denies `s3:DeleteObject`                  | Allows only `s3:PutObject` if the principal is from the **same organization** as Alice or matches **Bob's account ID** | Restricts access to other actions based on conditions.      |
+| **Resource Policy** | Allows `s3:*` for all principals          |                                           | Provides resource-based access to all S3 actions.           |
 
 
 ### **Evaluation Results**
 
-| **Action**         | **Alice (Inside Org)**             | **Bob (Outside Org)**            |
-|---------------------|------------------------------------|---------------------------------|
-| **s3:GetObject**    | **Denied** at OU SCP              | **Allowed** at Account RCP       |
-| **s3:PutObject**    | **Denied** at Account RCP         | **Allowed** at Account RCP       |
-| **s3:DeleteObject** | **Denied** at OU RCP              | **Denied** at OU RCP             |
-| **s3:ListObjects**  | **Allowed**                       | **Allowed**                      |
+| **Action**         | **Alice (Inside Org)**               | **Bob (Outside Org)**            |
+|---------------------|--------------------------------------|----------------------------------|
+| **s3:GetObject**    | **Denied** at OU SCP                | **Denied** at Account RCP         |
+| **s3:PutObject**    | **Allowed**                         | **Allowed**                      |
+| **s3:DeleteObject** | **Denied** at OU RCP                | **Denied** at OU RCP              |
+| **s3:ListObjects**  | **Allowed**                         | **Allowed**                      |
 
 Below is a visual walkthrough of the above scenario to showcase how access is evaluated to make "Allow" / "Deny" decisions:
 <br>
