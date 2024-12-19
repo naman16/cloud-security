@@ -353,7 +353,6 @@ The overall access evaluation logic that AWS applies to determine whether an act
 Below is an example to demonstrate access evaluation when `Alice` (principal inside the organization) and `Bob` (principal outside the organization) attempt S3 actions (`s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`, and `s3:ListObjects`) on the `example-bucket` under `Account B` (account in the same organization as Alice).
 
 ### **Policies Applied**
-<br>
 
 | **Hierarchy Level** | **SCP Policies**                          | **RCP Policies**                          | **Description**                                              |
 |----------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------------------------|
@@ -363,7 +362,6 @@ Below is an example to demonstrate access evaluation when `Alice` (principal ins
 | **Resource Policy** | Allows `s3:*` for all principals          |                                           | Resource-based policy allows full access to all S3 actions. |
 
 ### **Evaluation Results**
-<br>
 
 | **Action**         | **Alice (Inside Org)**                                   | **Bob (Outside Org)**                                  |
 |---------------------|----------------------------------------------------------|-------------------------------------------------------|
