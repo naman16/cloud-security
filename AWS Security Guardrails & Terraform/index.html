@@ -1,0 +1,818 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Implementing%20CNAPP%3A%20Day%202%20Focus%20Areas/">
+      
+      
+        <link rel="next" href="../Deep%20Dive%20-%20AWS%20Organization%20Policies%20%28Part%201%29/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>AWS Security Guardrails & Terraform - Cloud Security Blogs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="AWS Security Guardrails & Terraform - Cloud Security Blogs" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="./assets/images/social/AWS Security Guardrails & Terraform.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="AWS Security Guardrails & Terraform - Cloud Security Blogs" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/AWS Security Guardrails & Terraform.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#aws-security-guardrails-terraform" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Cloud Security Blogs" class="md-header__button md-logo" aria-label="Cloud Security Blogs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cloud Security Blogs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AWS Security Guardrails & Terraform
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Implementing CNAPP: Tool Selection and Day 1 Focus Areas
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Implementing%20CNAPP%3A%20Day%202%20Focus%20Areas/" class="md-tabs__link">
+        
+  
+    
+  
+  Implementing CNAPP: Day 2 Focus Areas
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  AWS Security Guardrails & Terraform
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Deep%20Dive%20-%20AWS%20Organization%20Policies%20%28Part%201%29/" class="md-tabs__link">
+        
+  
+    
+  
+  Deep Dive - AWS Organization Policies (Part 1)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Cloud Security Blogs" class="md-nav__button md-logo" aria-label="Cloud Security Blogs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cloud Security Blogs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementing CNAPP: Tool Selection and Day 1 Focus Areas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Implementing%20CNAPP%3A%20Day%202%20Focus%20Areas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementing CNAPP: Day 2 Focus Areas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AWS Security Guardrails & Terraform
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    AWS Security Guardrails & Terraform
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solution-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solution Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Solution Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements Generator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terraform-creator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Terraform Creator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#closing-thoughts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Closing Thoughts
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive%20-%20AWS%20Organization%20Policies%20%28Part%201%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deep Dive - AWS Organization Policies (Part 1)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="aws-security-guardrails-terraform">AWS Security Guardrails &amp; Terraform</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Traditional security approaches designed for on-premises environments are inadequate in addressing the unique risks posed by the cloud. The distributed and dynamic nature of cloud resources, speed of development and innovation, multi-tenant architectures, and decentralized operating models have resulted in a complex threat landscape that requires a fundamental shift in building and operating scalable security programs. This paradigm shift has popularized the concepts of paved roads and security guardrails to reduce the security burdens on the engineers and enable them to focus on innovation and driving business value, without compromising on security. Below, I have included some helpful resources better to explain the concepts of paved roads and security guardrails but at a high-level:</p>
+<ul>
+<li><strong><em>Paved Roads</em></strong>: Originally conceptualized by Netflix, refers to a set of standardized frameworks (e.g., authentication patterns, certificate management, service mesh, etc.), self-service tools, and automated processes that are readily consumable by engineers, allowing them to focus on their core responsibilities and not worry about implementing security requirements.  </li>
+<li><strong><em>Security Guardrails</em></strong>: These are preventive controls, integrated into the development workflows, that define the security boundaries and force the engineers to operate with them, thereby stopping misconfigured and vulnerable resources (code) from being released into cloud environments.</li>
+</ul>
+<p>Most organizations today have adopted some form of paved roads or security guardrails, although the maturity of these implementations varies significantly. Broadly, the focus has been on two key areas: <strong>(a) scanning and detection early in the Software Development Life Cycle (SDLC)</strong> and <strong>(b) ad hoc prevention of high-risk actions through CI/CD pipeline integrations and organizational policies</strong> (e.g., Service Control Policies (SCPs), Organization Policies, or Azure Policies). These efforts prioritize proactive identification of security issues early in the development process to help catch and address them before they manifest within cloud environments.</p>
+<p>Additionally, for many organizations operating in the cloud, implementing Cloud-Native Application Protection Platform (CNAPP) has become essential for achieving greater visibility into cloud environments and identifying diverse classes of security issues (I recently wrote blog posts on <a href="https://naman16.github.io/cloud-security/">Day 1</a> and <a href="https://naman16.github.io/cloud-security/Implementing%20CNAPP:%20Day%202%20Focus%20Areas/">Day 2</a> focus areas for CNAPP).</p>
+<p>While conducting scans and generating insights is a foundational first step toward understanding and securing the environment, a critical gap remains. Organizations often lack prescriptive guidance and accessible, reusable security artifacts that engineers can leverage directly. By not providing these resources, security teams inadvertently place the burden of configuring services securely on engineers, who may lack the security expertise or resources needed to efficiently address intricate security requirements. Without “built-in” security, engineers end up spending time on tasks that could otherwise be streamlined through reusable secure Infrastructure as Code (IaC) templates (<em>It is best practice to leverage IaC for cloud infrastructure provisioning and management</em>). This kind of “secure-by-design” IaC allows engineers to meet security requirements faster, enabling them to stay focused on their primary responsibilities.</p>
+<p>Establishing such reusable, secure IaC offers additional benefits beyond efficiency. By actively supporting engineers with secure IaC, security teams move from a passive, reactive role into a proactive partnership, where they provide engineers with actionable solutions rather than just requirements. This approach fosters stronger relationships with development teams, as security becomes an enabler rather than a gatekeeper, actively facilitating good security practices instead of merely imposing them.</p>
+<p>The CNAPP tools (outside of IaC scanning / policy-as-code (PaC)) are great at scanning and flagging issues and offering remediation guidance that is generally applicable for CLI or console users. However, this guidance falls short for organizations heavily invested in IaC, as engineers must still research and implement the specific IaC parameters needed to address the issues. This gap highlights the need for security teams to go beyond issue reporting. By building and distributing <em>“build once, use multiple times”</em> secure IaC templates, organizations can streamline remediation efforts, ultimately leading to faster, more scalable, and more consistent security practices.</p>
+<p>In summary, organizations invest significant resources in scanning and monitoring to ensure they have visibility into their security posture. Yet, a lack of centralized, reusable security artifacts often leaves engineers to interpret and implement security requirements on their own. By investing in reusable secure IaC, security teams can enable engineers to “inherit” security best practices, rather than requiring them to navigate complex configurations alone. This approach not only enhances efficiency but also builds a more collaborative relationship between security and engineering, reinforcing security as a shared responsibility across the organization.</p>
+<h2 id="solution-overview">Solution Overview</h2>
+<p>Given the benefits of secure IaC templates with built-in security requirements, below is a high-level overview of automation (<a href="https://github.com/naman16/AWS-Security-Guardrails-TF"><strong>source code here</strong></a>) that leverages Artificial Intelligence (AI) to develop:</p>
+<ul>
+<li>List of security requirements for several commonly used AWS services  </li>
+<li>Secure Terraform modules that codify these security requirements</li>
+</ul>
+<p><img alt="Automation Overview" src="../images/Automation%20Overview.png" /></p>
+<h3 id="requirements-generator">Requirements Generator</h3>
+<p>The Requirements Generator (requirements-generator.py) is a Python script that consolidates and enhances AWS service security requirements from multiple scanning tools (<a href="https://www.checkov.io/5.Policy%20Index/terraform.html">Checkov</a> and <a href="https://github.com/prowler-cloud/prowler">Prowler</a>). The script leverages Anthropic’s Claude 3.5 Sonnet model via AWS Bedrock and through prompt engineering, aims to transform the security requirements from these distinct sources into comprehensive, well-structured guidelines that engineers can easily understand and implement. Below are the key features that I have tried to implement:</p>
+<ul>
+<li><strong>Multi-Source Integration</strong>: Combines security requirements from multiple sources (Prowler and Checkov) into a unified format  </li>
+<li><strong>Intelligent Deduplication</strong>: Merges duplicate requirements while maintaining distinct requirements for different resources  </li>
+<li><strong>Environment-Aware Processing</strong>: Considers specific AWS environment configurations like hub-and-spoke network architecture and SSO setup  </li>
+<li><strong>Standardized Output</strong>: Generates consistently formatted JSON output with required fields like ID, name, description, cloud provider, and security domain  </li>
+<li><strong>Comprehensive Coverage</strong>: Identifies gaps in security requirements and adds missing controls based on AWS best practices</li>
+</ul>
+<p>Below is the large language model (LLM) prompt that I am currently using for requirements generation:</p>
+<pre><code>You are a cloud security expert that is tasked with defining detailed technical security requirements AWS services. 
+The security requirements should be clear, well-worded, and descriptive with all the necessary details such that it can be easily understood and implemented by developers.
+
+  Follow the below guidelines when developing technical security requirements:
+  1. Below are the key details about my AWS environment's setup that needs to be adhered to always:
+      - Network is setup to follow a hub and spoke architecture where the VPCs are connected to each other via Transit Gateways.
+      - AWS management console access is federated through SSO via AWS Identity Center. IAM users are only created as an exception.  
+      - AWS IAM user access keys are banned from use and instead IAM roles should be used.
+      - CloudTrail management events have been enabled for all my AWS accounts for all services.
+      - VPC flow logs have been enabled for all my VPCs for all AWS accounts. 
+      - You can assume that all the resources are only private and have no requirement for any sort of public access.
+      - Any resources that need to be publicly exposed to the internet, are managed separately and is outside the scope of the requirements defined here. 
+
+  2. You will be provided security requirements enclosed within the &lt;security requirements&gt; tag for different AWS services as a starting point. 
+      - If there are duplicative requirements on the same resource, combine them.
+      - If the security violates / do not follow my environment's specific setup, remove them. 
+      - if there are 2 requirements on the same resource for the same configuration, combine them into 1.
+          - For example: If there are 2 requirements for encryption-at-rest on sagemaker notebook, combine them into 1.
+      - If there are 2 requirements on 2 different resources for the same configuration, keep them separate. 
+          - For example: If there is 1 requirement for encryption-at-rest on sagemaker notebook and another 1 for encryption-at-rest on sagemaker domain, keep them as separate.
+
+  3. Add any missing security requirements for the given service and all of its resources to ensure a robust and comprehensive library of security requirements.          
+     - Examples of security requirements that should be added if missing: use latest TLS policies, enforce HTTPS, disable public access, enable encryption at-rest using CMK, etc.
+
+  4. When writing the &quot;name&quot; and &quot;description&quot;, make it very clear and well-worded such that it is easy to understand and can be easily implemented by developers.
+     - The &quot;name&quot; of the requirement should be a proper sentence and should be easy to understand. 
+     - The &quot;description&quot; of the requirement should be detailed and should contain implementation details for that requirement. 
+     - Pack all the details and context in the &quot;name&quot; and &quot;description&quot; of the requirement to make it easy to understand and implement for developers.
+     - Don't abstract any details by using generic phrases like &quot;apply secure settings&quot;. Instead, enumerate each setting that needs to be applied - &quot;enabling TLS, enabling audit logging, enabling user activity logging, etc.&quot;  
+     - Don't develop security requirements that are vague or generic.
+     - The granularity / specificity of these security requirements should be such that it can be interpreted by developers and translated into IaC easily.
+
+  5. When defining security requirements for the AWS service, only focus on requirements for that service. Don't define requirements for other services.
+     - For example:
+          - Avoid requirements like &quot;Implement Regular Key Rotation for AppFlow KMS Keys&quot; because this is captured in the requirements for AWS KMS by an overarching requirement like &quot;Customer managed keys (CMK) should have rotation enabled for every 90 days&quot;.
+          - Within AppFlow, we should only call out a requirement like &quot;Use AWS KMS Customer Managed Key (CMK) for AppFlow Flow Encryption&quot;.
+
+  6. Perform a detailed review on the developed security requirements to make sure the guidelines are followed and the below hold true:            
+      - Requirements like &quot;Enable AWS CloudTrail Logging for MSK Cluster API Calls&quot; &quot;Enable AWS CloudTrail Logging for AppFlow API Calls&quot; don't exist because CloudTrail logs are already enabled for all services.
+      - Requirements like &quot;&quot;Enable VPC Flow Logs for MWAA VPC&quot; don't exist because VPC flow logs have been enabled for my VPCs. 
+      - Requirements like &quot;Implement Multi-Factor Authentication for Critical Route53 Changes&quot; don't exist because federation / SSO through Identity Center enforces MFA.
+      - Requirements with generic phrases like &quot;restrict access&quot; or &quot;enforce principal of least privilege&quot; don't exist. Instead, they are written more clearly like &quot;restrict access to only known principals or accounts&quot;.
+      - Vague requirements that are subject to interpretation don't exist.
+          - For example: Requirements like &quot;Ensure Proper Configuration of Elastic Load Balancer Listeners&quot; and &quot;Implement Secure Listener Rules for Application Load Balancers&quot; don't exist. These are bad requirements because it is not clear how to implement this and is subject to interpretation by the developers. Instead, these requirements should be written where the exact configurations (HTTPS and latest TLS policies) are specified very clearly to ensure that all the necessary details are provided to implement secure load balancer listeners.       
+      - Requirements are defined on all the different resources for the AWS service. 
+          - For example: If there are requirements only for sagemaker domain but not sagemaker notebook, develop requirements for sagemaker notebook. Keep the requirements for sagemaker domain and sagemaker notebook separate, don't combine them.
+      - Requirements where different types of configurations are combined don't exist. Instead, keep them as 2 separate requirements.
+          - For example: &quot;Enable encryption at rest and in transit for MSK Cluster&quot; is a bad requirement. These should be split into 2 separate requirements like &quot;Use KMS CMK for encryption-at-rest for MSK Cluster&quot; and &quot;Use latest TLS policies for encryption-in-transit for MSK Cluster&quot;.
+      - Requirements where different types of resources are combined don't exist. Instead, keep them as 2 separate requirements. 
+          - For example:
+              - &quot;Use KMS CMK for encryption-at-rest for SageMaker Domain and Notebook Instance&quot; is a bad requirement. These should be split into 2 separate requirements like &quot;Use KMS CMK for encryption-at-rest for SageMaker Domain&quot; and &quot;Use KMS CMK for encryption-at-rest for SageMaker Notebook Instance&quot;
+              - &quot;Use Non-Default Ports for RDS Instances and Clusters&quot; is a bad requirement. These should be split into 2 separate requirements like &quot;Use Non-Default Ports for RDS Instances&quot; and &quot;Use Non-Default Ports for RDS Clusters&quot;
+
+  7. Update requirement IDs to follow format 'service:001', 'service:002', etc.
+      - For example: s3:001; s3:002; s3:003, etc.
+
+  8. Assign a &quot;domain&quot; to each requirement based on &quot;name&quot; and &quot;description&quot;.
+     - Possible values:
+          - data protection
+          - network security
+          - identity and access management
+          - logging and monitoring
+          - secure configuration
+
+  9. Ensure each requirement has these fields in this exact order:
+     - ID (format: service:00X)
+     - name (brief title)
+     - description (detailed explanation)
+     - cloudProvider (always &quot;AWS&quot;)
+     - domain
+
+Respond with ONLY a valid JSON array of requirements. Do not include any explanatory text or markdown formatting.
+</code></pre>
+<h3 id="terraform-creator">Terraform Creator</h3>
+<p>The Terraform Creator (terraform-creator.py) is a Python script that automatically generates secure Terraform modules based on the security requirements that were developed by the “Requirements Generator” script. The script utilizes Anthropic's Claude 3.5 Sonnet model via AWS Bedrock and employs prompt engineering to transform security requirements into reusable and secure Terraform modules. Below are the key features that I have attempted to implement:</p>
+<ul>
+<li>
+<p><strong>Standardized Module Structure</strong>: Generates three files for each AWS service:</p>
+<ul>
+<li>main.tf: Contains resource configurations with requirement traceability  </li>
+<li>variables.tf: Defines all configurable parameters with secure default  </li>
+<li>notes.md: Provides detailed implementation documentation and coverage analysis</li>
+</ul>
+</li>
+<li>
+<p><strong>Intelligent Implementation Decisions</strong>: Makes informed choices about requirement implementation:</p>
+<ul>
+<li>Assumes reusability where users will bring pre-created resource components (KMS keys, log buckets, etc.) as opposed to creating supporting resources (see below example) </li>
+<li>Avoids creating duplicate resources for implementing different requirements  </li>
+<li>Creates optional read/write IAM policies for flexibility</li>
+</ul>
+</li>
+<li>
+<p><strong>Comprehensive Documentation</strong>: Maintains detailed documentation of implementation status:</p>
+<ul>
+<li>Maps security requirements to specific Terraform configurations  </li>
+<li>Documents partially implemented requirements  </li>
+<li>Explains requirements that cannot be implemented via Terraform  </li>
+<li>Includes additional security measures beyond base requirements</li>
+</ul>
+</li>
+</ul>
+<p>Below is the LLM prompt that I am currently using for Terraform creation:</p>
+<pre><code>You are an expert in cloud security for AWS. You need to develop comprehensive, secure Terraform module for the given AWS service based on the
+security requirements enclosed within the &lt;security requirements&gt; tag. Follow the below guidelines when developing secure Terraform modules:     
+
+  1. The attempt should be to develop secure Terraform modules for all the security requirements for the given AWS service.
+
+  2. Use the &quot;name&quot; and &quot;description&quot; fields to develop understanding of the requirement for Terraform implementation.
+
+  3. If there are any requirements that cannot be implemented in Terraform or can only be implemented partially, do so and maintain a note in the notes.md file.
+      - Don't implement requirements for VPC endpoints like &quot;Implement VPC Endpoints for Kinesis Data Streams&quot; because VPC endpoints are managed outside of this module.
+      - Don't implement requirements like &quot;Enable AWS CloudTrail Logging for AppFlow API Calls&quot; because CloudTrail logging has already been enabled for all accounts and all services.
+      - Since IAM policies are use-case dependent, create 1 policy for read and 1 policy for write that users can OPTIONALLY use.
+      - For the same resource, don't create multiple separate resource blocks. Instead, create 1 resource block with all the configurations. 
+          - For example:
+              - Instead of creating 2 different resources like &quot;resource &quot;aws_kms_key&quot; &quot;main&quot;&quot; and &quot;resource &quot;aws_kms_key&quot; &quot;tagged&quot;&quot;, create only 1 &quot;aws_kms_key&quot; with all the configurations.
+              - Instead of creating 2 different resources like &quot;resource &quot;aws_apigatewayv2_stage&quot; &quot;xray&quot;&quot; and &quot;resource &quot;aws_apigatewayv2_stage&quot; &quot;main&quot;&quot;, create only 1 &quot;aws_apigatewayv2_stage&quot; with all the configurations.
+
+  4. DO NOT create supporting resources like s3 buckets, security groups, kms keys, cloudwatch log groups / alarms, etc. Assume that those have been created and the values will be provided.
+      - For example: 
+          - When enabling access logs for ALB, assume that the s3 logs destination bucket is already created and value will be provided by user as input.
+          - When setting up security groups for resources (RDS, ECS, EKS, etc.), assume that the security group has already been created and value will be provided by user as input.
+          - When setting up encryption on a resource, assume that the KMS key has already been created and value will be provided by user as input.              
+
+  5. Even when not specified explicitly, always implement security best practices like encryption at rest for all possible resources, latest TLS policies, disabling insecure defaults (e.g. disable_execute_api_endpoint = true for aws_api_gateway_rest_api), etc.
+
+  6. Below are the 3 files that should be created:
+      a. main.tf: Include all necessary resources and their configurations. Add comments for each requirement that was implemented in Terraform in the format ID:name directly above the actual configuration.
+      b. variables.tf: Define all variables used in main.tf, including descriptions and default values where appropriate.
+          1. Set the default values to be the most secure values possible. E.g., set ALB to internal = true instead of default value of internal = false.
+      c. notes.md: Provide a detailed breakdown in markdown syntax such that all requirements for the given AWS service are individually accounted for:
+          1. Requirements that were implemented in the Terraform code. Ensure you implement requirements in Terraform that are partially possible and maintain a note on that. 
+          2. Requirements that could be implemented but weren't included (if any) - this list should be as minimal as everything possible to implement through Terraform must be implemented.
+          3. Requirements that are inherently implemented by the implementation of a different requirement.
+          4. Requirements that cannot be directly implemented in Terraform along with an explanation.  
+          5. Any best practices or additional security measures not mentioned in the requirements but relevant to the AWS service.
+          6. Each of the requirements for the given AWS should be its own individual line, don't merge requirements like S3-001, S3-002, etc. in 1 row.
+          7. Example format for notes.md is provided below within the &lt;notes.md example&gt; tag.
+
+  7. Review all the 3 files generated to make sure that they are accurate, align to the provided security requirements for the AWS service, and follow all the rules specified above.
+
+Ensure that the Terraform code is well-commented, follows best practices, and is as secure as possible. Include input variables for all configurable parameters to make the module reusable.
+
+Format your response exactly as below within the XML tags and do not include anything else:
+
+&lt;main.tf&gt;
+main.tf content
+&lt;/main.tf&gt;
+
+&lt;variables.tf&gt;
+variables.tf content
+&lt;/variables.tf&gt;
+
+&lt;notes.md&gt;
+notes.md content
+&lt;/notes.md&gt;
+</code></pre>
+<p><be>
+<be>
+<be></p>
+<p>Below is an illustrative example to highlight how Terraform modules can be reused:</p>
+<p><img alt="Terraform Module Reusability - Example" src="../images/Terraform%20Module%20Reusability%20-%20Example.png" /></p>
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+<p>While this implementation primarily focused on developing security requirements and Terraform modules for AWS, it provides a flexible framework that can be customized for other IaC languages, cloud providers, and security requirements. By updating the prompts for the LLM and adjusting configurations—such as integrating Prowler and Checkov’s policies for Azure or GCP, incorporating security requirements from alternative tools, or using your own requirements—this automation can be adapted to suit various use-cases.</p>
+<p>With the help of AI, I was able to create these requirements and modules in a few hours with reasonable accuracy, which would otherwise have taken me weeks or even months. However, since the requirements and modules are AI-generated, it’s important to use them with caution; I recommend reviewing, validating, and tailoring the content to meet your specific needs. Rather than viewing this as a silver bullet, I see it as an enabler for enhancing efficiency in developing secure IaC. Overall, I am optimistic about its potential benefits:</p>
+<ul>
+<li><strong>Time Savings for Engineers</strong>: They can avoid starting from scratch when implementing security configurations.  </li>
+<li><strong>Support for Security Teams</strong>: AI can help alleviate the burden of developing remediation guidance, allowing teams to focus on more complex issues.</li>
+</ul>
+<p>While this implementation is designed to generate secure IaC starter packs, it illustrates a broader point: AI solutions can offer much-needed support to overworked security teams. As models evolve and improve, the quality of AI-generated outputs will only get better, enabling us to tackle more complex security challenges efficiently.</p>
+<p>Resources for paved roads and security guardrails:</p>
+<ol>
+<li>Netflix’s talk at RSA - <a href="https://www.rsaconference.com/library/presentation/usa/2023/Construction%20Time%20Again%20A%20Lesson%20in%20Paving%20Paths%20for%20Security?utm_source=appsec.beehiiv.com&amp;utm_medium=referral&amp;utm_campaign=reasonable-appsec-6-five-security-articles-guard-rails-paved-roads-photo-and-podcast-corner">Construction Time Again: A Lesson in Paving Paths for Security</a>  </li>
+<li>Google Cloud - <a href="https://cloud.google.com/blog/topics/inside-google-cloud/building-security-guardrails-for-developers-with-google-cloud">Building security guardrails for developers</a>  </li>
+<li>Resourcely’s conversation with Jason Chan - <a href="https://www.resourcely.io/post/guardrails-and-paved-roads">Guardrails and Paved Roads</a>  </li>
+<li>Jason Chan’s talk at LASCON: <a href="https://www.youtube.com/watch?v=geumLjxtc54">From Gates to Guardrails - Alternate Approaches to Product Security</a>  </li>
+<li>Netflix’s blog post - <a href="https://netflixtechblog.com/the-show-must-go-on-securing-netflix-studios-at-scale-19b801c86479">The Show Must Go On</a>  </li>
+<li>
+<p>Clint Gibler’s chats:</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=xijyr54FZn4">Jason Chan on the Origins of the Paved Road</a></li>
+<li><a href="https://www.youtube.com/watch?v=uQaWfTwAWp0">Netflix’s Scott Behrens on the Difficulty of Building a Useful Paved Road</a></li>
+</ol>
+</li>
+<li>
+<p>Resourcely’s open-source project - <a href="https://www.cloudguardrails.com/">Cloud Guardrails</a></p>
+</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+  <footer class="md-footer">
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        
+          <div class="md-footer-disclaimer">
+            The views and opinions expressed on this blog are solely my own and do not necessarily reflect the views or positions of my employer (PwC). All content is for informational purposes only and should not be considered professional advice. My employer does not endorse or approve the content of this blog. Views relating to my professional work are my own perspectives and do not reflect official positions or policies of my employer.
+
+          </div>
+        
+        
+          <div class="md-footer-social">
+            
+              <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/naman-sogani-567033134/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+            
+          </div>
+        
+      </div>
+    </div>
+  </footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>

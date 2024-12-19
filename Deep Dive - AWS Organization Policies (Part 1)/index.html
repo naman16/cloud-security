@@ -1,0 +1,1213 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../AWS%20Security%20Guardrails%20%26%20Terraform/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Deep Dive - AWS Organization Policies (Part 1) - Cloud Security Blogs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Deep Dive - AWS Organization Policies (Part 1) - Cloud Security Blogs" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="./assets/images/social/Deep Dive - AWS Organization Policies (Part 1).png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Deep Dive - AWS Organization Policies (Part 1) - Cloud Security Blogs" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/Deep Dive - AWS Organization Policies (Part 1).png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deep-dive-aws-organization-policies-part-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Cloud Security Blogs" class="md-header__button md-logo" aria-label="Cloud Security Blogs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cloud Security Blogs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deep Dive - AWS Organization Policies (Part 1)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Implementing CNAPP: Tool Selection and Day 1 Focus Areas
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Implementing%20CNAPP%3A%20Day%202%20Focus%20Areas/" class="md-tabs__link">
+        
+  
+    
+  
+  Implementing CNAPP: Day 2 Focus Areas
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../AWS%20Security%20Guardrails%20%26%20Terraform/" class="md-tabs__link">
+        
+  
+    
+  
+  AWS Security Guardrails & Terraform
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  Deep Dive - AWS Organization Policies (Part 1)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Cloud Security Blogs" class="md-nav__button md-logo" aria-label="Cloud Security Blogs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cloud Security Blogs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementing CNAPP: Tool Selection and Day 1 Focus Areas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Implementing%20CNAPP%3A%20Day%202%20Focus%20Areas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementing CNAPP: Day 2 Focus Areas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AWS%20Security%20Guardrails%20%26%20Terraform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS Security Guardrails & Terraform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Deep Dive - AWS Organization Policies (Part 1)
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Deep Dive - AWS Organization Policies (Part 1)
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-control-policies-scps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Control Policies (SCPs)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Service Control Policies (SCPs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scp-applicability-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      SCP Applicability Scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scp-permission-evaluation-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      SCP Permission Evaluation Logic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scp-development-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      SCP Development and Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scp-reference-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      SCP Reference Materials
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-control-policies-rcps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resource Control Policies (RCPs)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resource Control Policies (RCPs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rcp-applicability-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      RCP Applicability Scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rcp-permission-evaluation-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      RCP Permission Evaluation Logic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rcp-development-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      RCP Development and Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rcp-reference-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      RCP Reference Materials
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-evaluation-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Evaluation Logic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Access Evaluation Logic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#policies-applied" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policies Applied
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evaluation Results
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-perimeter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Perimeter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Perimeter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-perimeter-reference-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Perimeter Reference Materials
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#closing-thoughts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Closing Thoughts
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="deep-dive-aws-organization-policies-part-1">Deep Dive: AWS Organization Policies (Part 1)</h1>
+<h2 id="introduction">Introduction</h2>
+<p>As organizations scale their cloud infrastructure, managing AWS accounts securely and efficiently becomes both a necessity and a challenge. Today, companies heavily rely on <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html">AWS Organizations</a> or <a href="https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html">AWS Control Tower</a> to manage their multi-account AWS environments and meet their business, governance, security, and operational goal. This strategy enables workload isolation, improved quota and resource management, and the enforcement of security controls across environments (development, testing, and production). However, managing AWS accounts at scale introduces complexities — maintaining governance, enforcing guardrails, and streamlining operations across the organization.</p>
+<p>This is where <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies.html">AWS Organization Policies</a> play a pivotal role. These are rules that are applied at the organizational level for controlling resource access, enforcing security controls, and ensuring standardized configurations across multiple AWS accounts. They ensure that all accounts within an organization operate within these defined boundaries, thereby balancing flexibility with proper governance. There are 2 types of AWS Organization Policies:</p>
+<ul>
+<li>
+<p><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_authorization_policies.html"><strong>Authorization Policies</strong></a>: Authorization policies provide the ability to centrally define and enforce the maximum available permissions for principals and resources within your AWS Organizations. The two types of Authorization Policies are:  </p>
+<ul>
+<li><strong>Service Control Policies (SCPs)</strong>: SCPs allow you to centrally define and enforce maximum available permissions for principals (IAM users, root users, and roles) within your AWS Organizations.  </li>
+<li><strong>Resource Control Policies (RCPs)</strong>: RCPs allow you to centrally define and enforce the maximum available permissions for resources within your AWS Organizations.  </li>
+</ul>
+</li>
+<li>
+<p><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_management_policies.html"><strong>Management Policies</strong></a>: Management policies provide the ability to centrally define and enforce configurations on services and resources within your AWS Organizations. The different types of Management Policies are:  </p>
+<ul>
+<li><strong>Declarative Policies</strong>: Declarative policies allow you to centrally define and enforce baseline configuration of resources within your AWS Organizations.  </li>
+<li><strong>Backup Policies</strong>: Backup policies allow you to centrally manage backups for resources within your AWS Organizations.  </li>
+<li><strong>Tag Policies</strong>: Tag policies allow you to centrally enforce tagging standards on resources within your AWS Organizations.  </li>
+<li><strong>Chatbot Policies</strong>: Chatbot policies allow you to centrally restrict access to resources within your AWS Organizations, from Teams, Slack, etc.  </li>
+<li><strong>AI Services Opt-Out Policies</strong>: AI policies allow you to centrally control access to your data and prevent them from being used in the development of AWS’ AI services.</li>
+</ul>
+</li>
+</ul>
+<p>In the remainder of this blog (Part 1), I will take a deep-dive into the two types of Authorization Policies: SCPs and RCPs. I will follow this with a subsequent blog (Part 2) that delves into the various types of Management Policies.</p>
+<h2 id="service-control-policies-scps">Service Control Policies (SCPs)</h2>
+<p><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html">Service Control Policies (SCPs)</a> are a type of authorization policy that provides you with centralized control over the maximum permissions that are available to the principals (IAM users, root users, roles) within your AWS Organization. By design, SCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that principals within your organizations operate within these predefined access boundaries. Below are key considerations when implementing SCPs:</p>
+<h3 id="scp-applicability-scope">SCP Applicability Scope</h3>
+<ul>
+<li>SCPs apply only to IAM principals managed by member accounts within your organization. They do not apply to IAM principals that reside outside your organization.</li>
+<li>SCPs do not apply to policies attached directly to resources (i.e., resource policies).  <ul>
+<li>For example, if an Amazon S3 bucket owned by account A has a bucket policy granting access to users in account B (outside the organization), the SCP attached to account A does not apply to those external users or the resource policies.</li>
+</ul>
+</li>
+<li>SCPs do not apply to <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create-service-linked-role.html">service-linked roles</a>.</li>
+<li>SCPs do not apply to IAM principals within the management account. However, they do apply to IAM principals within delegated admin accounts.</li>
+<li>SCPs do not apply to the following tasks/entities:<ul>
+<li>Register for the Enterprise support plan as the root user.</li>
+<li>Provide trusted signer functionality for CloudFront private content.</li>
+<li>Configure reverse DNS for an Amazon Lightsail email server and Amazon EC2 instance as the root user.</li>
+<li>Tasks on some AWS-related services:<ul>
+<li>Alexa Top Sites.</li>
+<li>Alexa Web Information Service.</li>
+<li>Amazon Mechanical Turk.</li>
+<li>Amazon Product Marketing API.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="scp-permission-evaluation-logic">SCP Permission Evaluation Logic</h3>
+<ul>
+<li>SCPs operate on a deny-by-default model. If an action or service is not explicitly allowed by the SCP, it is implicitly denied, regardless of IAM permissions.<ul>
+<li>Hence, when SCPs are initially enabled, AWS attaches the <a href="https://console.aws.amazon.com/organizations/?#/policies/p-FullAWSAccess"><code>FullAWSAccess</code></a> policy at the root level of your organization. This ensures that all services and actions remain initially allowed until more restrictive policies are applied.</li>
+</ul>
+</li>
+<li>The permissions available to principals within accounts are restricted by the SCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at the parent level (root, OU, or the principal’s account), the action cannot be performed by the principal even if they have admin access.</li>
+<li>SCPs do not grant permissions; hence, IAM principals need to be assigned permissions explicitly via IAM policies.<ul>
+<li><strong>Example:</strong> If access to a service (e.g., S3) is “Allowed” via SCPs but the principal does not have permissions assigned to it explicitly via IAM policies, the principal cannot access S3.</li>
+</ul>
+</li>
+<li>If an IAM principal has an IAM policy that grants access to an action:<ul>
+<li>And the SCP also explicitly allows the action, then the principal can perform that action.</li>
+<li>But if the SCP does not explicitly allow or deny the action, the principal cannot perform that action.</li>
+</ul>
+</li>
+<li>If permissions boundaries are present, access must be allowed by all three mechanisms — SCPs, permission boundaries, and IAM policies - to perform the action.</li>
+</ul>
+<p>The flowchart below provides a high-level overview of how access decisions are made when SCPs are enabled:</p>
+<p><img alt="Permissions Evaluation Logic - SCPs" src="../images/Permissions%20Evaluation%20Logic%20-%20SCPs.png" /></p>
+<h3 id="scp-development-and-testing">SCP Development and Testing</h3>
+<ul>
+<li>Use "Deny" statements to enforce baseline security controls that you want to apply across your entire organization.  <ul>
+<li><strong>Example</strong>: Prevent member accounts from leaving your organization.</li>
+</ul>
+</li>
+</ul>
+<pre><code>{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;DenyLeavingOrganization&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Action&quot;: [
+                &quot;organizations:LeaveOrganization&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li>Use "Deny" statements with conditions to manage exceptions or enforce certain specific controls.  <ul>
+<li><strong>Example</strong>: Enforce the use of IMDSv2 for EC2 instances. </li>
+</ul>
+</li>
+</ul>
+<pre><code>{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;DenyRunInstancesWithoutIMDSv2&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Action&quot;: &quot;ec2:RunInstances&quot;,
+            &quot;Resource&quot;: &quot;*&quot;,
+            &quot;Condition&quot;: {
+                &quot;StringNotEquals&quot;: {
+                    &quot;ec2:MetadataHttpTokens&quot;: &quot;required&quot;
+                }
+            }
+        },
+        {
+            &quot;Sid&quot;: &quot;DenyRunInstancesWithHighHopLimit&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Action&quot;: &quot;ec2:RunInstances&quot;,
+            &quot;Resource&quot;: &quot;*&quot;,
+            &quot;Condition&quot;: {
+                &quot;NumericGreaterThan&quot;: {
+                    &quot;ec2:MetadataHttpPutResponseHopLimit&quot;: &quot;3&quot;
+                }
+            }
+        },
+        {
+            &quot;Sid&quot;: &quot;DenyAllActionsForInsecureRoleDelivery&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Action&quot;: &quot;*&quot;,
+            &quot;Resource&quot;: &quot;*&quot;,
+            &quot;Condition&quot;: {
+                &quot;NumericLessThan&quot;: {
+                    &quot;ec2:RoleDelivery&quot;: &quot;2.0&quot;
+                }
+            }
+        },
+        {
+            &quot;Sid&quot;: &quot;DenyMetadataOptionsModificationForNonAdmins&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Action&quot;: &quot;ec2:ModifyInstanceMetadataOptions&quot;,
+            &quot;Resource&quot;: &quot;*&quot;,
+            &quot;Condition&quot;: {
+                &quot;StringNotLike&quot;: {
+                    &quot;aws:PrincipalARN&quot;: &quot;arn:aws:iam::*:role/ec2-imds-admins&quot;
+                }
+            }
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li><strong>Example</strong>: Prevent high-risk roles from changes except when made by whitelisted admin roles.</li>
+</ul>
+<pre><code>{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;DenyAccessWithException&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Action&quot;: [
+                &quot;iam:AttachRolePolicy&quot;,
+                &quot;iam:DeleteRole&quot;,
+                &quot;iam:DeleteRolePermissionsBoundary&quot;,
+                &quot;iam:DeleteRolePolicy&quot;,
+                &quot;iam:DetachRolePolicy&quot;,
+                &quot;iam:PutRolePermissionsBoundary&quot;,
+                &quot;iam:PutRolePolicy&quot;,
+                &quot;iam:UpdateAssumeRolePolicy&quot;,
+                &quot;iam:UpdateRole&quot;,
+                &quot;iam:UpdateRoleDescription&quot;
+            ],
+            &quot;Resource&quot;: [
+                &quot;arn:aws:iam::*:role/&lt;role to protect from unauthorized changes&gt;&quot;
+            ],
+            &quot;Condition&quot;: {
+                &quot;ArnNotLike&quot;: {
+                    &quot;aws:PrincipalARN&quot;: &quot;arn:aws:iam::*:role/&lt;approved admin that can make changes&gt;&quot;
+                }
+            }
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li>By default, AWS applies the managed SCP <code>FullAWSAccess</code>, to all entities in the organization, which grants access to all services and actions. Be careful when removing this policy and not replacing it with another suitable policy (one that explicitly allows access to your desired list of services), as you can inadvertently end up locking yourself out.  <ul>
+<li><strong>Example</strong>: Access should only be granted to approved services (S3, EC2, DynamoDB), and all other service access should be blocked. You can do this by applying the below SCP and removing the default <code>FullAWSAccess</code> policy.</li>
+</ul>
+</li>
+</ul>
+<pre><code>{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;AllowApprovedServiceAccess&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;s3:*&quot;,
+                &quot;ec2:*&quot;,
+                &quot;dynamodb:*&quot;,
+                &quot;organizations:*&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li>AWS currently does not have any features or mechanisms to run SCPs in audit-mode to monitor the behavior and ascertain that SCPs won’t inadvertently cause disruptions.  <ul>
+<li>Leverage <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html">service last accessed data in IAM</a> to determine which services are in use versus not and then use this insight to develop SCPs.  </li>
+<li>SCPs should be deployed to non-production accounts/OUs first to confirm they meet the requirements and are not causing disruptions. Once there’s reasonable assurance around the behavior of SCPs, only then extend the scope to production accounts/OUs.</li>
+<li>Enable CloudTrail logging and query for access denied events where the failure reason is “service control policy.” Analyze the log entries to determine that all the denied events are intended and by design, and they are not blocking legitimate actions.</li>
+<li>Never apply SCPs directly to the root OUs before thoroughly testing in lower/non-production accounts/OUs.          </li>
+</ul>
+</li>
+<li>The blog post from AWS - <a href="https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/">Get more out of service control policies in a multi-account environment</a> - does a great job of walking through different approaches / recommendations for rolling out SCPs across multi-account environments, while staying within the limits and quotas - policy size of 5120 characters (including whitespaces), and 5 SCPs per entity (root, OUs, accounts). </li>
+</ul>
+<h3 id="scp-reference-materials">SCP Reference Materials</h3>
+<p>Documentation, Blog Posts, and Videos:</p>
+<ul>
+<li><a href="https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-1/">AWS - Codify your best practices using service control policies: Part 1</a>  </li>
+<li><a href="https://aws.amazon.com/blogs/mt/codify-your-best-practices-using-service-control-policies-part-2/">AWS - Codify your best practices using service control policies: Part 2</a>  </li>
+<li><a href="https://aws.amazon.com/blogs/security/how-to-use-aws-organizations-to-simplify-security-at-enormous-scale/">AWS - How to use AWS Organizations to simplify security at enormous scale</a>  </li>
+<li><a href="https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/">AWS - Identity Guide – Preventive controls with AWS Identity – SCPs</a>  </li>
+<li><a href="https://aws.amazon.com/blogs/industries/best-practices-for-aws-organizations-service-control-policies-in-a-multi-account-environment/">AWS - Best Practices for AWS Organizations Service Control Policies in a Multi-Account Environment</a>  </li>
+<li><a href="https://aws.amazon.com/blogs/security/control-vpc-sharing-in-an-aws-multi-account-setup-with-service-control-policies/">AWS - Control VPC sharing in an AWS multi-account setup with service control policies</a></li>
+<li><a href="https://www.youtube.com/watch?v=aljwG4N5a-0">AWS re:Invent 2024 - Security invariants: From enterprise chaos to cloud order</a></li>
+<li><a href="https://summitroute.com/blog/2020/03/25/aws_scp_best_practices/#two-person-rule-concept/">SummitRoute - AWS SCP Best Practices</a>  </li>
+<li><a href="https://scalesec.com/blog/understanding-aws-service-control-policies/">ScaleSec - Understanding AWS Service Control Policies</a>  </li>
+</ul>
+<p>Example Policies:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html">AWS - SCPs included within AWS documentation</a>  </li>
+<li><a href="https://github.com/aws-samples/service-control-policy-examples">AWS - GitHub repository containing example SCPs</a></li>
+<li>Vendor / Open Source Projects for SCPs:  <ul>
+<li><a href="https://github.com/ScaleSec/terraform_aws_scp">ScaleSec</a></li>
+<li><a href="https://github.com/primeharbor/aws-service-control-policies/tree/main">PrimeHarbor</a>  </li>
+<li><a href="https://asecure.cloud/l/scp/">ASecureCloud</a>  </li>
+<li><a href="https://github.com/cloudposse/terraform-aws-service-control-policies/tree/main/catalog">CloudPosse</a>  </li>
+<li><a href="https://github.com/salesforce/aws-allowlister">Salesforce’s Allowlister</a> - Creates SCPs that only allow AWS services compliant with preferred compliance frameworks (e.g., PCI, HIPAA, HITRUST, FedRamp High, FedRamp Moderate).  </li>
+</ul>
+</li>
+</ul>
+<h2 id="resource-control-policies-rcps">Resource Control Policies (RCPs)</h2>
+<p>The introduction of <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html">Resource Control Policies (RCPs)</a> by AWS addresses critical security challenges inherent in cloud environments. While SCPs effectively set permission boundaries for IAM principals within an organization, they do not govern resource-based policies. This limitation can lead to unintended / backdoor access if resource policies are misconfigured, as SCPs cannot restrict permissions granted through resource-based policies. Additionally, managing these resource policies individually across a sprawling infrastructure is complex and burdensome for security teams. RCPs mitigate this issue by enabling centralized enforcement of access controls directly on resources across all member accounts within an AWS Organization.</p>
+<p>RCPs are a type of authorization policy that provides you with centralized control over the maximum permissions that are available for the resources within your AWS Organization. By design, RCPs restrict permissions rather than grant them. Thus, they create permission guardrails and ensure that resources within AWS Organizations can only be accessed within these predefined access boundaries. Unlike SCPs, which are principal-centric, RCPs are resource-centric, focusing on controlling access to AWS resources. Below are key considerations when implementing RCPs:</p>
+<h3 id="rcp-applicability-scope">RCP Applicability Scope</h3>
+<ul>
+<li>
+<p>RCPs apply only to resources managed by member accounts within your organization. They do not apply to resources that reside outside your organization.  </p>
+<ul>
+<li><strong>Example</strong>: If an IAM principal in your member account (Account A) is trying to access an Amazon S3 bucket in Account B, then the RCP attached to Account A does not apply to the S3 bucket in Account B.  </li>
+</ul>
+</li>
+<li>
+<p>Unlike SCPs, which only apply to IAM principals within your organization, RCPs apply to principals external to your organization when they try to access resources within your organization.  </p>
+<ul>
+<li><strong>Example</strong>: If an IAM principal in an external account (Account B) is trying to access an Amazon S3 bucket in your member account (Account A), then the RCP attached to account A applies to the principal when trying to access the S3 bucket.  </li>
+</ul>
+</li>
+<li>
+<p>RCPs apply to the following AWS services:  </p>
+<ul>
+<li>Amazon S3  </li>
+<li>AWS Key Management Service (KMS)  <ul>
+<li>However, RCPs do not apply to AWS-managed KMS keys as those are managed and used by AWS services on your behalf.  </li>
+</ul>
+</li>
+<li>AWS Secrets Manager  </li>
+<li>Amazon SQS  </li>
+<li>AWS Security Token Service (STS)  </li>
+</ul>
+</li>
+<li>
+<p>RCPs do not apply to resources within the management account. However, they do apply to resources within delegated admin accounts.  </p>
+</li>
+<li>
+<p>RCPs cannot be used to restrict access to service-linked roles.</p>
+</li>
+</ul>
+<h3 id="rcp-permission-evaluation-logic">RCP Permission Evaluation Logic</h3>
+<ul>
+<li>By default, when RCPs are enabled, AWS applies a managed RCP, <code>RCPFullAWSAccess</code> to all entities (root, OUs, accounts) in the organization, which allow access to pass through RCPs and assure that all your existing IAM permissions continue to operate as they did until more restrictive policies are applied. This policy cannot be detached.</li>
+<li>The permissions for a resource are restricted by the RCPs applied at every level above it in the organization. If a specific permission is denied or not explicitly allowed at any parent level (root, OUs, or resource’s account), the action cannot be performed on the resource, even if the resource owner attaches a resource policy that allows full access to the principal.  </li>
+<li>When a principal makes a request to access a resource within an account governed by an RCP, the RCP becomes part of the policy evaluation logic to determine whether the action is permitted. This applies regardless of whether the requesting principal belongs to the same organization or an external account.  </li>
+<li>Since RCPs do not grant permissions, IAM principals must still be explicitly granted access via IAM policies. If an IAM principal lacks appropriate IAM permissions, they cannot perform the actions, even if an RCP allows those actions on the resource.  </li>
+<li>If permissions boundaries are present, access must be allowed by all three mechanisms — RCPs, permission boundaries, and IAM policies - to perform the action.</li>
+</ul>
+<p>The flowchart below provides a high-level overview of how access decisions are made when RCPs are enabled:<br />
+<img alt="Permissions Evaluation Logic - RCPs" src="../images/Permissions%20Evaluation%20Logic%20-%20RCPs.png" /></p>
+<h3 id="rcp-development-and-testing">RCP Development and Testing</h3>
+<ul>
+<li>Use “Deny” statements to enforce baseline security controls that you want to apply across your entire organization.  <ul>
+<li><strong>Example</strong>: Block resource access for principals external to the organization.</li>
+</ul>
+</li>
+</ul>
+<pre><code>{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;EnforceOrgIdentities&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Principal&quot;: &quot;*&quot;,
+            &quot;Action&quot;: [
+                &quot;s3:*&quot;,
+                &quot;sqs:*&quot;,
+                &quot;kms:*&quot;,
+                &quot;secretsmanager:*&quot;,
+                &quot;sts:AssumeRole&quot;,
+                &quot;sts:DecodeAuthorizationMessage&quot;,
+                &quot;sts:GetAccessKeyInfo&quot;,
+                &quot;sts:GetFederationToken&quot;,
+                &quot;sts:GetServiceBearerToken&quot;,
+                &quot;sts:GetSessionToken&quot;,
+                &quot;sts:SetContext&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;,
+            &quot;Condition&quot;: {
+                &quot;StringNotEqualsIfExists&quot;: {
+                    &quot;aws:PrincipalOrgID&quot;: &quot;&lt;org-id&gt;&quot;
+                }
+            }
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li>Use “Deny” statements with conditions to manage exceptions or enforce certain specific controls.  <ul>
+<li><strong>Example</strong>: Only allow service actions that are made using secure transport protocol (HTTPS). </li>
+</ul>
+</li>
+</ul>
+<pre><code>{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;EnforceSecureTransport&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Principal&quot;: &quot;*&quot;,
+            &quot;Action&quot;: [
+                &quot;sts:*&quot;,
+                &quot;s3:*&quot;,
+                &quot;sqs:*&quot;,
+                &quot;secretsmanager:*&quot;,
+                &quot;kms:*&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;,
+            &quot;Condition&quot;: {
+                &quot;BoolIfExists&quot;: {
+                    &quot;aws:SecureTransport&quot;: &quot;false&quot;
+                }
+            }
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li>AWS currently does not have any features or mechanisms to run RCPs in audit-mode to monitor the behavior and ascertain that RCPs won’t inadvertently cause disruptions.  <ul>
+<li>RCPs should be deployed to non-production accounts / OUs first to confirm they meet the requirements and are not causing disruptions. Only once there’s reasonable assurance around the behavior of RCPs can the scope be extended to production accounts / OUs be extended.</li>
+<li>Enable CloudTrail logging and query for access denied events. Analyze the log entries to determine that all the denied events are intended and by design, and RCPs are not blocking legitimate actions.</li>
+<li>Never apply RCPs directly to the root OUs before testing in lower / non-production accounts / OUs.</li>
+</ul>
+</li>
+<li>Like SCPs, RCPs have the same quotas and limits - policy size of 5120 characters (including whitespaces), and 5 RCPs per entity (root, OUs, accounts). </li>
+</ul>
+<h3 id="rcp-reference-materials">RCP Reference Materials</h3>
+<p>Documentation, Blog Posts, and Videos:</p>
+<ul>
+<li><a href="https://aws.amazon.com/blogs/aws/introducing-resource-control-policies-rcps-a-new-authorization-policy/">Introducing resource control policies (RCPs), a new type of authorization policy in AWS Organizations</a>  </li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=Zw8iRP0v0zA&amp;list=PLdq8VB0hSfcYjWMBLrItQTNSbhXZ-jElD&amp;index=63">AWS re:Invent 2024 - New governance capabilities for multi-account environments</a></p>
+</li>
+<li>
+<p><a href="https://www.wiz.io/blog/how-to-use-aws-resource-control-policies">Wiz - How to use AWS Resource Control Policies</a></p>
+</li>
+</ul>
+<p>Example Policies:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps_examples.html">AWS - RCPs included within AWS documentation</a>  </li>
+<li><a href="https://github.com/aws-samples/data-perimeter-policy-examples/tree/main/resource_control_policies">AWS - GitHub repository containing example RCPs</a></li>
+</ul>
+<h2 id="access-evaluation-logic">Access Evaluation Logic</h2>
+<p>The overall access evaluation logic that AWS applies to determine whether an action is allowed or not is much more complex than what is described above for RCPs and SCPs. The above visuals only walk through how these Authorization Policies function conceptually to help enforce access controls and security requirements. There are other types of policies as well in the flow (e.g., resource policies, session policies, IAM policies, etc.), that increase the complexity of how access is evaluated. The below <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic_policy-eval-denyallow.html">flowchart from AWS</a> is a comprehensive walkthrough of how access decisions are made:
+<br>
+<br>
+<img alt="Complete Access Evaluation Logic" src="../images/Complete%20Access%20Evaluation%20Logic.png" /></p>
+<p>Below is an example to demonstrate access evaluation when <code>Alice</code> (principal inside the organization) and <code>Bob</code> (principal outside the organization) attempt S3 actions (<code>s3:GetObject</code>, <code>s3:PutObject</code>, <code>s3:DeleteObject</code>, and <code>s3:ListObjects</code>) on the <code>example-bucket</code> under <code>Account B</code> (account in the same organization as Alice).</p>
+<h3 id="policies-applied"><strong>Policies Applied</strong></h3>
+<table>
+<thead>
+<tr>
+<th><strong>Hierarchy Level</strong></th>
+<th><strong>SCP Policies</strong></th>
+<th><strong>RCP Policies</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Root</strong></td>
+<td>Allows <code>s3</code>, <code>ec2</code>, <code>dynamoDB</code>, <code>organizations</code></td>
+<td>Default RCPFullAWSAccess: Allows all services</td>
+<td>Broad access at the root level.</td>
+</tr>
+<tr>
+<td><strong>OU: Production</strong></td>
+<td>Denies <code>s3:GetObject</code></td>
+<td>Denies all actions unless: <ul><li>The principal belongs to the same organization as Alice</li><li>Or the request originates from Bob's account</li></ul></td>
+<td>Restricts access unless these conditions are met.</td>
+</tr>
+<tr>
+<td><strong>Account B</strong></td>
+<td>Denies <code>s3:DeleteObject</code></td>
+<td>Denies <code>s3:PutObject</code></td>
+<td>Explicitly restricts <code>s3:DeleteObject</code> and <code>s3:PutObject</code>.</td>
+</tr>
+<tr>
+<td><strong>Resource Policy</strong></td>
+<td>Allows <code>s3:*</code> for all principals</td>
+<td></td>
+<td>Resource-based policy allows full access to all S3 actions.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="evaluation-results"><strong>Evaluation Results</strong></h3>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Alice (Inside Org)</strong></th>
+<th><strong>Bob (Outside Org)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>s3:GetObject</strong></td>
+<td><strong>Denied</strong> at OU SCP (explicit deny at OU SCP)</td>
+<td><strong>Allowed</strong> (OU RCP condition satisfied, no other deny)</td>
+</tr>
+<tr>
+<td><strong>s3:PutObject</strong></td>
+<td><strong>Denied</strong> at Account RCP (explicit deny at Account RCP)</td>
+<td><strong>Denied</strong> at Account RCP (explicit deny at Account RCP)</td>
+</tr>
+<tr>
+<td><strong>s3:DeleteObject</strong></td>
+<td><strong>Denied</strong> at Account SCP (explicit deny at Account SCP)</td>
+<td><strong>Allowed</strong> (OU RCP condition satisfied, SCP skipped)</td>
+</tr>
+<tr>
+<td><strong>s3:ListObjects</strong></td>
+<td><strong>Allowed</strong> (passes all checks and conditions)</td>
+<td><strong>Allowed</strong> (OU RCP condition satisfied, no other deny)</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a visual walkthrough of the above scenario to showcase how access is evaluated to make "Allow" / "Deny" decisions:
+<br></p>
+<p><img alt="Access Evaluation Logic - Example" src="../images/Access%20Evaluation%20Logic%20-%20Example.png" /></p>
+<h2 id="data-perimeter">Data Perimeter</h2>
+<p>When SCPs and RCPs are used together, they establish the foundational components for a <a href="https://aws.amazon.com/identity/data-perimeters-on-aws/">data perimeter</a> within your organization. At a high level, a data perimeter involves three key components— trusted identities, trusted resources, and expected networks — that work together to ensure that only whitelisted identities from known networks can access your organization’s resources.</p>
+<ul>
+<li><strong>Trusted Identities</strong>: IAM principals within the organization, explicitly trusted external accounts, or AWS on your behalf.  </li>
+<li><strong>Trusted Resources</strong>: Resources within your organization, resources belonging to explicitly trusted external accounts, or resources that AWS uses on your behalf.  </li>
+<li><strong>Expected Networks</strong>: Your VPCs, on-premise networks, or networks that AWS uses on your behalf.</li>
+</ul>
+<p>The diagram below from AWS provides a high-level overview of the concept of data perimeters:</p>
+<p><img alt="Data Perimeter Overview" src="../images/Data%20Perimeter%20Overview.png" /></p>
+<p>By implementing <em>only</em> SCPs and RCPs, you will have an accelerated start on the journey of setting up a data perimeter. However, this alone will not give you a full setup that covers all services. For a robust implementation of a data perimeter, there are other key elements (and arguably the harder ones to implement), listed below, that also need to be in place:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html"><strong>Resource Policies</strong></a>: Not all AWS services that support resource policies are also supported by RCPs (e.g., SNS, ECR, API Gateways). For these services, resource policies will still need to be applied in a decentralized manner on a per-resource basis, significantly increasing the complexity of extending the perimeter to these additional services.  </li>
+<li><a href="https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html#vpc-endpoint-policies-interface"><strong>VPC Endpoint Policies</strong></a>: To enforce that identities and resources are accessed from <strong>expected networks</strong>, AWS recommends using VPC endpoint policies. However, like resource policies, configuring and managing VPC endpoints at scale across all the VPCs in your organization for every supported AWS service is complex and requires significant effort.  <ul>
+<li>AWS’s whitepaper on secure and scalable networking architecture includes a section on implementing centralized VPC endpoints in a hub-and-spoke model. The whitepaper can be found <a href="https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-access-to-vpc-private-endpoints.html">here</a>.</li>
+</ul>
+</li>
+</ul>
+<p>The flowchart below outlines how the different policies, along with the requisite IAM condition keys, work together to achieve a secure data perimeter:</p>
+<p><img alt="Data Perimeter - How To" src="../images/Data%20Perimeter%20-%20How%20To.png" /></p>
+<p>In conclusion, SCPs and RCPs are an important stride toward building a data perimeter that aligns trusted identities, trusted resources, and expected networks. However, progressing from here to a fully realized data perimeter is a strategic, multi-layered effort that must evolve in lockstep with the complexity of your AWS environments. Achieving this level of control involves deep insights into the inner workings of your AWS environment, including the identity models of each service, the metadata tags that guide resource governance, and the network paths — both on-premises and in the cloud — that support data flows. You must also know exactly which third parties interact with your systems and from which locations, and maintain visibility into how these relationships change over time.</p>
+<p>This effort involves incrementally expanding beyond the basics, starting with core AWS services and methodically layering on additional controls for other resources. Over time, it will also require the incorporation of resource policies, VPC endpoint policies, and other service-specific measures to tighten the perimeter. Additionally, a well-defined tagging strategy is essential as it enables consistent governance, supports automated guardrails, helps with exception management, and simplifies the application of policies across large, dynamic environments. </p>
+<p>Ultimately, implementing a robust data perimeter is a multi-year undertaking that requires time, operational discipline, and organizational buy-in. It relies on strong foundational elements such as granular identity controls, consistent tagging practices, well-managed exceptions, resource governance, and secure network setup. By taking a phased, service-by-service approach and continually refining your controls, you can evolve from a simple perimeter concept into a fully realized data perimeter that safeguards your organization’s critical assets in a complex and ever-evolving AWS landscape.</p>
+<h3 id="data-perimeter-reference-materials">Data Perimeter Reference Materials</h3>
+<p>Documentation, Blog Posts, and Videos:</p>
+<ul>
+<li><a href="https://aws.amazon.com/identity/data-perimeters-blog-post-series/">AWS - Blog Post Series: Establishing a Data Perimeter on AWS</a>  </li>
+<li><a href="https://www.youtube.com/watch?v=te8GsFjB6Fw">AWS re:Inforce 2024 - Establishing a data perimeter on AWS, featuring Capital One (IAM305)</a></li>
+</ul>
+<p>Example Policies:</p>
+<ul>
+<li><a href="https://github.com/aws-samples/data-perimeter-policy-examples">AWS - GitHub repository containing example data perimeter policies</a></li>
+</ul>
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+<p>Both SCPs and RCPs are integral for managing permissions and enforcing governance across multi-account AWS environments. While SCPs set permission guardrails for IAM principals, RCPs set permission guardrails for resources. In addition to defining maximum available permissions for principals and resources within your organization, SCPs and RCPs can also be used to enforce security controls (e.g., preventing users from uploading unencrypted S3 objects, enforcing IMDSv2 for EC2 instances, or requiring HTTPS connections to resources). Together, these policies provide a centralized capability to control access, enforce security requirements, and also lay the foundations for a well-defined data perimeter.</p>
+<p>This is part 1 of mult-part blog series where in the next blog(s), I will try to do a similar deep-dive into the different types of Management Policies.   </p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+  <footer class="md-footer">
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        
+          <div class="md-footer-disclaimer">
+            The views and opinions expressed on this blog are solely my own and do not necessarily reflect the views or positions of my employer (PwC). All content is for informational purposes only and should not be considered professional advice. My employer does not endorse or approve the content of this blog. Views relating to my professional work are my own perspectives and do not reflect official positions or policies of my employer.
+
+          </div>
+        
+        
+          <div class="md-footer-social">
+            
+              <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/naman-sogani-567033134/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+            
+          </div>
+        
+      </div>
+    </div>
+  </footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>

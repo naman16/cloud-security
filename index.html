@@ -1,0 +1,659 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="Implementing%20CNAPP%3A%20Day%202%20Focus%20Areas/">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Cloud Security Blogs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="custom.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Cloud Security Blogs" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="./assets/images/social/index.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Cloud Security Blogs" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/index.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#implementing-cnapp-tool-selection-and-day-1-focus-areas" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Cloud Security Blogs" class="md-header__button md-logo" aria-label="Cloud Security Blogs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cloud Security Blogs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Implementing CNAPP: Tool Selection and Day 1 Focus Areas
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="." class="md-tabs__link">
+        
+  
+    
+  
+  Implementing CNAPP: Tool Selection and Day 1 Focus Areas
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="Implementing%20CNAPP%3A%20Day%202%20Focus%20Areas/" class="md-tabs__link">
+        
+  
+    
+  
+  Implementing CNAPP: Day 2 Focus Areas
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="AWS%20Security%20Guardrails%20%26%20Terraform/" class="md-tabs__link">
+        
+  
+    
+  
+  AWS Security Guardrails & Terraform
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="Deep%20Dive%20-%20AWS%20Organization%20Policies%20%28Part%201%29/" class="md-tabs__link">
+        
+  
+    
+  
+  Deep Dive - AWS Organization Policies (Part 1)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Cloud Security Blogs" class="md-nav__button md-logo" aria-label="Cloud Security Blogs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cloud Security Blogs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Implementing CNAPP: Tool Selection and Day 1 Focus Areas
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Implementing CNAPP: Tool Selection and Day 1 Focus Areas
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-cnapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is CNAPP?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tool-selection-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tool Selection Criteria
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#day-1-focus-areas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Day 1 Focus Areas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#closing-thoughts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Closing Thoughts
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Implementing%20CNAPP%3A%20Day%202%20Focus%20Areas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementing CNAPP: Day 2 Focus Areas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AWS%20Security%20Guardrails%20%26%20Terraform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS Security Guardrails & Terraform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deep%20Dive%20-%20AWS%20Organization%20Policies%20%28Part%201%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deep Dive - AWS Organization Policies (Part 1)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="implementing-cnapp-tool-selection-and-day-1-focus-areas">Implementing CNAPP: Tool Selection and Day 1 Focus Areas</h1>
+<p>As someone who has done multiple Cloud-Native Application Protection Platform (CNAPP)  implementations, I've summarized my key considerations to help people who are in the evaluation / early stages of CNAPP adoption. Below is the high-level structure of how this document is organized:  </p>
+<ol>
+<li><a href="#what-is-cnapp?">What is CNAPP?</a>  </li>
+<li><a href="#tool-selection-criteria">Tool Selection Criteria</a>  </li>
+<li><a href="#day-1-focus-areas">Day 1 Focus Areas</a></li>
+<li><a href="#closing-thoughts">Closing Thoughts</a></li>
+</ol>
+<h2 id="what-is-cnapp">What is CNAPP?</h2>
+<p>According to Gartner, “<em>Cloud-native application protection platforms (CNAPPs) are a unified and tightly integrated set of security and compliance capabilities, designed to protect cloud-native infrastructure and applications. CNAPPs incorporate an integrated set of proactive and reactive security capabilities, including artifact scanning, security guardrails, configuration and compliance management, risk detection and prioritization, and behavioral analytics, providing visibility, governance and control from code creation to production runtime. CNAPP solutions use a combination of API integrations with leading cloud platform providers, continuous integration/continuous development (CI/CD) pipeline integrations, and agent and agentless workload integration to offer combined development and runtime security coverage.</em>” </p>
+<p>In other words, CNAPP is an umbrella term for multiple security capabilities that are integrated into a unified platform to secure cloud-native applications and infrastructure throughout their lifecycle. A typical CNAPP includes the following core capabilities:</p>
+<ul>
+<li><strong>Cloud Security Posture Management (CSPM):</strong> Identifies misconfigurations and compliance risks in cloud infrastructure.  </li>
+<li><strong>Cloud Infrastructure Entitlement Management (CIEM):</strong> Manages and automates access permissions in cloud environments.  </li>
+<li><strong>Cloud Workload Protection Platform (CWPP):</strong> Protects cloud workloads, including containers, servers, and serverless functions.  </li>
+<li><strong>Infrastructure-as-Code (IaC) Scanning:</strong> Detects security issues early in the development process.  </li>
+<li><strong>Data Security Posture Management (DSPM):</strong> Discovers sensitive data sources and who has access to them.</li>
+</ul>
+<p>Below is an image from Gartner that provides a detailed view of the CNAPP capabilities landscape:</p>
+<p><img alt="CNAPP Capabilities - Gartner" src="images/CNAPP%20Capabilities%20-%20Gartner.png" /></p>
+<h2 id="tool-selection-criteria">Tool Selection Criteria</h2>
+<p>When choosing a CNAPP solution, even though no vendor excels in all areas of CNAPP, I strongly advocate for a "best-of-suite" approach rather than assembling multiple "best-of-breed" tools. It is operationally easier to roll out across the organization, reduces the complexity associated with maintaining and managing various tools, and provides unified visibility across the different types of findings as it eliminates the need to correlate data from disparate tools. When evaluating CNAPP solutions, consider the following:</p>
+<ul>
+<li><strong>Prioritize Vendors That Best Address Key Use-Cases:</strong> Identify the critical CNAPP capabilities required for your organization’s cloud security strategy. My suggestion is to prioritize vendors with strong CSPM, vulnerability scanning, and CIEM features, even if other features are less developed, as long as they have a clear plan to support additional CNAPP capabilities of interest, such as CWPP, DSPM, attack surface management, software supply chain security, IaC scanning, container image scanning, etc.  </li>
+<li><strong>Include Stakeholders From Different Teams:</strong> The capabilities that CNAPP offers extend to several different teams within the organization (Vulnerability Management, IAM, Security Monitoring, Data Protection), and including them in the selection process enables the organization to make a collective decision and helps to minimize the potential politics that can occur when key parties are left out of the decision-making process.  </li>
+<li><strong>Require Graph Databases:</strong> Given the dynamic and interconnectedness of modern cloud environments where complex relationships exist between resources, identities, configurations, and data flows, traditional relational databases can't keep up with modeling and analyzing these intricate webs of connections. This is where graph databases shine as they provide:<ul>
+<li><em>Comprehensive Visibility:</em> Maps the complex relationships between various cloud-native components (resources, identities, networking, security). This approach offers a holistic view of the cloud environment and helps in developing an architectural understanding of the various applications and workloads.</li>
+<li><em>Contextual Risk Prioritization:</em> Different types of findings (vulnerabilities, misconfigurations) on a given resource, coupled with the potential attack paths for that resource (by analyzing IAM and networking) can be correlated to apply better risk prioritization and perform targeted remediations.</li>
+<li><em>Multi-Cloud Consistency:</em> A unified graph data model where the representation of different resource types and relationships are standardized, can enable higher consistency in how security is applied across multi-cloud environments.   </li>
+</ul>
+</li>
+<li><strong>Agentless Vulnerability Scanning:</strong> Due to the ephemeral nature of resources and the decentralized nature of operating in the cloud where application and development teams own their entire stacks (including the lifecycle of the VM instances), consistently deploying agents on VMs is challenging, especially at organizations where the concept of golden images doesn’t exist. This is where agentless scanning can help streamline operations and provide automated vulnerability scanning capabilities.<ul>
+<li>However, agent-based solutions should be considered when CWPP is a priority as it is more effective in real-time monitoring / blocking of malicious activities / behavior.        </li>
+</ul>
+</li>
+<li><strong>Prioritize Comprehensive APIs:</strong> Prefer vendors with well-designed and flexible APIs that do not limit you to carrying out actions only via their console. Robust APIs will enable you to automate processes and workflows, integrate with enterprise tools (such as ticketing and messaging systems, vulnerability repositories, and SIEMs), and efficiently handle reporting and remediation tasks.</li>
+<li><strong>Alignment With Vendor Roadmaps:</strong> Assess the vendor's roadmap to ensure it aligns with your future requirements and strategic goals. For example, if your organization is making a big push for AI workloads in the near-future, consider vendors that have AI Posture Management (AIPM) capabilities in their short-term roadmap. </li>
+</ul>
+<p>By selecting a best-of-suite CNAPP solution that has CSPM, vulnerability scanning, and CIEM as its core capability and also has the required flexibility / extensibility as a platform, organizations can benefit from operational efficiencies, spend less time upskilling on multiple tools, and ultimately enhance their ability to manage risks in dynamic cloud-native environments.</p>
+<h2 id="day-1-focus-areas">Day 1 Focus Areas</h2>
+<p>As CNAPP definitions evolve, new capabilities (read: acronyms) are added, and vendors market their platforms as the silver bullet for addressing all cloud security needs, it is tempting to enable every available feature. However, this approach can overwhelm security teams with alerts and frustrate developers with a sudden influx of issues that need to be remediated, creating friction between teams meant to collaborate on reducing security risks. To avoid these pitfalls, consider the following:</p>
+<ul>
+<li><strong>Prioritize CSPM Operationalization:</strong> Prioritize enablement of CSPM and vulnerability scanning (from hereon, “CSPM”) on day one of your CNAPP implementation journey. This approach provides the following benefits:<ul>
+<li><em>Quick Value Realization:</em> These findings are typically easier to understand and address, allowing you to establish a baseline understanding of your cloud security posture and conduct burndown campaigns to reduce risks and demonstrate "quick-wins". This justifies the benefits in your CNAPP investment, crucial for building momentum and securing stakeholder buy-in.</li>
+<li><em>Platform Familiarity:</em> Starting with CSPM allows your security team to become familiar with the CNAPP tool's interface, graph database, data model, reporting mechanisms, and overall functionality. This foundational knowledge is essential for successfully implementing more advanced capabilities in the future.</li>
+<li><em>Upskilling Opportunity:</em> Implementing CSPM first gives your security teams time to upskill on cloud security concepts, creating a foundation for future implementation of more advanced capabilities.</li>
+<li><em>Developer Acclimation:</em> CSPM provides an opportunity for developers to understand how security issues are reported and how they need to consume and act on this information. This gradual introduction to the platform helps smooth the transition to a more security-aware development process.  </li>
+</ul>
+</li>
+<li><strong>Enable Self-Service Consumption of Findings:</strong> Set up role-based access control (RBAC) to enable self-service consumption of security findings for the developer community. This approach is crucial for conducting timely remediation and fostering a culture of shared responsibility within the organization. Below are the benefits of enabling self-service:<ul>
+<li><em>Developer Empowerment:</em> The onus for remediating issues is on the developers and cloud engineers; hence, providing them with self-service access to relevant security findings and remediation guidance allows them to take ownership of security issues associated with their applications.</li>
+<li><em>Accelerated Remediation:</em> Generally, CNAPP tools have descriptive remediation guidance that is actionable. By putting information directly in the hands of those who can act on it, your organization can significantly speed up the fix process and reduce the overall time-to-remediation.</li>
+<li><em>Shared Responsibility:</em> By providing developers with tool access, they can monitor the security posture of their applications on-demand, and provide inputs on false positives or potential policy adjustments, thereby fostering a collaborative culture for cloud security. Additionally, I have observed scenarios where developers and engineers often want to use CNAPP for their own non-security related use-cases (e.g., tagging, building cloud asset inventory, identifying resources that are no longer needed, etc.), thereby further making the case for the platform.  </li>
+</ul>
+</li>
+<li><strong>Metrics &amp; Reporting:</strong> Develop reporting for CSPM, ideally aligned to your SLA / vulnerability management standards, to measure the overall health of the program and remediation effectiveness. This will enable cultural changes and set proper expectations around remediation timelines.  </li>
+<li><strong>Conduct Regular Office Hours:</strong> Hold regular sessions and office hours, participate in developer forums, set up communication channels, etc. to educate the developers on the platform and hand-hold them through remediations when doing the initial roll-out. This will build goodwill and allow you to develop effective processes that incorporate valuable insights based on how your development teams think and operate.</li>
+<li><strong>Custom Develop &amp; Fine-Tune CSPM Policies:</strong> As your organization becomes familiar with the initial roll-out, it is crucial to move beyond out-of-the-box (OOB) policies towards custom policy development and fine-tuning (“customization”) to better align with the organization’s security standards and reduce false positives. Below are key considerations for customizing policies:<ul>
+<li><em>Reduce Alert Fatigue &amp; False Positives:</em> Out-of-the-box policies often generate a high volume of alerts, many of which may be false positives / irrelevant to your environment. Customization helps reduce noise and allows your teams to focus on the most critical issues.</li>
+<li><em>Align with Security Standards:</em> OOB policies may not adequately address your organization's unique risk profile or compliance requirements and may not be aligned with your security standards and controls. By developing custom policies based on security standards, cloud usage patterns and application architectures, you can have higher confidence in your policy set and improved accuracy in the legitimacy of the issues identified. Additionally, since these policies are contextualized for your organization’s cloud environments, they reduce friction and improve adoption among your development teams.</li>
+</ul>
+</li>
+</ul>
+<p>Prioritizing CSPM as your initial focus establishes a robust foundation that not only addresses critical security risks but also allows the organization to build confidence in its processes, workflows, and ability to remediate issues. This provides the foundation for the implementation of more advanced CNAPP capabilities in a manageable manner with minimal resistance / disruptions.</p>
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+<p>In summary, the tool in itself is very powerful and provides good visibility but the successful implementation and ROI are dependent on people and process elements where activities like fostering a shared responsibility culture, partnering with and enabling developers, phasing the roll-out of the platform, and designing effective processes are critical factors for success. </p>
+<p>PS: CNAPP is a broad area with many layers to unpack and there are several topic areas (listed below) that I did not cover in this blog post that require deep-dive of their own and will be a good candidate for a follow-up blog on “day 2” activities and beyond:</p>
+<ul>
+<li>Pre-deployment security capabilities such as container image scanning, secrets scanning, software supply chain  </li>
+<li>Integrations with ticketing and messaging platforms (Jira, Slack), SIEM (Splunk, Sentinel), vulnerability warehouse (ServiceNow VR)  </li>
+<li>Strategy for routing different styles of issues to different sources  </li>
+<li>Operationalizing the various CNAPP capabilities </li>
+</ul>
+<p>References:</p>
+<ol>
+<li>Gartner - <a href="https://www.gartner.com/doc/reprints?id=1-2I6V52K2&amp;ct=240726&amp;st=sb">https://www.gartner.com/doc/reprints?id=1-2I6V52K2&amp;ct=240726&amp;st=sb</a></li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+  <footer class="md-footer">
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        
+          <div class="md-footer-disclaimer">
+            The views and opinions expressed on this blog are solely my own and do not necessarily reflect the views or positions of my employer (PwC). All content is for informational purposes only and should not be considered professional advice. My employer does not endorse or approve the content of this blog. Views relating to my professional work are my own perspectives and do not reflect official positions or policies of my employer.
+
+          </div>
+        
+        
+          <div class="md-footer-social">
+            
+              <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/naman-sogani-567033134/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+            
+          </div>
+        
+      </div>
+    </div>
+  </footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>
