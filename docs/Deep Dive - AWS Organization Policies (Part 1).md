@@ -353,23 +353,22 @@ The overall access evaluation logic that AWS applies to determine whether an act
 Below is an example to demonstrate access evaluation when `Alice` (principal inside the organization) and `Bob` (principal outside the organization) attempt S3 actions (`s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`, and `s3:ListObjects`) on the `example-bucket` under `Account B` (account in the same organization as Alice).
 
 ### **Policies Applied**
-
+<br>
 | **Hierarchy Level** | **SCP Policies**                          | **RCP Policies**                          | **Description**                                              |
 |----------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------------------------|
-| **Root**            | Allows `s3`, `ec2`, `dynamoDB`, `organizations` | Allows all services                       | Broad access to services.                                   |
-| **OU: Production**  | Denies `s3:GetObject`                     | Denies `s3:DeleteObject`                  | Restricts `s3:GetObject` and `s3:DeleteObject`.             |
-| **Account B**       | Denies `s3:DeleteObject`                  | Allows only `s3:PutObject` if the principal is from the **same organization** as Alice or matches **Bob's account ID** | Restricts access to other actions based on conditions.      |
-| **Resource Policy** | Allows `s3:*` for all principals          |                                           | Provides resource-based access to all S3 actions.           |
-
+| **Root**            | Allows `s3`, `ec2`, `dynamoDB`, `organizations` | Default RCPFullAWSAccess: Allows all services | Broad access at the root level.                             |
+| **OU: Production**  | Denies `s3:GetObject`                     | Denies all actions unless: <ul><li>The principal belongs to the same organization as Alice</li><li>Or the request originates from Bob's account</li></ul> | Restricts access unless these conditions are met.           |
+| **Account B**       | Denies `s3:DeleteObject`                  | Denies `s3:PutObject`                      | Explicitly restricts `s3:DeleteObject` and `s3:PutObject`.  |
+| **Resource Policy** | Allows `s3:*` for all principals          |                                           | Resource-based policy allows full access to all S3 actions. |
 
 ### **Evaluation Results**
-
-| **Action**         | **Alice (Inside Org)**               | **Bob (Outside Org)**            |
-|---------------------|--------------------------------------|----------------------------------|
-| **s3:GetObject**    | **Denied** at OU SCP                | **Denied** at Account RCP         |
-| **s3:PutObject**    | **Allowed**                         | **Allowed**                      |
-| **s3:DeleteObject** | **Denied** at OU RCP                | **Denied** at OU RCP              |
-| **s3:ListObjects**  | **Allowed**                         | **Allowed**                      |
+<br>
+| **Action**         | **Alice (Inside Org)**                                   | **Bob (Outside Org)**                                  |
+|---------------------|----------------------------------------------------------|-------------------------------------------------------|
+| **s3:GetObject**    | **Denied** at OU SCP (explicit deny at OU SCP)           | **Allowed** (OU RCP condition satisfied, no other deny) |
+| **s3:PutObject**    | **Denied** at Account RCP (explicit deny at Account RCP) | **Denied** at Account RCP (explicit deny at Account RCP) |
+| **s3:DeleteObject** | **Denied** at Account SCP (explicit deny at Account SCP) | **Allowed** (OU RCP condition satisfied, SCP skipped) |
+| **s3:ListObjects**  | **Allowed** (passes all checks and conditions)           | **Allowed** (OU RCP condition satisfied, no other deny) |
 
 Below is a visual walkthrough of the above scenario to showcase how access is evaluated to make "Allow" / "Deny" decisions:
 <br>
