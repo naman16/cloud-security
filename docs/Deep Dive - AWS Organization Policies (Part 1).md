@@ -354,6 +354,7 @@ Below is an example to demonstrate access evaluation when `Alice` (principal ins
 
 ### **Policies Applied**
 <br>
+
 | **Hierarchy Level** | **SCP Policies**                          | **RCP Policies**                          | **Description**                                              |
 |----------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------------------------|
 | **Root**            | Allows `s3`, `ec2`, `dynamoDB`, `organizations` | Default RCPFullAWSAccess: Allows all services | Broad access at the root level.                             |
@@ -363,6 +364,7 @@ Below is an example to demonstrate access evaluation when `Alice` (principal ins
 
 ### **Evaluation Results**
 <br>
+
 | **Action**         | **Alice (Inside Org)**                                   | **Bob (Outside Org)**                                  |
 |---------------------|----------------------------------------------------------|-------------------------------------------------------|
 | **s3:GetObject**    | **Denied** at OU SCP (explicit deny at OU SCP)           | **Allowed** (OU RCP condition satisfied, no other deny) |
